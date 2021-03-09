@@ -1,38 +1,32 @@
 package leetcode;
 
 import java.util.*;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 public class Solution {
 
+    private int[] res = new int[]{0, 1};
+    private int size = 1;
     public String longestPalindrome(String s) {
-        String res = s.substring(0, 1);
-        int len = -1;
         char[] arr = s.toCharArray();
-        HashMap<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < s.length(); i++) {
-            char c = arr[i];
-            if (map.containsKey(c)) {
-                String temp = s.substring(map.get(c), i + 1);
-                if (temp.length() > len && check(temp)) {
-                    len = temp.length();
-                    res = temp;
-                }
+        for (int i = 0; i < arr.length - 1; i++) {
+            check(arr, i, i);
+            if(arr[i] == arr[i + 1]) {
+                check(arr, i, i + 1);
             }
-            map.put(c, i);
         }
-        return res;
+        return s.substring(res[0], res[1]);
     }
 
-    public boolean check(String str) {
-        char[] arr = str.toCharArray();
-        for (int i = 0; i < arr.length / 2; i++) {
-            if(arr[i] != arr[arr.length - 1 - i])
-                return false;
+    public void check(char[] arr, int start, int end) {
+        while (start >= 0 && end <= arr.length - 1 && arr[start] == arr[end]) {
+            start--;
+            end++;
         }
-        return true;
+        if (size < end - start) {
+            res = new int[]{start + 1, end};
+            size = end - start;
+        }
     }
 
     public double findMedianSortedArrays(int[] arr, int[] arr2) {
