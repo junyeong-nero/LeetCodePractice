@@ -5,6 +5,61 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    public boolean isPalindrome(int x) {
+
+    }
+
+    public int check2(String str) {
+        int res = 0;
+        long temp = Long.parseLong(str);
+        if(temp > Integer.MAX_VALUE)
+            res = Integer.MAX_VALUE;
+        else if(temp < Integer.MIN_VALUE)
+            res = Integer.MIN_VALUE;
+        else
+            res = Long.valueOf(temp).intValue();
+        return res;
+    }
+
+    public int myAtoi(String s) {
+        int res = 0, i;
+        char[] arr = s.toCharArray();
+        boolean symbol = false;
+
+        if(s.length() == 0)
+            return 0;
+
+        StringBuilder builder = new StringBuilder();
+        for (i = 0; i < arr.length; i++) {
+            char c = arr[i];
+            if(builder.length() == 0) {
+                if ((c >= '0' && c <= '9') || c == '+' || c == '-') {
+                    if(c == '+' || c == '-')
+                        symbol = true;
+                    builder.append(c);
+                } else if (c != ' ')
+                    break;
+            } else {
+                if (c >= '0' && c <= '9')
+                    builder.append(c);
+                else if (c == ' ' || c == '.') {
+                    res = check2(builder.toString());
+                    break;
+                } else if (c == '+' || c == '-') {
+                    if (symbol)
+                        break;
+                    else
+                        symbol = true;
+                } else {
+                    break;
+                }
+            }
+        }
+        if (i == arr.length)
+            res = check2(builder.toString());
+        return res;
+    }
+
     public String convert(String s, int numRows) {
         StringBuilder builder = new StringBuilder();
         char[] arr = s.toCharArray();
@@ -21,7 +76,6 @@ public class Solution {
 
             if(n == 0 && n2 == 0)
                 continue;
-
             while(true) {
                 if (n != 0) {
                     j += n;
