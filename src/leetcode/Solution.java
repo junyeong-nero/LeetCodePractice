@@ -5,6 +5,58 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    public String convert(String s, int numRows) {
+        StringBuilder builder = new StringBuilder();
+        char[] arr = s.toCharArray();
+        if(numRows == 1)
+            return s;
+        for (int i = 0; i < numRows; i++) {
+            int n = (numRows - i - 1) * 2;
+            int n2 = i * 2;
+            int j = i;
+
+            if(j >= arr.length)
+                break;
+            builder.append(arr[j]);
+
+            if(n == 0 && n2 == 0)
+                continue;
+
+            while(true) {
+                if (n != 0) {
+                    j += n;
+                    if(j < arr.length)
+                        builder.append(arr[j]);
+                    else break;
+                }
+
+                if(n2 != 0) {
+                    j += n2;
+                    if(j < arr.length)
+                        builder.append(arr[j]);
+                    else break;
+                }
+            }
+        }
+        return builder.toString();
+    }
+
+    public int reverse(int x) {
+        double res = 0;
+        int neg = x > 0 ? 1 : -1;
+        int d = Math.abs(x), count = 1;
+        int size = String.valueOf(d).length();
+        while (d != 0) {
+            res += (d % 10) * Math.pow(10, size - count++);
+            d /= 10;
+        }
+        res *= neg;
+        if(res <= Integer.MAX_VALUE && res >= Integer.MIN_VALUE)
+            return Double.valueOf(res).intValue();
+        else
+            return 0;
+    }
+
     private int[] res = new int[]{0, 1};
     private int size = 1;
     public String longestPalindrome(String s) {
