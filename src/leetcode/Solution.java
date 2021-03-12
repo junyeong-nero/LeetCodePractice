@@ -5,8 +5,64 @@ import java.util.function.Consumer;
 
 public class Solution {
 
-    public boolean isPalindrome(int x) {
+    public int maxArea(int[] arr) {
+        int a, b, res = 0;
+        int i = 0, j = arr.length - 1;
+        do {
+            a = arr[i];
+            b = arr[j];
+            res = Math.max(res, Math.min(a, b) * (j - i));
 
+            if (a < b) {
+                while (i < arr.length && arr[i] <= a) i++;
+            } else {
+                while (j > 0 && arr[j] <= b) j--;
+            }
+        } while (i != arr.length && j != 0 && i < j);
+        return res;
+    }
+
+/*    public int maxArea(int[] arr) {
+        int res = 0;
+        for (int target : arr) {
+            int a = 0;
+            int b = arr.length - 1;
+            while (arr[a] < target) a++;
+            while (arr[b] < target) b--;
+            if (a < b)
+                res = Math.max(res, target * (b - a));
+        }
+        return res;
+    }*/
+
+    // start with maxArea(arr, 0)
+    public int maxArea(int[] arr, int start) {
+        int target;
+        if(arr.length - 1 >= start)
+            target = arr[start];
+        else
+            return 0;
+        int res = 0;
+        for (int i = arr.length - 1; i > 0; i--)
+            res = Math.max(res, Math.min(arr[i], target) * (i - start));
+        return Math.max(res, maxArea(arr, start + 1));
+    }
+
+    public boolean isMatch(String s, String p) {
+        return s.equals(p);
+    }
+
+    public boolean isPalindrome(int x) {
+        if (x >= 0) {
+            int cur = 0;
+            int num = x;
+            while (num != 0){
+                cur = cur * 10 + num % 10;
+                num /= 10;
+            }
+            return cur == x;
+        } else
+            return false;
     }
 
     public int check2(String str) {
