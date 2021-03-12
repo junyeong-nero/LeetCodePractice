@@ -5,6 +5,52 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    public String intToRoman(int num) {
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] romanSymbols = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        StringBuilder result = new StringBuilder();
+
+        for (int i = 0; i < values.length; i++) {
+            while (num >= values[i]) {
+                num = num - values[i];
+                result.append(romanSymbols[i]);
+            }
+        }
+        return result.toString();
+    }
+
+/*
+    4ms
+    public String intToRoman(int num) {
+        StringBuilder builder = new StringBuilder();
+        int count = 0;
+        while (num != 0) {
+            int target = num % 10;
+            if (count == 3) {
+                builder.append("M".repeat(target));
+            } else {
+                char[] char_i = {'I', 'X', 'C', 'M'};
+                char[] char_v = {'V', 'L', 'D'};
+                if (target == 9) {
+                    builder.append(char_i[count + 1]);
+                    builder.append(char_i[count]);
+                } else if (target == 4) {
+                    builder.append(char_v[count]);
+                    builder.append(char_i[count]);
+                } else if (target >= 5) {
+                    builder.append(String.valueOf(char_i[count]).repeat(target - 5));
+                    builder.append(char_v[count]);
+                } else {
+                    builder.append(String.valueOf(char_i[count]).repeat(target));
+                }
+            }
+            count++;
+            num /= 10;
+        }
+        return builder.reverse().toString();
+    }
+*/
+
     public int maxArea(int[] arr) {
         int a, b, res = 0;
         int i = 0, j = arr.length - 1;
