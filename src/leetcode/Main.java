@@ -4,17 +4,15 @@ import java.util.Arrays;
 
 public class Main {
 
-    public static void test(int input, String result) {
+    public static void solve(int[] arr, int target) {
         Solution sol = new Solution();
-        String s = sol.intToRoman(input);
-        System.out.println(s + " : " + result);
+        System.out.println(sol.fourSum(arr, target));
     }
 
     public static void main(String[] args) {
-        test(3, "III");
-        test(4, "IV");
-        test(58, "LVIII");
-        test(1994, "MCMXCIV");
-        test(3999, "MMMCMXCIX");
+        solve(new int[]{1, 0, -1, 0, -2, 2}, 0);
+        solve(new int[]{}, 0);
+        solve(new int[]{-2, -1, -1, 1, 1, 2, 2}, 0);
+        solve(new int[]{-1,-5,-5,-3,2,5,0,4}, -7);
     }
 }

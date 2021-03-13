@@ -5,6 +5,49 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    public List<List<Integer>> fourSum(int[] arr, int target) {
+        List<List<Integer>> list = new ArrayList<>();
+        Arrays.sort(arr);
+        for (int i = 0; i < arr.length - 3; i++) {
+            for (int j = i + 1; j < arr.length - 2; j++) {
+                int sec = target - (arr[i] + arr[j]);
+                int x = j + 1, y = arr.length - 1;
+                while (x < y) {
+                    if(arr[x] + arr[y] == sec) {
+                        list.add(Arrays.asList(arr[i], arr[j], arr[x], arr[y]));
+                        x++;
+                        y--;
+                        while(x + 1 < arr.length && arr[x] == arr[x - 1]) x++;
+                        while(y - 1 > 0 && arr[y] == arr[y + 1]) y--;
+                    } else if (arr[x] + arr[y] > sec) {
+                        y--;
+                    } else {
+                        x++;
+                    }
+                }
+                while(j + 1 < arr.length && arr[j] == arr[j + 1]) j++;
+            }
+            while(i + 1 < arr.length && arr[i] == arr[i + 1]) i++;
+        }
+        return list;
+    }
+
+    public int romanToInt(String s) {
+        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
+        String[] romanSymbols = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int l = s.length();
+        if(l == 0)
+            return 0;
+        for (int i = 0; i < values.length; i++) {
+            if (s.substring(0, 1).equals(romanSymbols[i])) {
+                return values[i] + romanToInt(s.substring(1));
+            } else if (l >= 2 && s.substring(0, 2).equals(romanSymbols[i])) {
+                return values[i] + romanToInt(s.substring(2));
+            }
+        }
+        return 0;
+    }
+
     public String intToRoman(int num) {
         int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
         String[] romanSymbols = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
