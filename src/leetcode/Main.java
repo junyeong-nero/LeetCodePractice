@@ -4,15 +4,14 @@ import java.util.Arrays;
 
 public class Main {
 
-    public static void solve(int[] arr, int target) {
-        Solution sol = new Solution();
-        System.out.println(sol.fourSum(arr, target));
-    }
-
     public static void main(String[] args) {
-        solve(new int[]{1, 0, -1, 0, -2, 2}, 0);
-        solve(new int[]{}, 0);
-        solve(new int[]{-2, -1, -1, 1, 1, 2, 2}, 0);
-        solve(new int[]{-1,-5,-5,-3,2,5,0,4}, -7);
+        Solution.ListNode l = new Solution.ListNode(1, new Solution.ListNode(2, new Solution.ListNode(3, new Solution.ListNode(4, new Solution.ListNode(5)))));
+//        Solution.ListNode l = new Solution.ListNode(1, new Solution.ListNode(2, new Solution.ListNode(3)));
+        Solution sol = new Solution();
+        Solution.ListNode res = sol.reverseKGroup(l, 3);
+        while (res != null) {
+            System.out.println(res.val);
+            res = res.next;
+        }
     }
 }

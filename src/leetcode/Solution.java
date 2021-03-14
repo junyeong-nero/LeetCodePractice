@@ -5,6 +5,41 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    public static class ListNode {
+        int val;
+        ListNode next;
+        ListNode() {}
+        ListNode(int val) { this.val = val; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    }
+
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode d = head, res = new ListNode(), dummy = res;
+        ArrayList<Integer> arr = new ArrayList<>();
+        int count = 0;
+        while (true) {
+            if (count < k) {
+                if(d == null)
+                    break;
+                arr.add(d.val);
+                d = d.next;
+                count++;
+            } else {
+                for (int j = arr.size() - 1; j >= 0; j--) {
+                    dummy.next = new ListNode(arr.get(j));
+                    dummy = dummy.next;
+                }
+                arr.clear();
+                count = 0;
+            }
+        }
+        for (int i = 0; i < arr.size(); i++) {
+            dummy.next = new ListNode(arr.get(i));
+            dummy = dummy.next;
+        }
+        return res.next;
+    }
+
     public List<List<Integer>> fourSum(int[] arr, int target) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(arr);
@@ -339,14 +374,6 @@ public class Solution {
             map.put(chars[j], j);
         }
         return res;
-    }
-
-    public static class ListNode {
-        int val;
-        ListNode next;
-        ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
