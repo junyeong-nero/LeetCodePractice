@@ -13,18 +13,97 @@ public class Solution {
         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 
-    public List<String> letterCombinations(String digits) {
-        List<String> res = Collections.emptyList();
-        if(digits.length() == 0)
+    public String longestCommonPrefix(String[] arr) {
+        String res = "";
+        if(arr.length == 0)
             return res;
-        char[] sp = digits.toCharArray();
-        for (char s : sp) {
-            res = _letterCombination(res, s);
+
+        int i = 0;
+        char[] temp = arr[0].toCharArray();
+        if (_longestCommonPrefix(arr, i)) {
+            StringBuilder builder = new StringBuilder();
+            while (_longestCommonPrefix(arr, i)) {
+                builder.append(temp[i]);
+                i++;
+            }
+            res = builder.toString();
         }
         return res;
     }
 
-    public List<String> _letterCombination(List<String> arr, char target) {
+    public boolean _longestCommonPrefix(String[] arr, int i) {
+        boolean b = true;
+        if(i >= arr[0].length())
+            return false;
+        char target = arr[0].charAt(i);
+        for (String s : arr) {
+            if (i >= s.length() || s.charAt(i) != target) {
+                b = false;
+                break;
+            }
+        }
+        return b;
+    }
+
+//    public String longestCommonPrefix(String[] arr) {
+//        String res = "";
+//        if(arr.length == 0)
+//            return res;
+//
+//        int i = 0;
+//        String target = arr[0];
+//        while (i < target.length()) {
+//            int k = 1;
+//            String sub = target.substring(i, i + k);
+//            while (_longestCommonPrefix(arr, sub)) {
+//                if(sub.length() > res.length())
+//                    res = sub;
+//                if(i + k == target.length())
+//                    break;
+//                sub = target.substring(i, i + (++k));
+//            }
+//            i += k;
+//        }
+//        return res;
+//    }
+//
+//    public boolean _longestCommonPrefix(String[] arr, String target) {
+//        boolean b = true;
+//        for (String s : arr) {
+//            if (!s.contains(target)) {
+//                b = false;
+//                break;
+//            }
+//        }
+//        return b;
+//    }
+
+    public int[] nextPermutation(int[] arr) {
+        int temp = arr.length - 1;
+        int j = arr.length - 1;
+        while (j >= 0 && arr[j] >= arr[temp]) {
+            temp = j;
+            j--;
+        }
+
+        if (j == -1) {
+            Arrays.sort(arr);
+        } else {
+            int min = temp;
+            for (int i = arr.length - 1; i > j; i--) {
+                if (arr[j] < arr[i] && arr[i] < arr[min]) {
+                    min = i;
+                }
+            }
+            int n = arr[min];
+            arr[min] = arr[j];
+            arr[j] = n;
+            Arrays.sort(arr, j + 1, arr.length);
+        }
+        return arr;
+    }
+
+    public List<String> letterCombinations(String digits) {
         Map<Character, List<String>> map = new HashMap<>();
         map.put('2', Arrays.asList("a", "b", "c"));
         map.put('3', Arrays.asList("d", "e", "f"));
@@ -34,15 +113,19 @@ public class Solution {
         map.put('7', Arrays.asList("p", "q", "r", "s"));
         map.put('8', Arrays.asList("t", "u", "v"));
         map.put('9', Arrays.asList("w", "x", "y", "z"));
-
-        if(arr.size() == 0)
-            return map.get(target);
-
-        List<String> temp = map.get(target);
         ArrayList<String> res = new ArrayList<>();
-        for (String s : temp) {
-            for (String t : arr) {
-                res.add(t + s);
+        if(digits.length() == 0)
+            return res;
+
+        char[] sp = digits.toCharArray();
+        for (char c : sp) {
+            List<String> temp = map.get(c);
+            for (String s : temp) {
+                ArrayList<String> arr = new ArrayList<>();
+                for (String t : res) {
+                    arr.add(t + s);
+                }
+                res = (ArrayList<String>) arr.clone();
             }
         }
         return res;
