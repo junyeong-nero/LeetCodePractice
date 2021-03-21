@@ -13,6 +13,41 @@ public class Solution {
         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 
+    public List<String> letterCombinations(String digits) {
+        List<String> res = Collections.emptyList();
+        if(digits.length() == 0)
+            return res;
+        char[] sp = digits.toCharArray();
+        for (char s : sp) {
+            res = _letterCombination(res, s);
+        }
+        return res;
+    }
+
+    public List<String> _letterCombination(List<String> arr, char target) {
+        Map<Character, List<String>> map = new HashMap<>();
+        map.put('2', Arrays.asList("a", "b", "c"));
+        map.put('3', Arrays.asList("d", "e", "f"));
+        map.put('4', Arrays.asList("g", "h", "i"));
+        map.put('5', Arrays.asList("j", "k", "l"));
+        map.put('6', Arrays.asList("m", "n", "o"));
+        map.put('7', Arrays.asList("p", "q", "r", "s"));
+        map.put('8', Arrays.asList("t", "u", "v"));
+        map.put('9', Arrays.asList("w", "x", "y", "z"));
+
+        if(arr.size() == 0)
+            return map.get(target);
+
+        List<String> temp = map.get(target);
+        ArrayList<String> res = new ArrayList<>();
+        for (String s : temp) {
+            for (String t : arr) {
+                res.add(t + s);
+            }
+        }
+        return res;
+    }
+
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode d = head, res = new ListNode(), dummy = res;
         ArrayList<Integer> arr = new ArrayList<>();
