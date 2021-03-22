@@ -13,6 +13,32 @@ public class Solution {
         ListNode(int val, ListNode next) { this.val = val; this.next = next; }
     }
 
+    public int longestValidParentheses(String s) {
+        int res = 0;
+        char[] arr = s.toCharArray();
+        for (int i = 0; i < arr.length; i++) {
+            int left = 0, right = 0;
+            int j = i;
+            while (j < arr.length) {
+                char c = arr[j];
+                if(c == '(')
+                    left++;
+                if(c == ')')
+                    right++;
+                if(right == left)
+                    res = Math.max(res, right * 2);
+                if(right > left)
+                    break;
+                j++;
+            }
+            if (!(j == arr.length && right != left)) {
+                i = j;
+                res = Math.max(res, Math.min(right, left) * 2);
+            }
+        }
+        return res;
+    }
+
     public String longestCommonPrefix(String[] arr) {
         String res = "";
         if(arr.length == 0)
