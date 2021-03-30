@@ -1,9 +1,35 @@
 package leetcode;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.function.Consumer;
 
 public class Solution {
+
+    public double Postfix(String str) {
+        char[] arr = str.toCharArray();
+        ArrayList<Double> values = new ArrayList<>();
+        for (char c : arr) {
+            if (c >= '0' && c <= '9')
+                values.add((double) (c - '0'));
+            else {
+                double input = 0;
+                int size = values.size();
+                if (c == '+')
+                    input = values.get(size - 2) + values.get(size - 1);
+                if (c == '*')
+                    input = values.get(size - 2) * values.get(size - 1);
+                if (c == '/')
+                    input = values.get(size - 2) / values.get(size - 1);
+                if (c == '-')
+                    input = values.get(size - 2) - values.get(size - 1);
+
+                values.set(size - 2, input);
+                values.remove(size - 1);
+            }
+        }
+        return values.get(0);
+    }
 
     public static class ListNode {
         int val;
