@@ -6,6 +6,66 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    public boolean checkLine(char[] line) {
+        Set<Character> set = new HashSet<>();
+        for(char c : line)
+            if (!set.contains(c)) {
+                if (c != '.') {
+                    set.add(c);
+                }
+            } else {
+                return false;
+            }
+        return true;
+    }
+
+    public boolean checkSection(char[][] board, int i, int j) {
+        Set<Character> set = new HashSet<>();
+        for (int a = 3 * i; a < 3 * (i + 1); a++) {
+            for (int b = 3 * j; b < 3 * (j + 1); b++) {
+                char c = board[a][b];
+                if (!set.contains(c)) {
+                    if (c != '.') {
+                        set.add(c);
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
+    public boolean isValidSudoku(char[][] board) {
+
+        // check horizontal line
+        for (char[] chars : board) {
+            if (!checkLine(chars))
+                return false;
+        }
+
+        // check vertical line
+        for (int j = 0; j < board[0].length; j++) {
+            char[] chars = new char[9];
+            for (int i = 0; i < board.length; i++) {
+                chars[i] = board[i][j];
+            }
+            if(!checkLine(chars))
+                return false;
+        }
+
+        // check sections
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if(!checkSection(board, i, j))
+                    return false;
+            }
+        }
+
+        return true;
+    }
+
     public double Postfix(String str) {
         char[] arr = str.toCharArray();
         ArrayList<Double> values = new ArrayList<>();
