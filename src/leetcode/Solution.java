@@ -6,6 +6,17 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    double myPow(double x, int n) {
+        double res = 1;
+        for (int i = 0; i < Math.abs(n); i++)
+            res *= x;
+
+        if(n >= 0)
+            return res;
+        else
+            return 1 / res;
+    }
+
     public boolean checkLine(char[] line) {
         Set<Character> set = new HashSet<>();
         for(char c : line)
