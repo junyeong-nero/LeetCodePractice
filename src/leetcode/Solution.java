@@ -1,10 +1,70 @@
 package leetcode;
 
 import java.lang.reflect.Array;
+import java.net.Inet4Address;
 import java.util.*;
 import java.util.function.Consumer;
 
 public class Solution {
+
+    public List<Integer> transform(int[] arr) {
+        ArrayList<Integer> temp = new ArrayList<>();
+        for (int v : arr)
+            temp.add(v);
+        return temp;
+    }
+
+    List<List<Integer>> permuteResult;
+    public List<List<Integer>> permute(int[] arr) {
+        permuteResult = new ArrayList<>();
+        List<Integer> temp = transform(arr);
+        re_permute(temp, Collections.emptyList());
+        return permuteResult;
+    }
+
+    public void re_permute(List<Integer> list, List<Integer> res) {
+        if(list.size() == 0)
+            permuteResult.add(res);
+        for (int i = 0; i < list.size(); i++) {
+            List<Integer> res_ = new ArrayList<>(res);
+            List<Integer> list_ = new ArrayList<>(list);
+            res_.add(list_.get(i));
+            list_.remove(i);
+            re_permute(list_, res_);
+        }
+    }
+
+//    public List<Integer> transform(int[] arr) {
+//        ArrayList<Integer> temp = new ArrayList<>();
+//        for (int v : arr)
+//            temp.add(v);
+//        return temp;
+//    }
+//
+//    public ArrayList<List<Integer>> swap(ArrayList<List<Integer>> list) {
+//        ArrayList<List<Integer>> res = new ArrayList<>();
+//        for (List<Integer> temp : list) {
+//            res.add(temp);
+//            for (int i = 0; i < temp.size() - 1; i++) {
+//                for (int j = i + 1; j < temp.size(); j++) {
+//                    List<Integer> c = new ArrayList<>(List.copyOf(temp));
+//                    Collections.swap(c, i, j);
+//                    res.add(c);
+//                }
+//            }
+//        }
+//        return res;
+//    }
+//
+//    public List<List<Integer>> permute(int[] arr) {
+//        ArrayList<List<Integer>> res = new ArrayList<>();
+//        res.add(transform(arr));
+//
+//        for (int i = 0; i < arr.length; i++) {
+//            res = swap(res);
+//        }
+//        return res;
+//    }
 
     public String countAndSay(int n) {
         String temp = "1";
