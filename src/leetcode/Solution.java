@@ -6,6 +6,66 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    public String countAndSay(int n) {
+        String temp = "1";
+        for (int i = 0; i < n - 1; i++) {
+            temp = lookAndSay(temp);
+        }
+        return temp;
+    }
+
+    public String lookAndSay(String str) {
+        if(str.length() == 0)
+            return str;
+
+        char[] arr = str.toCharArray();
+        int count = 0;
+        char target = arr[0];
+        StringBuilder builder = new StringBuilder();
+        for (char c : arr) {
+            if (target != c) {
+                builder.append(count);
+                builder.append(target);
+                target = c;
+                count = 1;
+            } else {
+                count ++;
+            }
+        }
+        builder.append(count);
+        builder.append(target);
+
+        return builder.toString();
+    }
+
+    public String lookAndSay(int n) {
+        int count = 1;
+        int target = n % 10;
+        n /= 10;
+        StringBuilder builder = new StringBuilder();
+        while(true) {
+            int temp = n % 10;
+
+            if (n == 0) {
+                builder.append(target);
+                builder.append(count);
+                break;
+            }
+            n /= 10;
+
+            if (temp != target) {
+                builder.append(target);
+                builder.append(count);
+                target = temp;
+                count = 1;
+            } else {
+                count ++;
+            }
+
+        }
+        return builder.reverse().toString();
+    }
+
     double myPow(double x, int n) {
         double res = 1;
         for (int i = 0; i < Math.abs(n); i++)
