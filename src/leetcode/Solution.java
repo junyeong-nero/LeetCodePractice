@@ -7,6 +7,55 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    public int threeSumClosest(int[] arr, int target) {
+        Arrays.sort(arr);
+        int res = arr[0] + arr[1] + arr[2];
+        for (int i = 0; i < arr.length - 2; i++) {
+            int j = i + 1;
+            int k = arr.length - 1;
+            while (j < k) {
+                int sum = arr[i] + arr[j] + arr[k];
+                if (sum > target) {
+                    k--;
+                    if (Math.abs(target - sum) < Math.abs(target - res)) {
+                        res = sum;
+                    }
+                } else if (sum < target) {
+                    j++;
+                    if (Math.abs(target - sum) < Math.abs(target - res)) {
+                        res = sum;
+                    }
+                } else {
+                    return sum;
+                }
+            }
+        }
+        return res;
+    }
+
+//    public int threeSumClosest(int[] arr, int target) {
+//        if(arr.length < 3)
+//            return 0;
+//        int res = arr[0] + arr[1] + arr[2];
+//        for (int i = 0; i < arr.length - 2; i++) {
+//            for (int j = i + 1; j < arr.length - 1; j++) {
+//                for (int k = j + 1; k < arr.length; k++) {
+//                    int sum = arr[i] + arr[j] + arr[k];
+//                    if (Math.abs(res - target) > Math.abs(sum - target)) {
+//                        res = target;
+//                    }
+//                }
+//            }
+//        }
+//        return target;
+//    }
+
+//    public int[] searchRange(int[] arr, int target) {
+//        Collections.binarySearch(Collections.singletonList(arr), target);
+//    }
+//
+//    public int binarySearch(int [])
+
     public List<Integer> transform(int[] arr) {
         ArrayList<Integer> temp = new ArrayList<>();
         for (int v : arr)
