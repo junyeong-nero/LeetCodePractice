@@ -1,11 +1,75 @@
 package leetcode;
 
-import java.lang.reflect.Array;
-import java.net.Inet4Address;
 import java.util.*;
 import java.util.function.Consumer;
 
 public class Solution {
+
+    public String multiply(String str1, String str2) {
+
+        if (str1.equals("0") || str2.equals("0"))
+            return "0";
+        if(str1.equals("1"))
+            return str2;
+        if(str2.equals("1"))
+            return str1;
+
+        StringBuilder builder = new StringBuilder();
+        int[] res = new int[str1.length() + str2.length()];
+        char[] arr = str1.toCharArray();
+        char[] arr2 = str2.toCharArray();
+        if (str1.length() < str2.length()) {
+            arr = str2.toCharArray();
+            arr2 = str1.toCharArray();
+        }
+
+        for (int i = 0; i < arr2.length; i++) {
+            char under = arr2[i];
+            int count = i;
+            for (char upper : arr) {
+                int temp = (upper - '0') * (under - '0');
+                res[count + 1] += temp;
+                res[count] += res[count + 1] / 10;
+                res[count + 1] %= 10;
+                count++;
+            }
+        }
+        for (int j = res.length - 1; j > 0; j--) {
+            int temp = res[j];
+            res[j - 1] += temp / 10;
+            res[j] %= 10;
+        }
+        System.out.println(Arrays.toString(res));
+        boolean first = true;
+        for (int i : res) {
+            if (i != 0)
+                first = false;
+            if (i == 0 && first)
+                continue;
+            builder.append(i);
+        }
+        return builder.toString();
+    }
+
+    public void rotate(int[][] matrix) {
+        int size = matrix.length;
+        for (int i = 0; i < (size + 1) / 2; i++) {
+            for (int j = i; j < size - i - 1; j++) {
+                int x = i;
+                int y = j;
+                int temp = matrix[x][y];
+                for (int k = 0; k < 4; k++) {
+                    int sx = y;
+                    int sy = size - 1 - x;
+                    int a = matrix[sx][sy];
+                    matrix[sx][sy] = temp;
+                    temp = a;
+                    x = sx;
+                    y = sy;
+                }
+            }
+        }
+    }
 
     public int threeSumClosest(int[] arr, int target) {
         Arrays.sort(arr);

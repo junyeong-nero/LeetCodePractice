@@ -6,8 +6,10 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        int[] arr = {-1, 0, 1, 1, 55};
-        System.out.println(sol.threeSumClosest(arr, 3));
+        String s1 = "123";
+        String s2 = "456";
+        System.out.println(sol.multiply(s1, s2));
+        System.out.println(123 * 456);
     }
 
 }
