@@ -6,10 +6,12 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        String s1 = "123";
-        String s2 = "456";
-        System.out.println(sol.multiply(s1, s2));
-        System.out.println(123 * 456);
+        int[] arr = {0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1};
+        int[] arr2 = {4, 2, 0, 3, 2, 5};
+        int[] arr3 = {4, 2, 3};
+        System.out.println("total : " + sol.trap(arr));
+        System.out.println("total : " + sol.trap(arr2));
+        System.out.println("total : " + sol.trap(arr3));
     }
 
 }

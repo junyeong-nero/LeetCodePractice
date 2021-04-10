@@ -5,8 +5,34 @@ import java.util.function.Consumer;
 
 public class Solution {
 
-    public String multiply(String str1, String str2) {
+    public int trap(int[] height) {
+        int res = 0;
+        for (int i = 0; i < height.length - 1; i++) {
+            int current = height[i];
+            while (current != 0) {
+                int j = i + 1;
+                int temp = 0;
+                while(j < height.length) {
+                    if (height[j] < current) {
+                        temp += current - height[j];
+                        j++;
+                    } else {
+                        i = j - 1;
+                        res += temp;
+                        break;
+                    }
+                }
+                if (j == height.length) {
+                    current --;
+                } else {
+                    break;
+                }
+            }
+        }
+        return res;
+    }
 
+    public String multiply(String str1, String str2) {
         if (str1.equals("0") || str2.equals("0"))
             return "0";
         if(str1.equals("1"))
