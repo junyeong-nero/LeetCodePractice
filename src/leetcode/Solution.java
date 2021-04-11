@@ -1,7 +1,58 @@
 package leetcode;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Solution {
 
+    public ArrayList<Integer> transform(int[] arr) {
+        ArrayList<Integer> temp = new ArrayList<>();
+        Arrays.sort(arr);
+        for (int v: arr)
+            temp.add(v);
+        return temp;
+    }
+
+    List<List<Integer>> _resPermuteUnique;
+    public List<List<Integer>> permuteUnique(int[] arr) {
+        _resPermuteUnique = new ArrayList<>();
+        recursion_permuteUnique(transform(arr), new ArrayList<>());
+        return _resPermuteUnique;
+    }
+
+    public void recursion_permuteUnique(ArrayList<Integer> list, ArrayList<Integer> res) {
+        if (list.size() == 0)
+            _resPermuteUnique.add(res);
+        for (int i = 0; i < list.size(); i++) {
+            ArrayList<Integer> res_ = new ArrayList<>(res);
+            ArrayList<Integer> list_ = new ArrayList<>(list);
+            res_.add(list_.get(i));
+            list_.remove(i);
+            recursion_permuteUnique(list_, res_);
+            while(i + 1 < list.size() && list.get(i).equals(list.get(i + 1))) i++;
+        }
+    }
+
+    public int strStr(String haystack, String needle) {
+        if(needle.length() == 0)
+            return 0;
+        if(haystack.length() == 0)
+            return -1;
+
+        for (int i = 0; i <= haystack.length() - needle.length(); i++) {
+            int k = i;
+            while (haystack.charAt(k) == needle.charAt(k - i)) {
+                k++;
+                if(k - i == needle.length())
+                    return i;
+            }
+        }
+        return -1;
+    }
+
+/*
     public int search(int[] arr, int target) {
         return searchInRotated(arr, target, 0, arr.length - 1);
     }
@@ -22,6 +73,7 @@ public class Solution {
         else
             return result2;
     }
+*/
 
 //    public int trap(int[] height) {
 //        int res = 0;
