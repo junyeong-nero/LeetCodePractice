@@ -5,6 +5,27 @@ import java.util.function.Consumer;
 
 public class Solution {
 
+    public int search(int[] arr, int target) {
+        return searchInRotated(arr, target, 0, arr.length - 1);
+    }
+
+    public int searchInRotated(int[] arr, int target, int start, int end) {
+        if (arr[start] == target)
+            return start;
+        if (arr[end] == target)
+            return end;
+        if (start == end)
+            return -1;
+
+        int mid = (start + end) / 2;
+        int result = searchInRotated(arr, target, start, mid);
+        int result2 = searchInRotated(arr, target, mid + 1, end);
+        if (result != -1)
+            return result;
+        else
+            return result2;
+    }
+
     public int trap(int[] height) {
         int res = 0;
         for (int i = 0; i < height.length - 1; i++) {
@@ -12,7 +33,7 @@ public class Solution {
             while (current != 0) {
                 int j = i + 1;
                 int temp = 0;
-                while(j < height.length) {
+                while (j < height.length) {
                     if (height[j] < current) {
                         temp += current - height[j];
                         j++;
@@ -23,7 +44,7 @@ public class Solution {
                     }
                 }
                 if (j == height.length) {
-                    current --;
+                    current--;
                 } else {
                     break;
                 }
@@ -35,9 +56,9 @@ public class Solution {
     public String multiply(String str1, String str2) {
         if (str1.equals("0") || str2.equals("0"))
             return "0";
-        if(str1.equals("1"))
+        if (str1.equals("1"))
             return str2;
-        if(str2.equals("1"))
+        if (str2.equals("1"))
             return str1;
 
         StringBuilder builder = new StringBuilder();
@@ -52,7 +73,7 @@ public class Solution {
         for (int i = 0; i < arr2.length; i++) {
             char under = arr2[i];
             int count = i;
-            for (char upper : arr) {
+            for (char upper: arr) {
                 int temp = (upper - '0') * (under - '0');
                 res[count + 1] += temp;
                 res[count] += res[count + 1] / 10;
@@ -67,7 +88,7 @@ public class Solution {
         }
         System.out.println(Arrays.toString(res));
         boolean first = true;
-        for (int i : res) {
+        for (int i: res) {
             if (i != 0)
                 first = false;
             if (i == 0 && first)
@@ -123,87 +144,87 @@ public class Solution {
         return res;
     }
 
-//    public int threeSumClosest(int[] arr, int target) {
-//        if(arr.length < 3)
-//            return 0;
-//        int res = arr[0] + arr[1] + arr[2];
-//        for (int i = 0; i < arr.length - 2; i++) {
-//            for (int j = i + 1; j < arr.length - 1; j++) {
-//                for (int k = j + 1; k < arr.length; k++) {
-//                    int sum = arr[i] + arr[j] + arr[k];
-//                    if (Math.abs(res - target) > Math.abs(sum - target)) {
-//                        res = target;
-//                    }
-//                }
-//            }
-//        }
-//        return target;
-//    }
+    //    public int threeSumClosest(int[] arr, int target) {
+    //        if(arr.length < 3)
+    //            return 0;
+    //        int res = arr[0] + arr[1] + arr[2];
+    //        for (int i = 0; i < arr.length - 2; i++) {
+    //            for (int j = i + 1; j < arr.length - 1; j++) {
+    //                for (int k = j + 1; k < arr.length; k++) {
+    //                    int sum = arr[i] + arr[j] + arr[k];
+    //                    if (Math.abs(res - target) > Math.abs(sum - target)) {
+    //                        res = target;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //        return target;
+    //    }
 
-//    public int[] searchRange(int[] arr, int target) {
-//        Collections.binarySearch(Collections.singletonList(arr), target);
-//    }
-//
-//    public int binarySearch(int [])
+    //    public int[] searchRange(int[] arr, int target) {
+    //        Collections.binarySearch(Collections.singletonList(arr), target);
+    //    }
+    //
+    //    public int binarySearch(int [])
 
-    public List<Integer> transform(int[] arr) {
-        ArrayList<Integer> temp = new ArrayList<>();
-        for (int v : arr)
+    public List < Integer > transform(int[] arr) {
+        ArrayList < Integer > temp = new ArrayList < > ();
+        for (int v: arr)
             temp.add(v);
         return temp;
     }
 
-    List<List<Integer>> permuteResult;
-    public List<List<Integer>> permute(int[] arr) {
-        permuteResult = new ArrayList<>();
-        List<Integer> temp = transform(arr);
+    List < List < Integer >> permuteResult;
+    public List < List < Integer >> permute(int[] arr) {
+        permuteResult = new ArrayList < > ();
+        List < Integer > temp = transform(arr);
         re_permute(temp, Collections.emptyList());
         return permuteResult;
     }
 
-    public void re_permute(List<Integer> list, List<Integer> res) {
-        if(list.size() == 0)
+    public void re_permute(List < Integer > list, List < Integer > res) {
+        if (list.size() == 0)
             permuteResult.add(res);
         for (int i = 0; i < list.size(); i++) {
-            List<Integer> res_ = new ArrayList<>(res);
-            List<Integer> list_ = new ArrayList<>(list);
+            List < Integer > res_ = new ArrayList < > (res);
+            List < Integer > list_ = new ArrayList < > (list);
             res_.add(list_.get(i));
             list_.remove(i);
             re_permute(list_, res_);
         }
     }
 
-//    public List<Integer> transform(int[] arr) {
-//        ArrayList<Integer> temp = new ArrayList<>();
-//        for (int v : arr)
-//            temp.add(v);
-//        return temp;
-//    }
-//
-//    public ArrayList<List<Integer>> swap(ArrayList<List<Integer>> list) {
-//        ArrayList<List<Integer>> res = new ArrayList<>();
-//        for (List<Integer> temp : list) {
-//            res.add(temp);
-//            for (int i = 0; i < temp.size() - 1; i++) {
-//                for (int j = i + 1; j < temp.size(); j++) {
-//                    List<Integer> c = new ArrayList<>(List.copyOf(temp));
-//                    Collections.swap(c, i, j);
-//                    res.add(c);
-//                }
-//            }
-//        }
-//        return res;
-//    }
-//
-//    public List<List<Integer>> permute(int[] arr) {
-//        ArrayList<List<Integer>> res = new ArrayList<>();
-//        res.add(transform(arr));
-//
-//        for (int i = 0; i < arr.length; i++) {
-//            res = swap(res);
-//        }
-//        return res;
-//    }
+    //    public List<Integer> transform(int[] arr) {
+    //        ArrayList<Integer> temp = new ArrayList<>();
+    //        for (int v : arr)
+    //            temp.add(v);
+    //        return temp;
+    //    }
+    //
+    //    public ArrayList<List<Integer>> swap(ArrayList<List<Integer>> list) {
+    //        ArrayList<List<Integer>> res = new ArrayList<>();
+    //        for (List<Integer> temp : list) {
+    //            res.add(temp);
+    //            for (int i = 0; i < temp.size() - 1; i++) {
+    //                for (int j = i + 1; j < temp.size(); j++) {
+    //                    List<Integer> c = new ArrayList<>(List.copyOf(temp));
+    //                    Collections.swap(c, i, j);
+    //                    res.add(c);
+    //                }
+    //            }
+    //        }
+    //        return res;
+    //    }
+    //
+    //    public List<List<Integer>> permute(int[] arr) {
+    //        ArrayList<List<Integer>> res = new ArrayList<>();
+    //        res.add(transform(arr));
+    //
+    //        for (int i = 0; i < arr.length; i++) {
+    //            res = swap(res);
+    //        }
+    //        return res;
+    //    }
 
     public String countAndSay(int n) {
         String temp = "1";
@@ -214,21 +235,21 @@ public class Solution {
     }
 
     public String lookAndSay(String str) {
-        if(str.length() == 0)
+        if (str.length() == 0)
             return str;
 
         char[] arr = str.toCharArray();
         int count = 0;
         char target = arr[0];
         StringBuilder builder = new StringBuilder();
-        for (char c : arr) {
+        for (char c: arr) {
             if (target != c) {
                 builder.append(count);
                 builder.append(target);
                 target = c;
                 count = 1;
             } else {
-                count ++;
+                count++;
             }
         }
         builder.append(count);
@@ -242,7 +263,7 @@ public class Solution {
         int target = n % 10;
         n /= 10;
         StringBuilder builder = new StringBuilder();
-        while(true) {
+        while (true) {
             int temp = n % 10;
 
             if (n == 0) {
@@ -258,7 +279,7 @@ public class Solution {
                 target = temp;
                 count = 1;
             } else {
-                count ++;
+                count++;
             }
 
         }
@@ -270,15 +291,15 @@ public class Solution {
         for (int i = 0; i < Math.abs(n); i++)
             res *= x;
 
-        if(n >= 0)
+        if (n >= 0)
             return res;
         else
             return 1 / res;
     }
 
     public boolean checkLine(char[] line) {
-        Set<Character> set = new HashSet<>();
-        for(char c : line)
+        Set < Character > set = new HashSet < > ();
+        for (char c: line)
             if (!set.contains(c)) {
                 if (c != '.') {
                     set.add(c);
@@ -290,7 +311,7 @@ public class Solution {
     }
 
     public boolean checkSection(char[][] board, int i, int j) {
-        Set<Character> set = new HashSet<>();
+        Set < Character > set = new HashSet < > ();
         for (int a = 3 * i; a < 3 * (i + 1); a++) {
             for (int b = 3 * j; b < 3 * (j + 1); b++) {
                 char c = board[a][b];
@@ -310,7 +331,7 @@ public class Solution {
     public boolean isValidSudoku(char[][] board) {
 
         // check horizontal line
-        for (char[] chars : board) {
+        for (char[] chars: board) {
             if (!checkLine(chars))
                 return false;
         }
@@ -321,14 +342,14 @@ public class Solution {
             for (int i = 0; i < board.length; i++) {
                 chars[i] = board[i][j];
             }
-            if(!checkLine(chars))
+            if (!checkLine(chars))
                 return false;
         }
 
         // check sections
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if(!checkSection(board, i, j))
+                if (!checkSection(board, i, j))
                     return false;
             }
         }
@@ -338,10 +359,10 @@ public class Solution {
 
     public double Postfix(String str) {
         char[] arr = str.toCharArray();
-        ArrayList<Double> values = new ArrayList<>();
-        for (char c : arr) {
+        ArrayList < Double > values = new ArrayList < > ();
+        for (char c: arr) {
             if (c >= '0' && c <= '9')
-                values.add((double) (c - '0'));
+                values.add((double)(c - '0'));
             else {
                 double input = 0;
                 int size = values.size();
@@ -365,8 +386,13 @@ public class Solution {
         int val;
         ListNode next;
         ListNode() {}
-        ListNode(int val) { this.val = val; }
-        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+        ListNode(int val) {
+            this.val = val;
+        }
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
     }
 
     public int longestValidParentheses(String s) {
@@ -377,13 +403,13 @@ public class Solution {
             int j = i;
             while (j < arr.length) {
                 char c = arr[j];
-                if(c == '(')
+                if (c == '(')
                     left++;
-                if(c == ')')
+                if (c == ')')
                     right++;
-                if(right == left)
+                if (right == left)
                     res = Math.max(res, right * 2);
-                if(right > left)
+                if (right > left)
                     break;
                 j++;
             }
@@ -397,7 +423,7 @@ public class Solution {
 
     public String longestCommonPrefix(String[] arr) {
         String res = "";
-        if(arr.length == 0)
+        if (arr.length == 0)
             return res;
 
         int i = 0;
@@ -415,10 +441,10 @@ public class Solution {
 
     public boolean _longestCommonPrefix(String[] arr, int i) {
         boolean b = true;
-        if(i >= arr[0].length())
+        if (i >= arr[0].length())
             return false;
         char target = arr[0].charAt(i);
-        for (String s : arr) {
+        for (String s: arr) {
             if (i >= s.length() || s.charAt(i) != target) {
                 b = false;
                 break;
@@ -427,38 +453,38 @@ public class Solution {
         return b;
     }
 
-//    public String longestCommonPrefix(String[] arr) {
-//        String res = "";
-//        if(arr.length == 0)
-//            return res;
-//
-//        int i = 0;
-//        String target = arr[0];
-//        while (i < target.length()) {
-//            int k = 1;
-//            String sub = target.substring(i, i + k);
-//            while (_longestCommonPrefix(arr, sub)) {
-//                if(sub.length() > res.length())
-//                    res = sub;
-//                if(i + k == target.length())
-//                    break;
-//                sub = target.substring(i, i + (++k));
-//            }
-//            i += k;
-//        }
-//        return res;
-//    }
-//
-//    public boolean _longestCommonPrefix(String[] arr, String target) {
-//        boolean b = true;
-//        for (String s : arr) {
-//            if (!s.contains(target)) {
-//                b = false;
-//                break;
-//            }
-//        }
-//        return b;
-//    }
+    //    public String longestCommonPrefix(String[] arr) {
+    //        String res = "";
+    //        if(arr.length == 0)
+    //            return res;
+    //
+    //        int i = 0;
+    //        String target = arr[0];
+    //        while (i < target.length()) {
+    //            int k = 1;
+    //            String sub = target.substring(i, i + k);
+    //            while (_longestCommonPrefix(arr, sub)) {
+    //                if(sub.length() > res.length())
+    //                    res = sub;
+    //                if(i + k == target.length())
+    //                    break;
+    //                sub = target.substring(i, i + (++k));
+    //            }
+    //            i += k;
+    //        }
+    //        return res;
+    //    }
+    //
+    //    public boolean _longestCommonPrefix(String[] arr, String target) {
+    //        boolean b = true;
+    //        for (String s : arr) {
+    //            if (!s.contains(target)) {
+    //                b = false;
+    //                break;
+    //            }
+    //        }
+    //        return b;
+    //    }
 
     public int[] nextPermutation(int[] arr) {
         int temp = arr.length - 1;
@@ -485,8 +511,8 @@ public class Solution {
         return arr;
     }
 
-    public List<String> letterCombinations(String digits) {
-        Map<Character, List<String>> map = new HashMap<>();
+    public List < String > letterCombinations(String digits) {
+        Map < Character, List < String >> map = new HashMap < > ();
         map.put('2', Arrays.asList("a", "b", "c"));
         map.put('3', Arrays.asList("d", "e", "f"));
         map.put('4', Arrays.asList("g", "h", "i"));
@@ -495,19 +521,19 @@ public class Solution {
         map.put('7', Arrays.asList("p", "q", "r", "s"));
         map.put('8', Arrays.asList("t", "u", "v"));
         map.put('9', Arrays.asList("w", "x", "y", "z"));
-        ArrayList<String> res = new ArrayList<>();
-        if(digits.length() == 0)
+        ArrayList < String > res = new ArrayList < > ();
+        if (digits.length() == 0)
             return res;
 
         char[] sp = digits.toCharArray();
-        for (char c : sp) {
-            List<String> temp = map.get(c);
-            for (String s : temp) {
-                ArrayList<String> arr = new ArrayList<>();
-                for (String t : res) {
+        for (char c: sp) {
+            List < String > temp = map.get(c);
+            for (String s: temp) {
+                ArrayList < String > arr = new ArrayList < > ();
+                for (String t: res) {
                     arr.add(t + s);
                 }
-                res = (ArrayList<String>) arr.clone();
+                res = (ArrayList < String > ) arr.clone();
             }
         }
         return res;
@@ -515,11 +541,11 @@ public class Solution {
 
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode d = head, res = new ListNode(), dummy = res;
-        ArrayList<Integer> arr = new ArrayList<>();
+        ArrayList < Integer > arr = new ArrayList < > ();
         int count = 0;
         while (true) {
             if (count < k) {
-                if(d == null)
+                if (d == null)
                     break;
                 arr.add(d.val);
                 d = d.next;
@@ -540,38 +566,66 @@ public class Solution {
         return res.next;
     }
 
-    public List<List<Integer>> fourSum(int[] arr, int target) {
-        List<List<Integer>> list = new ArrayList<>();
+    public List < List < Integer >> fourSum(int[] arr, int target) {
+        List < List < Integer >> list = new ArrayList < > ();
         Arrays.sort(arr);
         for (int i = 0; i < arr.length - 3; i++) {
             for (int j = i + 1; j < arr.length - 2; j++) {
                 int sec = target - (arr[i] + arr[j]);
                 int x = j + 1, y = arr.length - 1;
                 while (x < y) {
-                    if(arr[x] + arr[y] == sec) {
+                    if (arr[x] + arr[y] == sec) {
                         list.add(Arrays.asList(arr[i], arr[j], arr[x], arr[y]));
                         x++;
                         y--;
-                        while(x + 1 < arr.length && arr[x] == arr[x - 1]) x++;
-                        while(y - 1 > 0 && arr[y] == arr[y + 1]) y--;
+                        while (x + 1 < arr.length && arr[x] == arr[x - 1]) x++;
+                        while (y - 1 > 0 && arr[y] == arr[y + 1]) y--;
                     } else if (arr[x] + arr[y] > sec) {
                         y--;
                     } else {
                         x++;
                     }
                 }
-                while(j + 1 < arr.length && arr[j] == arr[j + 1]) j++;
+                while (j + 1 < arr.length && arr[j] == arr[j + 1]) j++;
             }
-            while(i + 1 < arr.length && arr[i] == arr[i + 1]) i++;
+            while (i + 1 < arr.length && arr[i] == arr[i + 1]) i++;
         }
         return list;
     }
 
     public int romanToInt(String s) {
-        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        String[] romanSymbols = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int[] values = {
+                1000,
+                900,
+                500,
+                400,
+                100,
+                90,
+                50,
+                40,
+                10,
+                9,
+                5,
+                4,
+                1
+        };
+        String[] romanSymbols = {
+                "M",
+                "CM",
+                "D",
+                "CD",
+                "C",
+                "XC",
+                "L",
+                "XL",
+                "X",
+                "IX",
+                "V",
+                "IV",
+                "I"
+        };
         int l = s.length();
-        if(l == 0)
+        if (l == 0)
             return 0;
         for (int i = 0; i < values.length; i++) {
             if (s.substring(0, 1).equals(romanSymbols[i])) {
@@ -584,8 +638,36 @@ public class Solution {
     }
 
     public String intToRoman(int num) {
-        int[] values = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
-        String[] romanSymbols = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+        int[] values = {
+                1000,
+                900,
+                500,
+                400,
+                100,
+                90,
+                50,
+                40,
+                10,
+                9,
+                5,
+                4,
+                1
+        };
+        String[] romanSymbols = {
+                "M",
+                "CM",
+                "D",
+                "CD",
+                "C",
+                "XC",
+                "L",
+                "XL",
+                "X",
+                "IX",
+                "V",
+                "IV",
+                "I"
+        };
         StringBuilder result = new StringBuilder();
 
         for (int i = 0; i < values.length; i++) {
@@ -597,37 +679,37 @@ public class Solution {
         return result.toString();
     }
 
-/*
-    4ms
-    public String intToRoman(int num) {
-        StringBuilder builder = new StringBuilder();
-        int count = 0;
-        while (num != 0) {
-            int target = num % 10;
-            if (count == 3) {
-                builder.append("M".repeat(target));
-            } else {
-                char[] char_i = {'I', 'X', 'C', 'M'};
-                char[] char_v = {'V', 'L', 'D'};
-                if (target == 9) {
-                    builder.append(char_i[count + 1]);
-                    builder.append(char_i[count]);
-                } else if (target == 4) {
-                    builder.append(char_v[count]);
-                    builder.append(char_i[count]);
-                } else if (target >= 5) {
-                    builder.append(String.valueOf(char_i[count]).repeat(target - 5));
-                    builder.append(char_v[count]);
+    /*
+        4ms
+        public String intToRoman(int num) {
+            StringBuilder builder = new StringBuilder();
+            int count = 0;
+            while (num != 0) {
+                int target = num % 10;
+                if (count == 3) {
+                    builder.append("M".repeat(target));
                 } else {
-                    builder.append(String.valueOf(char_i[count]).repeat(target));
+                    char[] char_i = {'I', 'X', 'C', 'M'};
+                    char[] char_v = {'V', 'L', 'D'};
+                    if (target == 9) {
+                        builder.append(char_i[count + 1]);
+                        builder.append(char_i[count]);
+                    } else if (target == 4) {
+                        builder.append(char_v[count]);
+                        builder.append(char_i[count]);
+                    } else if (target >= 5) {
+                        builder.append(String.valueOf(char_i[count]).repeat(target - 5));
+                        builder.append(char_v[count]);
+                    } else {
+                        builder.append(String.valueOf(char_i[count]).repeat(target));
+                    }
                 }
+                count++;
+                num /= 10;
             }
-            count++;
-            num /= 10;
+            return builder.reverse().toString();
         }
-        return builder.reverse().toString();
-    }
-*/
+    */
 
     public int maxArea(int[] arr) {
         int a, b, res = 0;
@@ -646,23 +728,23 @@ public class Solution {
         return res;
     }
 
-/*    public int maxArea(int[] arr) {
-        int res = 0;
-        for (int target : arr) {
-            int a = 0;
-            int b = arr.length - 1;
-            while (arr[a] < target) a++;
-            while (arr[b] < target) b--;
-            if (a < b)
-                res = Math.max(res, target * (b - a));
-        }
-        return res;
-    }*/
+    /*    public int maxArea(int[] arr) {
+            int res = 0;
+            for (int target : arr) {
+                int a = 0;
+                int b = arr.length - 1;
+                while (arr[a] < target) a++;
+                while (arr[b] < target) b--;
+                if (a < b)
+                    res = Math.max(res, target * (b - a));
+            }
+            return res;
+        }*/
 
     // start with maxArea(arr, 0)
     public int maxArea(int[] arr, int start) {
         int target;
-        if(arr.length - 1 >= start)
+        if (arr.length - 1 >= start)
             target = arr[start];
         else
             return 0;
@@ -680,7 +762,7 @@ public class Solution {
         if (x >= 0) {
             int cur = 0;
             int num = x;
-            while (num != 0){
+            while (num != 0) {
                 cur = cur * 10 + num % 10;
                 num /= 10;
             }
@@ -692,9 +774,9 @@ public class Solution {
     public int check2(String str) {
         int res = 0;
         long temp = Long.parseLong(str);
-        if(temp > Integer.MAX_VALUE)
+        if (temp > Integer.MAX_VALUE)
             res = Integer.MAX_VALUE;
-        else if(temp < Integer.MIN_VALUE)
+        else if (temp < Integer.MIN_VALUE)
             res = Integer.MIN_VALUE;
         else
             res = Long.valueOf(temp).intValue();
@@ -706,15 +788,15 @@ public class Solution {
         char[] arr = s.toCharArray();
         boolean symbol = false;
 
-        if(s.length() == 0)
+        if (s.length() == 0)
             return 0;
 
         StringBuilder builder = new StringBuilder();
         for (i = 0; i < arr.length; i++) {
             char c = arr[i];
-            if(builder.length() == 0) {
+            if (builder.length() == 0) {
                 if ((c >= '0' && c <= '9') || c == '+' || c == '-') {
-                    if(c == '+' || c == '-')
+                    if (c == '+' || c == '-')
                         symbol = true;
                     builder.append(c);
                 } else if (c != ' ')
@@ -743,30 +825,30 @@ public class Solution {
     public String convert(String s, int numRows) {
         StringBuilder builder = new StringBuilder();
         char[] arr = s.toCharArray();
-        if(numRows == 1)
+        if (numRows == 1)
             return s;
         for (int i = 0; i < numRows; i++) {
             int n = (numRows - i - 1) * 2;
             int n2 = i * 2;
             int j = i;
 
-            if(j >= arr.length)
+            if (j >= arr.length)
                 break;
             builder.append(arr[j]);
 
-            if(n == 0 && n2 == 0)
+            if (n == 0 && n2 == 0)
                 continue;
-            while(true) {
+            while (true) {
                 if (n != 0) {
                     j += n;
-                    if(j < arr.length)
+                    if (j < arr.length)
                         builder.append(arr[j]);
                     else break;
                 }
 
-                if(n2 != 0) {
+                if (n2 != 0) {
                     j += n2;
-                    if(j < arr.length)
+                    if (j < arr.length)
                         builder.append(arr[j]);
                     else break;
                 }
@@ -785,19 +867,22 @@ public class Solution {
             d /= 10;
         }
         res *= neg;
-        if(res <= Integer.MAX_VALUE && res >= Integer.MIN_VALUE)
+        if (res <= Integer.MAX_VALUE && res >= Integer.MIN_VALUE)
             return Double.valueOf(res).intValue();
         else
             return 0;
     }
 
-    private int[] res = new int[]{0, 1};
+    private int[] res = new int[] {
+            0,
+            1
+    };
     private int size = 1;
     public String longestPalindrome(String s) {
         char[] arr = s.toCharArray();
         for (int i = 0; i < arr.length - 1; i++) {
             check(arr, i, i);
-            if(arr[i] == arr[i + 1]) {
+            if (arr[i] == arr[i + 1]) {
                 check(arr, i, i + 1);
             }
         }
@@ -810,7 +895,9 @@ public class Solution {
             end++;
         }
         if (size < end - start) {
-            res = new int[]{start + 1, end};
+            res = new int[] {
+                    start + 1, end
+            };
             size = end - start;
         }
     }
@@ -838,14 +925,14 @@ public class Solution {
             type = ai < aj;
             int value = Math.min(ai, aj);
 
-//            System.out.println(value);
-            if(p == t1) v1 = value;
-            if(p == t2) {
+            //            System.out.println(value);
+            if (p == t1) v1 = value;
+            if (p == t2) {
                 v2 = value;
                 return (v1 + v2) / 2F;
             }
             p++;
-            if(type) i++;
+            if (type) i++;
             else j++;
         }
         return 0;
@@ -859,7 +946,7 @@ public class Solution {
             return s.length();
 
         char[] chars = s.toCharArray();
-        HashMap<Character, Integer> map = new HashMap<>();
+        HashMap < Character, Integer > map = new HashMap < > ();
         map.put(chars[i], i);
 
         for (j = 1; j < s.length(); j++) {
@@ -882,7 +969,7 @@ public class Solution {
         while (l1 != null || l2 != null) {
             int temp = (l1 == null ? 0 : l1.val) + (l2 == null ? 0 : l2.val) + dummy.val;
             dummy.val = temp % 10;
-            if(temp >= 10)
+            if (temp >= 10)
                 dummy.next = new ListNode(temp / 10);
             dummy = dummy.next;
             l1 = l1 == null ? null : l1.next;
@@ -892,21 +979,24 @@ public class Solution {
     }
 
     public int[] twoSum(int[] nums, int target) {
-        for(int i = 0; i < nums.length; i++) {
-            for(int j = i + 1; j < nums.length; j++) {
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
                 if (nums[i] + nums[j] == target) {
-                    return new int[]{i, j};
+                    return new int[] {
+                            i,
+                            j
+                    };
                 }
             }
         }
         return null;
     }
 
-    public List<List<Integer>> threeSum(int[] nums) {
-        List<List<Integer>> res = new ArrayList<>();
+    public List < List < Integer >> threeSum(int[] nums) {
+        List < List < Integer >> res = new ArrayList < > ();
         Arrays.sort(nums);
         for (int i = 0; i + 2 < nums.length; i++) {
-            if (i > 0 && nums[i] == nums[i - 1]) {              // skip same result
+            if (i > 0 && nums[i] == nums[i - 1]) { // skip same result
                 continue;
             }
             int j = i + 1, k = nums.length - 1;
@@ -916,8 +1006,8 @@ public class Solution {
                     res.add(Arrays.asList(nums[i], nums[j], nums[k]));
                     j++;
                     k--;
-                    while (j < k && nums[j] == nums[j - 1]) j++;  // skip same result
-                    while (j < k && nums[k] == nums[k + 1]) k--;  // skip same result
+                    while (j < k && nums[j] == nums[j - 1]) j++; // skip same result
+                    while (j < k && nums[k] == nums[k + 1]) k--; // skip same result
                 } else if (nums[j] + nums[k] > target) {
                     k--;
                 } else {
@@ -928,32 +1018,32 @@ public class Solution {
         return res;
     }
 
-    public List<List<Integer>> threeSum_1(int[] arr) {
-        HashSet<List<Integer>> list = new HashSet<>();
-        Consumer<Integer> p = (index) -> {
-            int target = arr[index];
-            for (int i = index + 1; i < arr.length; i++) {
-                for (int j = i + 1; j < arr.length; j++) {
-                    if (arr[i] + arr[j] == -target) {
-                        List<Integer> a = Arrays.asList(target, arr[i], arr[j]);
-                        a.sort(Integer::compareTo);
-                        list.add(a);
-                    }
+    public List < List < Integer >> threeSum_1(int[] arr) {
+        HashSet < List < Integer >> list = new HashSet < > ();
+        Consumer < Integer > p = (index) -> {
+        int target = arr[index];
+        for (int i = index + 1; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] + arr[j] == -target) {
+                    List < Integer > a = Arrays.asList(target, arr[i], arr[j]);
+                    a.sort(Integer::compareTo);
+                    list.add(a);
                 }
             }
+        }
         };
         for (int i = 0; i < arr.length; i++) p.accept(i);
-        return new ArrayList<>(list);
+        return new ArrayList < > (list);
     }
 
-    public List<List<Integer>> threeSum_2(int[] arr) {
-        HashMap<Integer, List<List<Integer>>> map = new HashMap<>();
+    public List < List < Integer >> threeSum_2(int[] arr) {
+        HashMap < Integer, List < List < Integer >>> map = new HashMap < > ();
         Arrays.sort(arr);
         for (int i = 0; i < arr.length; i++) {
             for (int j = i + 1; j < arr.length; j++) {
                 int key = arr[i] + arr[j];
-                List<List<Integer>> l = new ArrayList<>();
-                if(map.containsKey(key))
+                List < List < Integer >> l = new ArrayList < > ();
+                if (map.containsKey(key))
                     l = map.get(key);
 
                 l.add(Arrays.asList(i, j));
@@ -961,17 +1051,17 @@ public class Solution {
             }
         }
 
-        Set<List<Integer>> list = new HashSet<>();
+        Set < List < Integer >> list = new HashSet < > ();
         for (int index = 0; index < arr.length; index++) {
             int value = arr[index];
             if (map.containsKey(-value)) {
-                List<List<Integer>> l = map.get(-value);
-                for (List<Integer> a : l) {
+                List < List < Integer >> l = map.get(-value);
+                for (List < Integer > a: l) {
 
-                    if(a.contains(index))
+                    if (a.contains(index))
                         break;
 
-                    List<Integer> b = new ArrayList<>();
+                    List < Integer > b = new ArrayList < > ();
                     a.stream().forEach(integer -> b.add(arr[integer]));
                     b.add(value);
                     b.sort(Integer::compareTo);
@@ -980,6 +1070,6 @@ public class Solution {
             }
         }
 
-        return new ArrayList<>(list);
+        return new ArrayList < > (list);
     }
 }
