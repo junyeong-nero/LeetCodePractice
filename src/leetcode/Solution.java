@@ -1,11 +1,33 @@
 package leetcode;
 
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Solution {
+
+    List<List<Integer>> result_combinationSum;
+    public List<List<Integer>> combinationSum(int[] candidates, int target) {
+        result_combinationSum = new ArrayList<>();
+        combinationSum(candidates, target, new ArrayList<>(), 0);
+        return result_combinationSum;
+    }
+
+    public void combinationSum(int[] candidates, int target, List<Integer> current, int start) {
+        if (target == 0) {
+            result_combinationSum.add(current);
+        } else if(target > 0) {
+            for (int i = start; i < candidates.length; i++) {
+                int v = candidates[i];
+                if (target - v < 0) continue;
+                List<Integer> temp = new ArrayList<>(current);
+                temp.add(v);
+                combinationSum(candidates, target - v, temp, i);
+            }
+        }
+    }
 
     public ArrayList<Integer> transform(int[] arr) {
         ArrayList<Integer> temp = new ArrayList<>();
