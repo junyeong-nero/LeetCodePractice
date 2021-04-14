@@ -8,6 +8,32 @@ import java.util.List;
 
 public class Solution {
 
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        ListNode res = new ListNode();
+        ArrayList<Integer> arr = new ArrayList<>();
+        ListNode temp = l1;
+        while (temp != null) {
+            arr.add(temp.val);
+            temp = temp.next;
+        }
+
+        temp = l2;
+        while (temp != null) {
+            arr.add(temp.val);
+            temp = temp.next;
+        }
+        arr.sort(Integer::compareTo);
+        temp = res;
+        for (int i = 0; i < arr.size() - 1; i++) {
+            temp.val = arr.get(i);
+            temp.next = new ListNode();
+            temp = temp.next;
+        }
+        if(arr.size() >= 1)
+            temp.val = arr.get(arr.size() - 1);
+        return res;
+    }
+
     List<List<Integer>> result_combinationSum;
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         result_combinationSum = new ArrayList<>();
