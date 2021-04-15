@@ -8,6 +8,17 @@ import java.util.List;
 
 public class Solution {
 
+    public ListNode swapPairs(ListNode head) {
+        ListNode temp = head;
+        while(temp != null && temp.next != null) {
+            int n = temp.val;
+            temp.val = temp.next.val;
+            temp.next.val = n;
+            temp = temp.next.next;
+        }
+        return head;
+    }
+
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
         if (l1 == null) return l2;
         if (l2 == null) return l1;
