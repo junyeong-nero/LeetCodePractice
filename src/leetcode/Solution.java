@@ -9,29 +9,23 @@ import java.util.List;
 public class Solution {
 
     public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        ListNode res = new ListNode();
-        ArrayList<Integer> arr = new ArrayList<>();
-        ListNode temp = l1;
-        while (temp != null) {
-            arr.add(temp.val);
-            temp = temp.next;
+        if (l1 == null) return l2;
+        if (l2 == null) return l1;
+        ListNode head = new ListNode(0);
+        ListNode pointer = head;
+        while (l1 != null && l2 != null) {
+            if (l1.val < l2.val) {
+                pointer.next = l1;
+                l1 = l1.next;
+            } else {
+                pointer.next = l2;
+                l2 = l2.next;
+            }
+            pointer = pointer.next;
         }
-
-        temp = l2;
-        while (temp != null) {
-            arr.add(temp.val);
-            temp = temp.next;
-        }
-        arr.sort(Integer::compareTo);
-        temp = res;
-        for (int i = 0; i < arr.size() - 1; i++) {
-            temp.val = arr.get(i);
-            temp.next = new ListNode();
-            temp = temp.next;
-        }
-        if(arr.size() >= 1)
-            temp.val = arr.get(arr.size() - 1);
-        return res;
+        if (l1 == null) pointer.next = l2;
+        if (l2 == null) pointer.next = l1;
+        return head.next;
     }
 
     List<List<Integer>> result_combinationSum;
