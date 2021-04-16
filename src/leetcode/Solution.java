@@ -8,6 +8,26 @@ import java.util.List;
 
 public class Solution {
 
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        Arrays.sort(candidates);
+        List<List<Integer>> res = new ArrayList<>();
+        _combinationSum2(res, new ArrayList<>(), candidates, 0, target);
+        return res;
+    }
+
+    public void _combinationSum2(List<List<Integer>> result, ArrayList<Integer> current, int[] candidates, int index, int target) {
+        if(target == 0) {
+            result.add(new ArrayList<>(current));
+        } else if(target > 0) {
+            for (int i = index; i < candidates.length; i++) {
+                if(i > index && candidates[i] == candidates[i - 1]) continue;
+                current.add(candidates[i]);
+                _combinationSum2(result, current, candidates, i + 1, target - candidates[i]);
+                current.remove(current.size() - 1);
+            }
+        }
+    }
+
     public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode start = new ListNode(0);
         ListNode slow = start, fast = start;
