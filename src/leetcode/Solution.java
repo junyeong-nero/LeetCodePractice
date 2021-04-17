@@ -1,12 +1,77 @@
 package leetcode;
 
 import java.sql.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Solution {
+
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<Character>();
+        for (char c : s.toCharArray()) {
+            if (c == '(')
+                stack.push(')');
+            else if (c == '{')
+                stack.push('}');
+            else if (c == '[')
+                stack.push(']');
+            else if (stack.isEmpty() || stack.pop() != c)
+                return false;
+        }
+        return stack.isEmpty();
+    }
+
+    public boolean isValid2(String s) {
+        final char[] input = s.toCharArray();
+        int index = -1;
+        for (int i = 0; i < input.length; i++) {
+            switch(input[i]) {
+                case '(':
+                    input[++index] = ')';
+                    break;
+                case '[':
+                    input[++index] = ']';
+                    break;
+                case '{':
+                    input[++index] = '}';
+                    break;
+                case ')':
+                case ']':
+                case '}':
+                    if (index < 0 || input[index--] != input[i]) {
+                        return false;
+                    }
+                    break;
+            }
+        }
+        return index < 0;
+    }
+
+//    public boolean isValid(String s) {
+//        return isValid(s, 0, s.length() - 1);
+//    }
+//
+//    public boolean isValid(String s, int start, int end) {
+//        if(start > end)
+//            return true;
+//        else {
+//            int i = start;
+//            char c = s.charAt(start);
+//            if(c == '(') c = ')';
+//            else if(c == '[') c = ']';
+//            else if(c == '{') c = '}';
+//            else
+//                return false;
+//
+//            while(i <= end && s.charAt(i) != c) i++;
+//            if(i == end + 1) {
+//                return false;
+//            } else {
+//                boolean b1 = isValid(s, start + 1, i - 1);
+//                boolean b2 = isValid(s, i + 1, end);
+//                return b1 && b2;
+//            }
+//        }
+//    }
 
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
         Arrays.sort(candidates);
