@@ -5,6 +5,49 @@ import java.util.*;
 
 public class Solution {
 
+    public List<String> generateParenthesis(int n) {
+        if(n == 0)
+            return Collections.emptyList();
+        if(n == 1)
+            return Collections.singletonList("()");
+        List<String> res = new ArrayList<>();
+        for (int i = 1; i < n; i++) {
+            List<String> temp = generateParenthesis(n - i);
+            List<String> temp2 = generateParenthesis(i);
+            for (String s : temp) {
+                for (String s2 : temp2) {
+                    StringBuilder builder;
+                    String t;
+                    builder = new StringBuilder();
+                    builder.append(s2);
+                    builder.append(s);
+                    t = builder.toString();
+                    if(!res.contains(t))
+                        res.add(t);
+
+                    builder = new StringBuilder();
+                    builder.append(s);
+                    builder.append(s2);
+                    t = builder.toString();
+                    if(!res.contains(t))
+                        res.add(t);
+
+                    builder = new StringBuilder();
+                    builder.append("(".repeat(i));
+                    builder.append(s);
+                    builder.append(")".repeat(i));
+                    t = builder.toString();
+                    if(!res.contains(t))
+                        res.add(t);
+                }
+            }
+        }
+        return res;
+    }
+
+    // (())(())
+    // ["(((())))","((()()))","((())())","((()))()","(()(()))","(()()())","(()())()","(())(())","(())()()","()((()))","()(()())","()(())()","()()(())","()()()()"]
+
     public boolean isValid(String s) {
         Stack<Character> stack = new Stack<Character>();
         for (char c : s.toCharArray()) {
