@@ -1,15 +1,60 @@
 package leetcode;
 
-import java.sql.Array;
 import java.util.*;
 
 public class Solution {
+
+    public ListNode mergeKLists(ListNode[] lists) {
+        ListNode res = new ListNode(0);
+        ListNode temp = res;
+        ArrayList<ListNode> temp_list = new ArrayList<>(Arrays.asList(lists));
+        while(!temp_list.isEmpty()) {
+            ListNode min = null;
+            int index = -1;
+            for (int i = 0; i < temp_list.size(); i++) {
+                ListNode node = temp_list.get(i);
+                if(node == null)
+                    continue;
+                if (min == null || node.val < min.val) {
+                    min = node;
+                    index = i;
+                }
+            }
+            if(min != null) {
+                if(min.next != null)
+                    temp_list.set(index, temp_list.get(index).next);
+                else
+                    temp_list.remove(index);
+            } else
+                break;
+            temp.next = min;
+            temp = temp.next;
+        }
+        return res.next;
+    }
+
+    public List<String> generateParenthesis2(int n) {
+        List<String> result = new ArrayList<>();
+        generateParenthesis2("", 0, 0, n, result);
+        return result;
+    }
+
+    private void generateParenthesis2(String s, int open, int close, int n, List<String> result) {
+        if (close == n) {
+            result.add(s);
+            return;
+        }
+        if (open > close) generateParenthesis2(s + ")", open, close + 1, n, result);
+        if (open < n) generateParenthesis2(s + "(", open + 1, close, n, result);
+    }
 
     public List<String> generateParenthesis(int n) {
         if(n == 0)
             return Collections.emptyList();
         if(n == 1)
             return Collections.singletonList("()");
+        if(n == 2)
+            return Arrays.asList("()()", "(())");
         List<String> res = new ArrayList<>();
         for (int i = 1; i < n; i++) {
             List<String> temp = generateParenthesis(n - i);
@@ -21,13 +66,6 @@ public class Solution {
                     builder = new StringBuilder();
                     builder.append(s2);
                     builder.append(s);
-                    t = builder.toString();
-                    if(!res.contains(t))
-                        res.add(t);
-
-                    builder = new StringBuilder();
-                    builder.append(s);
-                    builder.append(s2);
                     t = builder.toString();
                     if(!res.contains(t))
                         res.add(t);
