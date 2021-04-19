@@ -4,6 +4,15 @@ import java.util.*;
 
 public class Solution {
 
+    public int removeDuplicates(int[] arr) {
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            arr[count++] = arr[i];
+            while(i + 1 < arr.length && arr[i] == arr[i + 1]) i++;
+        }
+        return count;
+    }
+
     public ListNode mergeKLists(ListNode[] lists) {
         ListNode res = new ListNode(0);
         ListNode temp = res;
