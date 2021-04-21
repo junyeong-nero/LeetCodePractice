@@ -4,6 +4,32 @@ import java.util.*;
 
 public class Solution {
 
+    public int jump(int[] arr) {
+        return jump(arr,  0, 30);
+    }
+
+    public int jump(int[] arr, int current, int level) {
+        if(level <= 0)
+            return -1;
+        if(current == arr.length - 1)
+            return 0;
+        else if(current > arr.length - 1)
+            return -1;
+        else {
+            int value = level;
+            for (int i = 1; i <= arr[current]; i++) {
+                int temp = jump(arr, current + i, value - 1);
+                if (temp != -1 && temp < value) {
+                    value = temp;
+                }
+            }
+            if(value == Integer.MAX_VALUE)
+                return -1;
+            else
+                return value + 1;
+        }
+    }
+
     public int removeDuplicates(int[] arr) {
         int count = 0;
         for (int i = 0; i < arr.length; i++) {
