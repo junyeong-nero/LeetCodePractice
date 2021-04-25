@@ -4,6 +4,26 @@ import java.util.*;
 
 public class Solution {
 
+    public int firstMissingPositive(int[] arr) {
+        Arrays.sort(arr);
+        int index = 0;
+        while(index < arr.length && arr[index] <= 0) index++;
+        if(index == arr.length || arr[index] > 1)
+            return 1;
+        else {
+            int i, count = arr[index];
+            for (i = index; i < arr.length; i++) {
+                if(arr[i] != count)
+                    return count;
+                else {
+                    count++;
+                    while(i + 1 < arr.length && arr[i] == arr[i + 1]) i++;
+                }
+            }
+            return count;
+        }
+    }
+
     public int[] removeElement(int[] arr, int val) {
         int count = 0;
         for (int i = 0; i < arr.length; i++) {
