@@ -4,6 +4,16 @@ import java.util.*;
 
 public class Solution {
 
+    public int[] removeElement(int[] arr, int val) {
+        int count = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] != val) {
+                arr[count++] = arr[i];
+            }
+        }
+        return arr;
+    }
+
     public int jump(int[] arr) {
         return jump(arr,  0, 30);
     }
