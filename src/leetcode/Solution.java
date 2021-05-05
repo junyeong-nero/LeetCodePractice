@@ -4,6 +4,48 @@ import java.util.*;
 
 public class Solution {
 
+    public boolean isAnagram(String a, String b) {
+        if(a.length() != b.length())
+            return false;
+        char[] arr_a = a.toCharArray();
+        char[] arr_b = b.toCharArray();
+        Arrays.sort(arr_a);
+        Arrays.sort(arr_b);
+        for(int i = 0; i < a.length(); i++)
+            if(arr_a[i] != arr_b[i])
+                return false;
+        return true;
+    }
+
+    public List<List<String>> groupAnagrams(String[] arr) {
+        List<List<String>> res = new ArrayList<>();
+        if(arr.length == 0)
+            return res;
+        if(arr.length == 1) {
+            res.add(Collections.singletonList(arr[0]));
+            return res;
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            if(arr[i] == null)
+                continue;
+
+            List<String> list = new ArrayList<>();
+            list.add(arr[i]);
+            for (int j = i + 1; j < arr.length; j++) {
+                if(arr[j] == null)
+                    continue;
+                if (isAnagram(arr[i], arr[j])) {
+                    list.add(arr[j]);
+                    arr[j] = null;
+                }
+            }
+            arr[i] = null;
+            res.add(list);
+        }
+        return res;
+    }
+
     public int firstMissingPositive(int[] arr) {
         Arrays.sort(arr);
         int index = 0;
