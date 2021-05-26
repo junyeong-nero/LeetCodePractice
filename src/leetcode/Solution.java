@@ -2,7 +2,26 @@ package leetcode;
 
 import java.util.*;
 
+
 public class Solution {
+
+    public int searchInsert(int[] arr, int target) {
+        return searchInsert(arr, target, 0, arr.length - 1);
+    }
+
+    public int searchInsert(int[] arr, int target, int start, int end) {
+        int temp = (start + end) / 2;
+        if(arr[temp] == target) return temp;
+        else if(start == end) return start + (arr[start] > target ? 0 : 1);
+        else if(arr[temp] > target) return searchInsert(arr, target, start, temp);
+        else return searchInsert(arr, target, temp + 1, end);
+    }
+
+    int func(int a, int b) {
+        if(a <= 0) return 0;
+        if(a == 1) return 1;
+        return func(a -2 , a) + func(a - 1, b) + a;
+    }
 
     public boolean isAnagram(String a, String b) {
         if(a.length() != b.length())
