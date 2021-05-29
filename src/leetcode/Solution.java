@@ -5,6 +5,57 @@ import java.util.*;
 
 public class Solution {
 
+    public boolean isMatch(String s, String p) {
+        if(p.equals("*") && s.length() == 1) return true;
+        if(p.equals("?")) return true;
+
+        ArrayList<Integer> temp = new ArrayList<>();
+        ArrayList<Character> wilds = new ArrayList<>();
+        temp.add(-1);
+        for (int i = 0; i < p.length(); i++) {
+            if (p.charAt(i) == '?') {
+                temp.add(i);
+                wilds.add('?');
+            } if (p.charAt(i) == '*') {
+                temp.add(i);
+                wilds.add('*');
+            }
+        }
+        temp.add(p.length());
+
+        if(temp.size() == 2)
+            return s.equals(p);
+
+        ArrayList<String> strings = new ArrayList<>();
+        for (int i = 0; i < temp.size() - 1; i++) {
+            String ss = p.substring(temp.get(i) + 1, temp.get(i + 1));
+            if(!ss.equals(""))
+                strings.add(ss);
+        }
+
+        ArrayList<Integer> arr = new ArrayList<>();
+        for (int i = 0; i < strings.size(); i++) {
+            arr.add(s.indexOf(strings.get(i)));
+        }
+
+        // check -1;
+        boolean b = arr.stream().anyMatch(element -> element == -1);
+        if(b) return false;
+
+        // check up-stair
+        ArrayList<Integer> cmp = new ArrayList<>(arr);
+        cmp.sort(Integer::compareTo);
+        if(!cmp.equals(arr)) return false;
+
+        for(int i = 0; i < arr.size() - 1; i++) {
+            char c = wilds.get(i);
+            if(arr.get(i + 1) - arr.get(i) == 2 && wilds.get(i) == '*') return false;
+            if(arr.get(i + 1) - arr.get(i) > 2 && wilds.get(i) == '?') return false;
+        }
+
+        return true;
+    }
+
     public int searchInsert(int[] arr, int target) {
         return searchInsert(arr, target, 0, arr.length - 1);
     }

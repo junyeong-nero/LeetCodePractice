@@ -6,14 +6,13 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        int[] arr = {1, 3, 5, 6};
-        System.out.println(sol.searchInsert(arr, 5));
-        System.out.println(sol.searchInsert(arr, 2));
-        System.out.println(sol.searchInsert(arr, 7));
-        System.out.println(sol.searchInsert(arr, 0));
-
-        int[] arr2 = {1, 3};
-        System.out.println(sol.searchInsert(arr2, 0));
+//        System.out.println(sol.isMatch("aa", "a"));
+//        System.out.println(sol.isMatch("aa", "*"));
+//        System.out.println(sol.isMatch("cb", "?a"));
+//        System.out.println(sol.isMatch("adceb", "*a*b"));
+//        System.out.println(sol.isMatch("acdcb", "a*c?b"));
+//        System.out.println(sol.isMatch("abcabczzzde", "*abc???de*"));
+        System.out.println(sol.isMatch("abefcdgiescdfimde", "ab*cd?i*de"));
     }
 
 }
