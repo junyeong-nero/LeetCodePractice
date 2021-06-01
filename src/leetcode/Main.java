@@ -6,13 +6,11 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-//        System.out.println(sol.isMatch("aa", "a"));
-//        System.out.println(sol.isMatch("aa", "*"));
-//        System.out.println(sol.isMatch("cb", "?a"));
-//        System.out.println(sol.isMatch("adceb", "*a*b"));
-//        System.out.println(sol.isMatch("acdcb", "a*c?b"));
-//        System.out.println(sol.isMatch("abcabczzzde", "*abc???de*"));
-        System.out.println(sol.isMatch("abefcdgiescdfimde", "ab*cd?i*de"));
+        System.out.println(Arrays.toString(sol.searchRange(new int[]{2, 2}, 2)));
+        System.out.println(Arrays.toString(sol.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 8)));
+        System.out.println(Arrays.toString(sol.searchRange(new int[]{5, 7, 7, 8, 8, 9, 10}, 8)));
+        System.out.println(Arrays.toString(sol.searchRange(new int[]{5, 7, 7, 8, 8, 10}, 6)));
+        System.out.println(Arrays.toString(sol.searchRange(new int[]{}, 0)));
     }
 
 }

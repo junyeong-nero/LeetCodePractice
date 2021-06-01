@@ -5,6 +5,44 @@ import java.util.*;
 
 public class Solution {
 
+    public int[] searchRange(int[] arr, int target) {
+        int[] res = new int[] {-1, -1};
+        searchRange(res, arr, target, 0, arr.length - 1);
+        return res;
+    }
+
+    public void searchRange(int[] res, int[] arr, int target, int start, int end) {
+        if(arr.length == 0)
+            return;
+        if(arr.length == 1) {
+            if(arr[0] == target) {
+                res[0] = 0;
+                res[1] = 0;
+            }
+            return;
+        }
+
+        int mid = (start + end) / 2;
+        if(start > end) return;
+        if(arr[mid] == target) {
+            boolean[] b = {true, true};
+            if(mid == 0 || arr[mid - 1] != target) {
+                res[0] = mid;
+                b[0] = false;
+            }
+            if(mid == arr.length - 1 || arr[mid + 1] != target) {
+                res[1] = mid;
+                b[1] = false;
+            }
+            if(b[0]) searchRange(res, arr, target, start, mid - 1);
+            if(b[1]) searchRange(res, arr, target, mid + 1, end);
+        } else if(arr[mid] < target) {
+            searchRange(res, arr, target, mid + 1, end);
+        } else {
+            searchRange(res, arr, target, start, mid - 1);
+        }
+    }
+
     public boolean isMatch(String s, String p) {
         if(p.equals("*") && s.length() == 1) return true;
         if(p.equals("?")) return true;
@@ -33,11 +71,24 @@ public class Solution {
                 strings.add(ss);
         }
 
-        ArrayList<Integer> arr = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> k = new ArrayList<>();
         for (int i = 0; i < strings.size(); i++) {
-            arr.add(s.indexOf(strings.get(i)));
+            ArrayList<Integer> r = findIndexes(s, strings.get(i));
+            k.add(r);
         }
+        return true;
+    }
 
+    public ArrayList<Integer> findIndexes(String str, String find) {
+        ArrayList<Integer> res = new ArrayList<>();
+        for (int i = 0; str.indexOf(find, i) != -1; i++) {
+            i = str.indexOf(find, i);
+            res.add(i);
+        }
+        return res;
+    }
+
+    public boolean isMatch(ArrayList<Integer> arr, ArrayList<Integer> wilds) {
         // check -1;
         boolean b = arr.stream().anyMatch(element -> element == -1);
         if(b) return false;
@@ -48,7 +99,6 @@ public class Solution {
         if(!cmp.equals(arr)) return false;
 
         for(int i = 0; i < arr.size() - 1; i++) {
-            char c = wilds.get(i);
             if(arr.get(i + 1) - arr.get(i) == 2 && wilds.get(i) == '*') return false;
             if(arr.get(i + 1) - arr.get(i) > 2 && wilds.get(i) == '?') return false;
         }
