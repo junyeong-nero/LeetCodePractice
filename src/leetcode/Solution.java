@@ -11,37 +11,51 @@ public class Solution {
         else return Math.abs(x - x2) == Math.abs(y - y2);
     }
 
+    public boolean checkQueen(List<List<Integer>> list, int i, int j) {
+        for (List<Integer> l : list) {
+            if(checkQueen(l.get(0), l.get(1), i, j))
+                return true;
+        }
+        return false;
+    }
+
     public List<List<String>> solveNQueens(int n) {
         List<List<Integer>> res = new ArrayList<>();
-//        boolean arr[][] = new boolean[n][n];
-        solveNQueens(n, res, 1, 0);
+        solveNQueens(n, res, 0, 0);
+        int map[][] = new int[n][n];
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                map[i][j] = 0;
+            }
+        }
+        for(List<Integer> l : res) {
+            map[l.get(0)][l.get(1)] = 1;
+        }
+        for (int l[] : map) {
+            System.out.println(Arrays.toString(l));
+        }
         return null;
     }
 
     public int solveNQueens(int n, List<List<Integer>> current, int x, int y) {
-        if(current.size() == n)
+        if(current.size() == n) {
+            System.out.println(current);
             return 0;
-
-        int res = current.size();
-        int sx = -1, sy = -1;
+        }
+        int s = current.size();
         for(int i = 0; i < n; i++) {
             for(int j = 0; j < n; j++) {
-                if(!checkQueen(x, y, i, j)) {
-                    List<List<Integer>> arr = new ArrayList<>(current);
-                    arr.add(Arrays.asList(i, j));
-                    int temp = solveNQueens(n, arr, i, j);
-                    if(temp != -1 && temp < res) {
-                        res = temp;
-                        sx = i;
-                        sy = j;
-                    }
+                // previous check
+                if(!checkQueen(current, i, j) && !checkQueen(x, y, i, j)) {
+                    current.add(Arrays.asList(i, j));
+                    int temp = solveNQueens(n, current, i, j);
+                    if(temp == -1)
+                        current.remove(current.size() - 1); // remove last index
                 }
             }
         }
-
-        System.out.println(sx + ", " + sy);
-        if(res == current.size()) return -1;
-        else return res + 1;
+        if(s == current.size()) return -1;
+        else return s + 1;
     }
 
     public int negative(int n) {

@@ -6,7 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        sol.solveNQueens(4);
+        sol.solveNQueens(9);
     }
 
 }
