@@ -5,6 +5,15 @@ import java.util.*;
 
 public class Solution {
 
+    public static int maxSubArray(int[] A) {
+        int maxSoFar=A[0], maxEndingHere=A[0];
+        for (int i=1;i<A.length;++i){
+            maxEndingHere = Math.max(maxEndingHere+A[i],A[i]);
+            maxSoFar = Math.max(maxSoFar, maxEndingHere);
+        }
+        return maxSoFar;
+    }
+
     public boolean checkQueen(int x, int y, int x2, int y2) {
         if(x == x2 || y == y2)
             return true;
@@ -20,26 +29,38 @@ public class Solution {
     }
 
     public List<List<String>> solveNQueens(int n) {
-        List<List<Integer>> res = new ArrayList<>();
-        solveNQueens(n, res, 0, 0);
-        int map[][] = new int[n][n];
-        for(int i = 0; i < n; i++) {
-            for(int j = 0; j < n; j++) {
-                map[i][j] = 0;
-            }
+        List<List<String>> res = new ArrayList<>();
+        if (n == 1) {
+            res.add(Collections.singletonList("Q"));
+            return res;
         }
-        for(List<Integer> l : res) {
-            map[l.get(0)][l.get(1)] = 1;
+        if (n > 1 && n < 4)
+            return res;
+
+        for (int x = 1; x < n - 1; x++) {
+            solveNQueens(res, new ArrayList<>(), n, x, 0);
         }
-        for (int l[] : map) {
-            System.out.println(Arrays.toString(l));
-        }
-        return null;
+        return res;
     }
 
-    public int solveNQueens(int n, List<List<Integer>> current, int x, int y) {
-        if(current.size() == n) {
-            System.out.println(current);
+    public List<String> convert(int n, List<List<Integer>> temp) {
+        List<String> s = new ArrayList<>();
+        for (List<Integer> l : temp) {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < n; i++) {
+                if(i == l.get(1))
+                    builder.append('Q');
+                else
+                    builder.append('.');
+            }
+            s.add(builder.toString());
+        }
+        return s;
+    }
+
+    public int solveNQueens(List<List<String>> res, List<List<Integer>> current, int n, int x, int y) {
+        if (current.size() == n) {
+            res.add(convert(n, current));
             return 0;
         }
         int s = current.size();
@@ -48,7 +69,7 @@ public class Solution {
                 // previous check
                 if(!checkQueen(current, i, j) && !checkQueen(x, y, i, j)) {
                     current.add(Arrays.asList(i, j));
-                    int temp = solveNQueens(n, current, i, j);
+                    int temp = solveNQueens(res, current, n, i, j);
                     if(temp == -1)
                         current.remove(current.size() - 1); // remove last index
                 }
