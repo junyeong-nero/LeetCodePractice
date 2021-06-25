@@ -5,6 +5,33 @@ import java.util.*;
 
 public class Solution {
 
+    public List<Integer> spiralOrder(int[][] matrix) {
+        List<Integer> list = new ArrayList<>();
+        int i = 0, j = 0;
+        int w = matrix.length;
+        int h = matrix[0].length;
+
+        int[] x = {1, 0, -1, 0};
+        int[] y = {0, 1, 0, -1};
+        int type = 0;
+        while (true) {
+            if (list.size() == w * h)
+                break;
+            list.add(matrix[i][j]);
+            matrix[i][j] = Integer.MAX_VALUE;
+
+            int I = i + y[type];
+            int J = j + x[type];
+            if (I < 0 || I > w - 1 || J < 0 || J > h - 1 || matrix[I][J] == Integer.MAX_VALUE) {
+                type++;
+                type %= 4;
+            }
+            i += y[type];
+            j += x[type];
+        }
+        return list;
+    }
+
     public static int maxSubArray(int[] A) {
         int maxSoFar=A[0], maxEndingHere=A[0];
         for (int i=1;i<A.length;++i){
