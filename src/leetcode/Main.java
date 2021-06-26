@@ -6,8 +6,9 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        int[][] arr = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-        int[][] arr2 = {{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}};
-        System.out.println(sol.spiralOrder(arr2));
+        int[] arr = {2, 3, 1, 1, 4};
+        int[] arr2 = {3, 2, 1, 0, 4};
+        System.out.println(sol.canJump(arr));
+        System.out.println(sol.canJump(arr2));
     }
 }

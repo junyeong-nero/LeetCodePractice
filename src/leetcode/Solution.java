@@ -5,6 +5,29 @@ import java.util.*;
 
 public class Solution {
 
+    public boolean canJump(int[] arr) {
+//        return canJump(0, arr);
+        return canJump(arr, arr.length - 1);
+    }
+
+    public boolean canJump(int[] arr, int lastIndex) {
+        int last = lastIndex, i;
+        for (i = last - 1; i >= 0; i--) {
+            if(i + arr[i] >= last) last = i;
+        }
+        return last <= 0;
+    }
+
+    public boolean canJump(int index, int[] arr) {
+        if(index == arr.length - 1)
+            return true;
+        for (int i = arr[index]; i >= 1; i--) {
+            if(canJump(index + i, arr))
+                return true;
+        }
+        return false;
+    }
+
     public List<Integer> spiralOrder(int[][] matrix) {
         List<Integer> list = new ArrayList<>();
         int i = 0, j = 0;
