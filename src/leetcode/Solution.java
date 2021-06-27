@@ -5,6 +5,12 @@ import java.util.*;
 
 public class Solution {
 
+    public void commitForRestDay(int count) {
+        for (int i = 0; i < count; i++) {
+            System.out.println("today is sunday");
+        }
+    }
+
     public boolean canJump(int[] arr) {
 //        return canJump(0, arr);
         return canJump(arr, arr.length - 1);
