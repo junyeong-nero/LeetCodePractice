@@ -11,6 +11,61 @@ public class Solution {
         }
     }
 
+    public boolean isLexicographic(String[] arr, int index) {
+        boolean check = true;
+        for (int j = 0; j < arr.length - 1; j++) {
+            if (arr[j].charAt(index) > arr[j + 1].charAt(index)) check = false;
+        }
+        return check;
+    }
+
+    public int minDeletionSize(String[] arr, int index) {
+        if(index >= arr[0].length())
+            return 0;
+
+        boolean check = true;
+        ArrayList<String[]> list = new ArrayList<>();
+        for (int j = 0; j < arr.length - 1; j++) {
+            if (arr[j].charAt(index) > arr[j + 1].charAt(index)) check = false;
+            if (arr[j].charAt(index) == arr[j + 1].charAt(index)) {
+                list.add(new String[]{arr[j], arr[j + 1]});
+            }
+        }
+        if(!check) return 1 + minDeletionSize(arr, index + 1);
+        else {
+            if(list.isEmpty()) return 0;
+            else {
+                int temp = 0;
+                for (String[] strings : list) {
+                    if (strings[0].charAt(index + 1) > strings[1].charAt(index + 1)) {
+                        temp = 1;
+                        break;
+                    }
+                }
+                if(temp == 1)   return minDeletionSize(arr, index + 2);
+                else            return 0;
+            }
+        }
+    }
+
+    public int minDeletionSize(String[] A) {
+        int res = 0, n = A.length, m = A[0].length(), i, j;
+        boolean[] sorted = new boolean[n - 1];
+        for (j = 0; j < m; ++j) {
+            for (i = 0; i < n - 1; ++i) {
+                if (!sorted[i] && A[i].charAt(j) > A[i + 1].charAt(j)) {
+                    res++;
+                    break;
+                }
+            }
+            if (i < n - 1) continue;
+            for (i = 0; i < n - 1; ++i) {
+                sorted[i] |= A[i].charAt(j) < A[i + 1].charAt(j);
+            }
+        }
+        return res;
+    }
+
     public boolean canJump(int[] arr) {
 //        return canJump(0, arr);
         return canJump(arr, arr.length - 1);
