@@ -11,6 +11,19 @@ public class Solution {
         }
     }
 
+    public void moveZeroes(int[] arr) {
+        int index = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] != 0) {
+                int temp = arr[index];
+                arr[index] = arr[i];
+                arr[i] = temp;
+                index++;
+            }
+        }
+        System.out.println(Arrays.toString(arr));
+    }
+
     public boolean isLexicographic(String[] arr, int index) {
         boolean check = true;
         for (int j = 0; j < arr.length - 1; j++) {
