@@ -11,6 +11,73 @@ public class Solution {
         }
     }
 
+    public String removeDuplicates(String s) {
+        int len = s.length();
+        StringBuilder builder = new StringBuilder();
+        boolean b = true;
+        for (int i = 0; i < len; ++i) {
+            if (i < len - 1 && s.charAt(i) == s.charAt(i + 1)) {
+                i++;
+                b = false;
+            }
+            else builder.append(s.charAt(i));
+        }
+        if(b)
+            return builder.toString();
+        else
+            return removeDuplicates(builder.toString());
+    }
+
+    public int candy(int[] ratings) {
+        int[] child = new int[ratings.length];
+        Arrays.fill(child, 1);
+
+        for (int i = 0; i < ratings.length; i++) {
+            if(i - 1 >= 0)
+                while(ratings[i] > ratings[i - 1] && child[i] <= child[i - 1]) child[i]++;
+            if(i + 1 <= ratings.length - 1)
+                while(ratings[i] > ratings[i + 1] && child[i] <= child[i + 1]) child[i]++;
+        }
+
+        System.out.println(Arrays.toString(child));
+
+        int sum = 0;
+        for (int i : child) {
+            sum += i;
+        }
+        return sum;
+    }
+
+    public int countRestrictedPaths(int n, int[][] edges) {
+        return 0;
+    }
+
+    public int countAllPaths(int n, int[][] edges) {
+        countAllPaths(n, Collections.singletonList(1), 0, edges);
+        return 0;
+    }
+
+
+    public void countAllPaths(int target, List<Integer> road, int weight, int[][] edges) {
+        int current = road.get(road.size() - 1);
+        if(current == target)
+            System.out.println(road);
+        for (int i = 0; i < edges.length; i++) {
+            if (edges[i][0] == current && !road.contains(edges[i][1])) {
+                List<Integer> temp = new ArrayList<>(road.size() + 1);
+                temp.addAll(road);
+                temp.add(edges[i][1]);
+                countAllPaths(target, temp, weight + edges[i][2], edges);
+            }
+            if (edges[i][1] == current && !road.contains(edges[i][0])) {
+                List<Integer> temp = new ArrayList<>(road.size() + 1);
+                temp.addAll(road);
+                temp.add(edges[i][0]);
+                countAllPaths(target, temp, weight + edges[i][2], edges);
+            }
+        }
+    }
+
     public void moveZeroes(int[] arr) {
         int index = 0;
         for (int i = 0; i < arr.length; i++) {
