@@ -11,6 +11,27 @@ public class Solution {
         }
     }
 
+    public double champagneTower(int poured, int query_row, int query_glass) {
+        double[] res = new double[query_row + 2];
+        res[0] = poured;
+        for (int row = 1; row <= query_row; row++)
+            for (int i = row; i >= 0; i--)
+                res[i + 1] += res[i] = Math.max(0.0, (res[i] - 1) / 2);
+        return Math.min(res[query_glass], 1.0);
+    }
+
+    double combination(int p, int q) {
+        return factorial(p) / (factorial(p - q) * factorial(q));
+    }
+
+    double factorial(int n) {
+        double res = 1;
+        for (int i = 2; i <= n; i++) {
+            res *= n;
+        }
+        return res;
+    }
+
     public String removeDuplicates(String s) {
         int len = s.length();
         StringBuilder builder = new StringBuilder();
@@ -38,9 +59,6 @@ public class Solution {
             if(i + 1 <= ratings.length - 1)
                 while(ratings[i] > ratings[i + 1] && child[i] <= child[i + 1]) child[i]++;
         }
-
-        System.out.println(Arrays.toString(child));
-
         int sum = 0;
         for (int i : child) {
             sum += i;
