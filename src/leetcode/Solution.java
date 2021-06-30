@@ -11,6 +11,60 @@ public class Solution {
         }
     }
 
+
+    public int longestOnes(int[] arr, int k) {
+        if(k >= arr.length) return arr.length;
+
+        int res = 0, temp = 0, count = 0;
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 0; i < arr.length; ++i) {
+            if (arr[i] == 1) temp++;
+            if (arr[i] == 0) count++;
+            if (i != 0 && arr[i] == 0) {
+                list.add(temp);
+                temp = 0;
+            }
+        }
+        if(count <= k) return arr.length;
+        list.add(temp);
+
+        int len = list.size() - k;
+        for (int i = 0; i < len; ++i) {
+            int sum = 0;
+            for (int j = 0; j < list.size() && j < k + 1; j++) sum += list.get(i + j);
+            res = Math.max(res, sum + k);
+        }
+        return res;
+    }
+
+//    public int longestOnes(int[] arr, int k, int start) {
+//        int res = 0, temp = 0;
+//        int count = k;
+//        for (int i = start; i < arr.length; ++i) {
+//            if (arr[i] == 1) temp++;
+//            if (arr[i] == 0) {
+//                if (count > 0) {
+//                    count--;
+//                    temp++;
+//                } else {
+//                    res = Math.max(res, temp);
+//                    temp = 0;
+//                    count = k;
+//                }
+//            }
+//        }
+//        res = Math.max(res, temp);
+//        return res;
+//    }
+//
+//    public int longestOnes(int[] arr, int k) {
+//        int res = 0;
+//        for (int i = 0; i < arr.length; i++) {
+//            res = Math.max(res, longestOnes(arr, k, i));
+//        }
+//        return res;
+//    }
+
     public double champagneTower(int poured, int query_row, int query_glass) {
         double[] res = new double[query_row + 2];
         res[0] = poured;
