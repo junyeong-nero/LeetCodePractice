@@ -11,6 +11,29 @@ public class Solution {
         }
     }
 
+    TreeNode result_node = null;
+    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
+//        findNode(true, root, p, q);
+        if (root == null) return null;
+        if (root.val == p.val || root.val == q.val) return root;
+        TreeNode leftAns = lowestCommonAncestor(root.left, p, q);
+        TreeNode rightAns = lowestCommonAncestor(root.right, p, q);
+        if(leftAns != null && rightAns != null) return root;
+        if(leftAns != null) return leftAns;
+        return rightAns;
+    }
+
+    public boolean findNode(boolean result, TreeNode root, TreeNode target, TreeNode q) {
+        boolean res = root.val == target.val;
+        if (root.right != null) res |= findNode(result, root.right, target, q);
+        if (root.left != null) res |= findNode(result, root.left, target, q);
+        if (result && res) {
+            boolean temp = findNode(false, root, q, q);
+            if (temp) result_node = root;
+        }
+        return res;
+    }
+
     public List<Integer> preorderTraversal(TreeNode node) {
         List<Integer> list = new LinkedList<Integer>();
         Stack<TreeNode> rights = new Stack<TreeNode>();
