@@ -10,6 +10,15 @@ public class Solution {
             System.out.println("today is sunday");
         }
     }
+    int bst_sum = 0;
+    public TreeNode bstToGst(TreeNode root) {
+        if(root == null) return null;
+        bstToGst(root.right);
+        root.val += bst_sum;
+        bst_sum = root.val;
+        bstToGst(root.left);
+        return root;
+    }
 
     TreeNode result_node = null;
     public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
