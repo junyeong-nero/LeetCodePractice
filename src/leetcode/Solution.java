@@ -10,6 +10,37 @@ public class Solution {
             System.out.println("today is sunday");
         }
     }
+
+    public double new21Game(int n, int k, int maxPts) {
+        if(k == 0 || n >= k + maxPts) return 1;
+        double dp[] = new double[n + 1], Wsum = 1, res = 0;
+        dp[0] = 1;
+        for (int i = 1; i <= n; ++i) {
+            dp[i] = Wsum / maxPts;
+            if (i < k) Wsum += dp[i];
+            else res += dp[i];
+            if (i - maxPts >= 0) Wsum -= dp[i - maxPts]; // 왜지?
+        }
+        return res;
+        // n 보다 큰 값을 가질 확률을 구해서 빼자
+    }
+
+    double game_sum = 0;
+    double game_total = 0;
+
+    public void new21Game(int n, int k, int maxPts, int sum) {
+        if (sum > n) return;
+        for (int i = 1; i <= maxPts; i++) {
+            int tmp = sum + i;
+            if (i >= k) { // k보다 커서 종료되고, 총합이 n 보다 작거나 같은 경우
+                game_total++; // 종료되는 모든 프로세스의 수
+                if(tmp <= n) game_sum++; // 최종합이 tmp보다 작은 경우
+            }
+            if (i < k) // k보다 작아서 종료되지 않고 다음 프로세스로 넘어가는 경우
+                new21Game(n, k, maxPts, tmp);
+        }
+    }
+
     int bst_sum = 0;
     public TreeNode bstToGst(TreeNode root) {
         if(root == null) return null;
