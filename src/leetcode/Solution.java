@@ -11,6 +11,50 @@ public class Solution {
         }
     }
 
+    public int longestMountain(int[] arr) {
+        if(arr.length < 3) return 0;
+        int res = 0, before, len = 0;
+        boolean upward = false;
+        boolean downward = false;
+        before = arr[0];
+        for (int i = 1; i < arr.length; i++) {
+            if (arr[i] > before) {
+                if (!downward && !upward) upward = true;
+                if (downward && upward) {
+                    res = Math.max(res, len);
+                    len = 0;
+                    upward = false;
+                    downward = false;
+                    i--;
+                    continue;
+                }
+                len++;
+            }
+            if (arr[i] < before) {
+                if(upward && !downward) {
+                    downward = true;
+                    len++;
+                }
+                if(downward) len++;
+            }
+            if (arr[i] == before || i == arr.length - 1) {
+                if (downward && upward) {
+                    res = Math.max(res, len);
+                    len = 0;
+                    upward = false;
+                    downward = false;
+                    continue;
+                } else {
+                    len = 0;
+                    upward = false;
+                    downward = false;
+                }
+            }
+            before = arr[i];
+        }
+        return res;
+    }
+
     public double new21Game(int n, int k, int maxPts) {
         if(k == 0 || n >= k + maxPts) return 1;
         double dp[] = new double[n + 1], Wsum = 1, res = 0;
