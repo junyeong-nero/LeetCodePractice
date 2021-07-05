@@ -11,6 +11,86 @@ public class Solution {
         }
     }
 
+//    Each character is a lower case vowel ('a', 'e', 'i', 'o', 'u')
+//    Each vowel 'a' may only be followed by an 'e'.
+//    Each vowel 'e' may only be followed by an 'a' or an 'i'.
+//    Each vowel 'i' may not be followed by another 'i'.
+//    Each vowel 'o' may only be followed by an 'i' or a 'u'.
+//    Each vowel 'u' may only be followed by an 'a'.
+
+    public int countVowelPermutation(int n) {
+        int[][] dp = new int[n + 1][5];
+        int mod = 1000000007;
+        for (int i = 1; i <= n; i++) { // length
+            for (int j = 0; j < 5; j++) { // a, e, i, o, u
+                if(i == 1) dp[i][j] = 1;
+                else {
+                    int res = 0;
+                    if (j == 0) {
+                        res = (res + dp[i - 1][1]) % mod;
+                    }
+                    else if (j == 1) {
+                        res = (res + dp[i - 1][0]) % mod;
+                        res = (res + dp[i - 1][2]) % mod;
+                    }
+                    else if (j == 2) {
+                        res = (res + dp[i - 1][0]) % mod;
+                        res = (res + dp[i - 1][1]) % mod;
+                        res = (res + dp[i - 1][3]) % mod;
+                        res = (res + dp[i - 1][4]) % mod;
+                    }
+                    else if (j == 3) {
+                        res = (res + dp[i - 1][2]) % mod;
+                        res = (res + dp[i - 1][4]) % mod;
+                    }
+                    else {
+                        res = (res + dp[i - 1][0]) % mod;
+                    }
+                    dp[i][j] = res;
+                }
+            }
+        }
+        int sum = 0;
+        for (int i = 0; i < 5; i++) sum = (sum + dp[n][i]) % mod;
+        return sum;
+    }
+
+    // "ae", "ea", "ei", "ia", "ie", "io", "iu", "oi", "ou" and "ua"
+    public int countVowelPermutation(int n, int len, int last) {
+        int res = 0;
+        if (len == 0) {
+            res += countVowelPermutation(n, len + 1, 0);
+            res += countVowelPermutation(n, len + 1, 1);
+            res += countVowelPermutation(n, len + 1, 2);
+            res += countVowelPermutation(n, len + 1, 3);
+            res += countVowelPermutation(n, len + 1, 4);
+        }
+        else if (len == n) return 1;
+        else {
+            if (last == 0) {
+                res += countVowelPermutation(n, len + 1, 1);
+            }
+            else if (last == 1) {
+                res += countVowelPermutation(n, len + 1, 0);
+                res += countVowelPermutation(n, len + 1, 2);
+            }
+            else if (last == 2) {
+                res += countVowelPermutation(n, len + 1, 0);
+                res += countVowelPermutation(n, len + 1, 1);
+                res += countVowelPermutation(n, len + 1, 3);
+                res += countVowelPermutation(n, len + 1, 4);
+            }
+            else if (last == 3) {
+                res += countVowelPermutation(n, len + 1, 2);
+                res += countVowelPermutation(n, len + 1, 4);
+            }
+            else if (last == 4) {
+                res += countVowelPermutation(n, len + 1, 0);
+            }
+        }
+        return res;
+    }
+
     public int longestMountain(int[] arr) {
         if(arr.length < 3) return 0;
         int res = 0, before, len = 0;
