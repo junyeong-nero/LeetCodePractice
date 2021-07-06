@@ -11,13 +11,29 @@ public class Solution {
         }
     }
 
-//    Each character is a lower case vowel ('a', 'e', 'i', 'o', 'u')
+
+    public int[][] matrixReshape(int[][] mat, int r, int c) {
+        int row = mat.length;
+        int column = mat[0].length;
+        int[][] res = new int[r][c];
+        int count = 0;
+        if (row * column != r * c) return mat;
+        for (int i = 0; i < row; ++i) {
+            for (int j = 0; j < column; ++j) {
+                res[count / c][count % c] = mat[i][j];
+                count++;
+            }
+        }
+        return res;
+    }
+
+
+    //    Each character is a lower case vowel ('a', 'e', 'i', 'o', 'u')
 //    Each vowel 'a' may only be followed by an 'e'.
 //    Each vowel 'e' may only be followed by an 'a' or an 'i'.
 //    Each vowel 'i' may not be followed by another 'i'.
 //    Each vowel 'o' may only be followed by an 'i' or a 'u'.
 //    Each vowel 'u' may only be followed by an 'a'.
-
     public int countVowelPermutation(int n) {
         int[][] dp = new int[n + 1][5];
         int mod = 1000000007;
@@ -56,6 +72,7 @@ public class Solution {
     }
 
     // "ae", "ea", "ei", "ia", "ie", "io", "iu", "oi", "ou" and "ua"
+
     public int countVowelPermutation(int n, int len, int last) {
         int res = 0;
         if (len == 0) {
@@ -134,6 +151,7 @@ public class Solution {
         }
         return res;
     }
+
 
     public double new21Game(int n, int k, int maxPts) {
         if(k == 0 || n >= k + maxPts) return 1;

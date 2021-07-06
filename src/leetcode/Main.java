@@ -1,13 +1,15 @@
 package leetcode;
 
+import java.util.Arrays;
+
 public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-//        System.out.println(sol.longestMountain(new int[]{2, 1, 4, 7, 3, 2, 5}));
-//        System.out.println(sol.countVowelPermutation(1));
-//        System.out.println(sol.countVowelPermutation(2));
-//        System.out.println(sol.countVowelPermutation(5));
-        System.out.println(sol.countVowelPermutation(158));
+        int[][] tmp = new int[][]{
+                {1, 2},
+                {3, 4}
+        };
+        System.out.println(Arrays.deepToString(sol.matrixReshape(tmp, 4, 1)));
     }
 }
