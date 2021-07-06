@@ -11,6 +11,18 @@ public class Solution {
         }
     }
 
+    public List<String> stringMatching(String[] words) {
+        List<String> list = new ArrayList<>();
+        for (int j = 0; j < words.length; ++j) {
+            for (int i = 0; i < words.length; ++i) {
+                if (i != j && words[i].contains(words[j])) {
+                    list.add(words[j]);
+                    break;
+                }
+            }
+        }
+        return list;
+    }
 
     public int[][] matrixReshape(int[][] mat, int r, int c) {
         int row = mat.length;

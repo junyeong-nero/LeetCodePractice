@@ -11,5 +11,9 @@ public class Main {
                 {3, 4}
         };
         System.out.println(Arrays.deepToString(sol.matrixReshape(tmp, 4, 1)));
+        System.out.println(sol.stringMatching(new String[]{"mass", "as", "hero", "superhero"}));
+        System.out.println(sol.stringMatching(new String[]{"leetcode", "et", "code"}));
+        System.out.println(sol.stringMatching(new String[]{"blue", "green", "bu"}));
+
     }
 }
