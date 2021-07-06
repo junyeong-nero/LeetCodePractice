@@ -11,6 +11,34 @@ public class Solution {
         }
     }
 
+    public int consecutiveNumbersSum_shortener(int n) {
+        int res = 0, tmp = 0;
+        for (int i = 1; i <= n; ++i) {
+            tmp += i;
+            if (tmp > n) break;
+            if ((n - tmp) % i == 0) ++res;
+        }
+        return res;
+    }
+
+    public int consecutiveNumbersSum(int n) {
+        int res = 0;
+        // x^2 + x - 2n;
+        for (int i = 1; i <= n; i++) {
+            if (i * (i + 1) > 2 * n) break;
+            if (consecutiveNumbersSum(n, i)) {
+                res++;
+            }
+        }
+        return res;
+    }
+
+    public boolean consecutiveNumbersSum(int n, int k) {
+        int tmp = n - k * (k + 1) / 2;
+        if (tmp < 0) return false;
+        return tmp % k == 0;
+    }
+
     public List<String> stringMatching(String[] words) {
         List<String> list = new ArrayList<>();
         for (int j = 0; j < words.length; ++j) {
