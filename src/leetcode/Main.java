@@ -10,10 +10,7 @@ public class Main {
                 {1, 2},
                 {3, 4}
         };
-        System.out.println(Arrays.deepToString(sol.matrixReshape(tmp, 4, 1)));
-        System.out.println(sol.consecutiveNumbersSum(79932));
 
-//        if(sol.consecutiveNumberSum(79932, 62831))
-//            System.out.println("wow");
+        System.out.println(Arrays.toString(sol.countBits(10)));
     }
 }

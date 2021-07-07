@@ -11,6 +11,12 @@ public class Solution {
         }
     }
 
+    public int[] countBits(int n) {
+        int[] arr = new int[n + 1];
+        for (int i = 1; i <= n; i++) arr[i] = arr[i >> 1] + (i & 1);
+        return arr;
+    }
+
     public int consecutiveNumbersSum_shortener(int n) {
         int res = 0, tmp = 0;
         for (int i = 1; i <= n; ++i) {
