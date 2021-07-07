@@ -11,6 +11,20 @@ public class Solution {
         }
     }
 
+    public int minSetSize(int[] arr) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int v : arr) {
+            if (!map.containsKey(v))    map.put(v, 1);
+            else                        map.put(v, map.get(v) + 1);
+        }
+        List<Integer> list = new ArrayList<>(map.values());
+        list.sort((a, b) -> b - a);
+
+        int sum = 0, res;
+        for (res = 0; sum < arr.length / 2; ++res) sum += list.get(res);
+        return res;
+    }
+
     public int[] countBits(int n) {
         int[] arr = new int[n + 1];
         for (int i = 1; i <= n; i++) arr[i] = arr[i >> 1] + (i & 1);
