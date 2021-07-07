@@ -11,6 +11,45 @@ public class Solution {
         }
     }
 
+    int[][] dp_min;
+    public int minFallingPathSum(int[][] matrix) {
+        int res = Integer.MAX_VALUE;
+        dp_min = new int[matrix.length][matrix[0].length];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                dp_min[i][j] = Integer.MAX_VALUE;
+            }
+        }
+        for (int i = 0; i < matrix[0].length; i++) {
+            minFallingPathSum(matrix, 0, i);
+            res = Math.min(res, dp_min[0][i]);
+        }
+        return res;
+    }
+
+    public void minFallingPathSum(int[][] matrix, int x, int y) {
+        if (x >= matrix.length || x < 0 || y >= matrix[0].length || y < 0)
+            return;
+
+        if (x == matrix.length - 1) {
+            dp_min[x][y] = matrix[x][y];
+            return;
+        }
+        if (dp_min[x][y] != Integer.MAX_VALUE)
+            return;
+
+        minFallingPathSum(matrix, x + 1, y - 1);
+        minFallingPathSum(matrix, x + 1, y);
+        minFallingPathSum(matrix, x + 1, y + 1);
+        int temp = dp_min[x + 1][y];
+        if(x + 1 < matrix.length && y - 1 >= 0 && y - 1 < matrix[0].length)
+            temp = Math.min(temp, dp_min[x + 1][y - 1]);
+        if(x + 1 < matrix.length && y + 1 < matrix[0].length)
+            temp = Math.min(temp, dp_min[x + 1][y + 1]);
+
+        dp_min[x][y] = matrix[x][y] + temp;
+    }
+
     public int minSetSize(int[] arr) {
         HashMap<Integer, Integer> map = new HashMap<>();
         for (int v : arr) {
