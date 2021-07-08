@@ -2,13 +2,26 @@ package leetcode;
 
 import java.util.*;
 
-
 public class Solution {
 
     public void commitForRestDay(int count) {
         for (int i = 0; i < count; i++) {
             System.out.println("today is sunday");
         }
+    }
+
+    public int subtractProductAndSum(int n) {
+        List<Integer> list = new ArrayList<>();
+        while (n != 0) {
+            list.add(n % 10);
+            n /= 10;
+        }
+        int m = 1;
+        for (int i : list) m *= i;
+
+        int s = 0;
+        for (int j : list) s += j;
+        return m - s;
     }
 
     int[][] dp_min;

@@ -13,6 +13,7 @@ public class Main {
         };
 
         int[][] temp = new int[][]{{-48}};
-        System.out.println(sol.minFallingPathSum(tmp));
+        System.out.println(sol.subtractProductAndSum(234));
+        System.out.println(sol.subtractProductAndSum(4421));
     }
 }
