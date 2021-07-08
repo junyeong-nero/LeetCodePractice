@@ -10,6 +10,57 @@ public class Solution {
         }
     }
 
+    public int maxSumSubmatrix(int[][] matrix, int k) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int res = sumSubmatrix(matrix, 0, 0, n, m);
+        return res;
+    }
+
+    public int sumSubmatrix(int[][] matrix, int sx, int sy, int ex, int ey) {
+        int sum = 0;
+        for (int x = sx; x < ex; ++x) {
+            for (int y = sy; y < ey; ++y) {
+                sum += matrix[x][y];
+            }
+        }
+        return sum;
+    }
+
+    public int kthSmallest2(int[][] matrix, int k) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[] res = new int[m*n];
+        res[0] = matrix[0][0];
+        for (int i = 1; i < m * n; i++) res[i] = matrix[i / n][i % n];
+        Arrays.sort(res);
+        return res[k-1];
+    }
+
+    public int kthSmallest(int[][] matrix, int k) {
+        int n = matrix.length;
+        int[] index = new int[n];
+        int count = 0;
+//        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < n; ++i) index[i] = 0;
+        while (count != k) {
+            int min = 0;
+            for (int i = 1; i < n; ++i) {
+                if (index[min] < n && index[i] < n && matrix[min][index[min]] >= matrix[i][index[i]])
+                    min = i;
+                if (index[min] >= n)
+                    min = i;
+            }
+            count++;
+//            list.add(matrix[min][index[min]]);
+//            System.out.println(list);
+            if(count == k) return matrix[min][index[min]];
+            index[min]++;
+        }
+//        System.out.println(list);
+        return matrix[0][0];
+    }
+
     public int subtractProductAndSum(int n) {
         List<Integer> list = new ArrayList<>();
         while (n != 0) {

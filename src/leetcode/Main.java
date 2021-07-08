@@ -7,13 +7,15 @@ public class Main {
     public static void main(String[] args) {
         Solution sol = new Solution();
         int[][] tmp = new int[][]{
-                {2, 1, 3},
-                {6, 5, 4},
-                {7, 8, 9}
+                {1, 5, 9},
+                {10, 11, 13},
+                {12, 13, 15}
+        };
+        int[][] tmp2 = new int[][]{
+                {1, 2},
+                {1, 3}
         };
 
-        int[][] temp = new int[][]{{-48}};
-        System.out.println(sol.subtractProductAndSum(234));
-        System.out.println(sol.subtractProductAndSum(4421));
+        System.out.println(sol.maxSumSubmatrix(tmp2, 24));
     }
 }
