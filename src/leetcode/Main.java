@@ -17,5 +17,6 @@ public class Main {
         };
 
         System.out.println(sol.maxSumSubmatrix(tmp2, 24));
+        sol.commitForRestDay(100);
     }
 }
