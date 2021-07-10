@@ -10,6 +10,20 @@ public class Solution {
         }
     }
 
+    public int findLengthOfLCIS(int[] arr) {
+        int res = 1, len = 1, temp = arr[0];
+        for (int i = 0; i < arr.length; ++i) {
+            if (arr[i] > temp) {
+                len++;
+            } else {
+                res = Math.max(res, len);
+                len = 1;
+            }
+            temp = arr[i];
+        }
+        return Math.max(res, len);
+    }
+
     public int lengthOfLIS(int[] arr) {
         int n = arr.length;
         int[] dp = new int[n + 1];

@@ -16,8 +16,7 @@ public class Main {
                 {1, 3}
         };
 
-        System.out.println(sol.lengthOfLIS(new int[]{10, 9, 2, 5, 3, 7, 101, 18}));
-        System.out.println(sol.lengthOfLIS(new int[]{0, 1, 0, 3, 2, 3}));
-        System.out.println(sol.lengthOfLIS(new int[]{7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7}));
+        System.out.println(sol.findLengthOfLCIS(new int[]{1, 3, 5, 4, 7}));
+        System.out.println(sol.findLengthOfLCIS(new int[]{1, 3, 5, 7}));
     }
 }
