@@ -10,6 +10,44 @@ public class Solution {
         }
     }
 
+    public int lengthOfLIS(int[] arr) {
+        int n = arr.length;
+        int[] dp = new int[n + 1];
+        for(int i = 0; i < n; i++){
+            dp[i] = 1;
+            for(int j = 0; j < i; j++){
+                if(arr[i] > arr[j]) dp[i] = Math.max(dp[i], dp[j] + 1);
+            }
+        }
+        int max = 0;
+        for(int i = 0; i < n; i++) max = Math.max(max, dp[i]);
+        return max;
+    }
+
+    int[] dp_lis;
+    public int lengthOfLIS2(int[] arr) {
+        dp_lis = new int[arr.length];
+        Arrays.fill(dp_lis, -1);
+        int res = 1;
+        for (int i = 0; i < arr.length; ++i) {
+            lengthOfLIS2(arr, i);
+            res = Math.max(res, dp_lis[i]);
+        }
+        return res;
+    }
+
+    public void lengthOfLIS2(int[] arr, int start) {
+        if (dp_lis[start] != -1) return;
+        int res = 0;
+        for (int i = start; i < arr.length; ++i) {
+            if (arr[i] > arr[start]) {
+                lengthOfLIS2(arr, i);
+                res = Math.max(res, dp_lis[i]);
+            }
+        }
+        dp_lis[start] = res + 1;
+    }
+
     public int maxSumSubmatrix(int[][] matrix, int k) {
         int n = matrix.length;
         int m = matrix[0].length;
