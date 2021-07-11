@@ -16,6 +16,7 @@ public class Main {
                 {1, 3}
         };
 
+        sol.commitForRestDay(2020);
         System.out.println(sol.findLengthOfLCIS(new int[]{1, 3, 5, 4, 7}));
         System.out.println(sol.findLengthOfLCIS(new int[]{1, 3, 5, 7}));
     }
