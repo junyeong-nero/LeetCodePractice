@@ -16,8 +16,15 @@ public class Main {
                 {1, 3}
         };
 
-        sol.commitForRestDay(2020);
-        System.out.println(sol.findLengthOfLCIS(new int[]{1, 3, 5, 4, 7}));
-        System.out.println(sol.findLengthOfLCIS(new int[]{1, 3, 5, 7}));
+//        sol.commitForRestDay(2020);
+//        System.out.println(sol.findLengthOfLCIS(new int[]{1, 3, 5, 4, 7}));
+//        System.out.println(sol.findLengthOfLCIS(new int[]{1, 3, 5, 7}));
+
+        MedianFinder m = new MedianFinder();
+        m.addNum(1);
+        m.addNum(2);
+        System.out.println(m.findMedian());
+        m.addNum(3);
+        System.out.println(m.findMedian());
     }
 }
