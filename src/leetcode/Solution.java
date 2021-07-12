@@ -10,6 +10,46 @@ public class Solution {
         }
     }
 
+    public int eraseOverlapIntervals(int[][] intervals) {
+        if (intervals.length == 0)  return 0;
+
+        Arrays.sort(intervals, (a, b) -> a[1] - b[1]);
+        int end = intervals[0][1];
+        int count = 1;
+
+        for (int i = 1; i < intervals.length; i++) {
+            if (intervals[i][0] >= end) {
+                end = intervals[i][1];
+                count++;
+            }
+        }
+        return intervals.length - count;
+    }
+
+//    public boolean overlapInterval(int[][] intervals, int n, int target_index) {
+//        boolean temp = false;
+//        if (n == intervals[target_index][1]) return true;
+//        for (int i = 0; i < intervals.length; i++) {
+//            int[] inv = intervals[i];
+//            if (i != target_index && inv[0] == n) {
+//                temp |= overlapInterval(intervals, inv[1], target_index);
+//            }
+//        }
+//        return temp;
+//    }
+//
+//    public int eraseOverlapIntervals(int[][] intervals) {
+//        int res = 0;
+//        for (int i = 0; i < intervals.length; i++) {
+//            if (overlapInterval(intervals, intervals[i][0], i)) {
+//                intervals[i][0] = Integer.MIN_VALUE;
+//                intervals[i][1] = Integer.MAX_VALUE;
+//                res++;
+//            }
+//        }
+//        return res;
+//    }
+
     public int findLengthOfLCIS(int[] arr) {
         int res = 1, len = 1, temp = arr[0];
         for (int i = 0; i < arr.length; ++i) {
