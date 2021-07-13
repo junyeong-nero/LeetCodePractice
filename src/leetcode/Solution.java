@@ -10,8 +10,86 @@ public class Solution {
         }
     }
 
-//    "badc"
-//    "baba"
+    public boolean backspaceCompare(String s, String t) {
+        Stack<Character> a = new Stack<>();
+        Stack<Character> b = new Stack<>();
+        for (int i = 0; i < s.length(); ++i) {
+            char c = s.charAt(i);
+            if (c == '#') {
+                if (!a.isEmpty()) a.pop();
+            } else {
+                a.add(c);
+            }
+        }
+
+        for (int i = 0; i < t.length(); ++i) {
+            char c = t.charAt(i);
+            if (c == '#') {
+                if (!b.isEmpty()) b.pop();
+            } else {
+                b.add(c);
+            }
+        }
+        return a.equals(b);
+    }
+
+//    public String reorganizeString(String s) {
+//        int n = s.length();
+//        int[] arr = new int[30];
+//        Arrays.fill(arr, 0);
+//        for (int i = 0; i < n; ++i) {
+//            char c = s.charAt(i);
+//            arr[c - 'a']++;
+//            if (arr[c - 'a'] > (n + 1) / 2) {
+//                return "";
+//            }
+//        }
+//        StringBuilder builder = new StringBuilder();
+//
+//        int count = 0;
+//        while (count < n) {
+//            for (int i = 0; i < 26; i++) {
+//                if (arr[i] > 0) {
+//                    builder.append((char)(i + 'a'));
+//                    arr[i]--;
+//                    count++;
+//                }
+//            }
+//        }
+//        return builder.toString();
+//    }
+
+    public String reorganizeString(String s) {
+        int n = s.length();
+        int[] arr = new int[30];
+        Arrays.fill(arr, 0);
+        for (int i = 0; i < n; ++i) {
+            char c = s.charAt(i);
+            arr[c - 'a']++;
+            if (arr[c - 'a'] > (n + 1) / 2) {
+                return "";
+            }
+        }
+        List<Integer> index = new ArrayList<>();
+        for (int i = 0; i < 30; i++) {
+            if (arr[i] > 0) index.add(i);
+        }
+        index.sort((a, b) -> arr[b] - arr[a]);
+
+        StringBuilder builder = new StringBuilder();
+        int count = 0;
+        while (count < n) {
+            for (int i = 0; i < 26; i++) {
+                int current = index.get(i);
+                if (arr[current] > 0) {
+                    builder.append((char)(current + 'a'));
+                    arr[current]--;
+                    count++;
+                }
+            }
+        }
+        return builder.toString();
+    }
 
     public boolean isIsomorphic(String s, String t) {
         return isIsomorphic2(s, t) && isIsomorphic2(t, s);

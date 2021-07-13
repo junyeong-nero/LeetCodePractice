@@ -8,6 +8,9 @@ public class Main {
         Solution sol = new Solution();
 //        System.out.println(sol.isIsomorphic("add", "egg"));
 //        System.out.println(sol.isIsomorphic("foo", "bar"));
-        System.out.println(sol.isIsomorphic("badc", "baba"));
+        System.out.println(sol.backspaceCompare("ab#c", "ad#c"));
+        System.out.println(sol.backspaceCompare("ab##", "c#d#"));
+        System.out.println(sol.backspaceCompare("a##c", "#a#c"));
+        System.out.println(sol.backspaceCompare("a#c", "b"));
     }
 }
