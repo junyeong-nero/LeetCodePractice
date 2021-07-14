@@ -10,7 +10,22 @@ public class Solution {
         }
     }
 
-    // 계단 형식으로 코인을 넣는데, 마지막 줄에 남은 코인의 갯수를 구하여라.
+    // O(log N) algorithm -> binary search?
+    public int findPeakElement(int[] arr) {
+        return findPeakElement(arr, 0, arr.length - 1);
+    }
+
+    public int findPeakElement(int[] arr, int start, int end) {
+        if (start == end) return start;
+        int mid = (start + end) / 2;
+        int left = findPeakElement(arr, start, mid);
+        int right = findPeakElement(arr, mid + 1, end);
+        if (arr[left] > arr[mid]) mid = left;
+        if (arr[right] > arr[mid]) mid = right;
+        return mid;
+    }
+
+    // 계단 형식으로 코인을 넣는데, 마지막 줄에 남은 코인의   갯수를 구하여라.
     public int arrangeCoins(int n) {
         return (int) ((-1 + Math.sqrt(1 + 8 * (long) n)) / 2);
     }
