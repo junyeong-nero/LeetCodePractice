@@ -10,6 +10,11 @@ public class Solution {
         }
     }
 
+    // 계단 형식으로 코인을 넣는데, 마지막 줄에 남은 코인의 갯수를 구하여라.
+    public int arrangeCoins(int n) {
+        return (int) ((-1 + Math.sqrt(1 + 8 * (long) n)) / 2);
+    }
+
     public boolean backspaceCompare(String s, String t) {
         Stack<Character> a = new Stack<>();
         Stack<Character> b = new Stack<>();
