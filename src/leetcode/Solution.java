@@ -10,6 +10,52 @@ public class Solution {
         }
     }
 
+    public boolean canBeTriangle(int a, int b, int c) {
+        int large = Math.max(a, Math.max(b, c));
+        // large < sum of others => large - sum of others <  90
+        int sum_of_others = a + b + c - large;
+        return large < sum_of_others;
+    }
+
+    // 2, 2, 3, 4
+    // ^        ^
+    public int triangleNumber(int[] arr) {
+        Arrays.sort(arr);
+        int res = 0;
+        for (int i = 0; i < arr.length - 2; i++) {
+            for (int j = i + 1; j < arr.length - 1; j++) {
+                for (int k = j + 1; k < arr.length; k++) {
+                    if (canBeTriangle(arr[i], arr[j], arr[k])) {
+//                        System.out.printf("%d|%d|%d%n", arr[i], arr[j], arr[k]);
+                        res++;
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        return res;
+    }
+
+    public int triangleNumber2(int[] arr) {
+        int count = 0;
+        Arrays.sort(arr);
+        for(int i = 0; i < arr.length-2; i++) {
+            if(arr[i] != 0) {
+                int k = i + 2;
+                for (int j = i + 1; j < arr.length - 1; j++) {
+                    while (k < arr.length && arr[i] + arr[j] > arr[k]) {
+                        k++;
+                    }
+                    // cause we have k++ when we get out of the loop
+                    // so we have to -1 while we count the number
+                    count += k - 1 - j;
+                }
+            }
+        }
+        return count;
+    }
+
     // 96 * 9 + 96 * 9
 
     public int numDecodings(String s) {
