@@ -10,6 +10,42 @@ public class Solution {
         }
     }
 
+    public List<List<Integer>> fourSum(int[] arr, int target) {
+        List<List<Integer>> list = new ArrayList<>();
+        Arrays.sort(arr);
+        for (int i = 0; i < arr.length - 3; i++) {
+            for (int j = i + 1; j < arr.length - 2; j++) {
+                int temp = target - (arr[i] + arr[j]);
+                int x = j + 1, y = arr.length - 1;
+                while (x < y) {
+                    if (arr[x] + arr[y] == temp) {
+                        list.add(Arrays.asList(arr[i], arr[j], arr[x], arr[y]));
+                        x++;
+                        y--;
+                        while (x + 1 < arr.length && arr[x] == arr[x - 1]) x++;
+                        while (y - 1 > 0 && arr[y] == arr[y + 1]) y--;
+                    } else if (arr[x] + arr[y] > temp) {
+                        y--;
+                    } else {
+                        x++;
+                    }
+                }
+                while (j + 1 < arr.length && arr[j] == arr[j + 1]) j++;
+            }
+            while (i + 1 < arr.length && arr[i] == arr[i + 1]) i++;
+        }
+        return list;
+    }
+
+    public boolean isPerfectSquare(int num) {
+        int i = 1;
+        while (num > 0) {
+            num -= i;
+            i += 2;
+        }
+        return num == 0;
+    }
+
     public boolean canBeTriangle(int a, int b, int c) {
         int large = Math.max(a, Math.max(b, c));
         // large < sum of others => large - sum of others <  90
@@ -2219,32 +2255,6 @@ public class Solution {
 //        return res.next;
 //    }
 //
-//    public List < List < Integer >> fourSum(int[] arr, int target) {
-//        List < List < Integer >> list = new ArrayList < > ();
-//        Arrays.sort(arr);
-//        for (int i = 0; i < arr.length - 3; i++) {
-//            for (int j = i + 1; j < arr.length - 2; j++) {
-//                int sec = target - (arr[i] + arr[j]);
-//                int x = j + 1, y = arr.length - 1;
-//                while (x < y) {
-//                    if (arr[x] + arr[y] == sec) {
-//                        list.add(Arrays.asList(arr[i], arr[j], arr[x], arr[y]));
-//                        x++;
-//                        y--;
-//                        while (x + 1 < arr.length && arr[x] == arr[x - 1]) x++;
-//                        while (y - 1 > 0 && arr[y] == arr[y + 1]) y--;
-//                    } else if (arr[x] + arr[y] > sec) {
-//                        y--;
-//                    } else {
-//                        x++;
-//                    }
-//                }
-//                while (j + 1 < arr.length && arr[j] == arr[j + 1]) j++;
-//            }
-//            while (i + 1 < arr.length && arr[i] == arr[i + 1]) i++;
-//        }
-//        return list;
-//    }
 //
 //    public int romanToInt(String s) {
 //        int[] values = {
