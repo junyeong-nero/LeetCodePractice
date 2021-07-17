@@ -10,6 +10,15 @@ public class Solution {
         }
     }
 
+    // n -> [1, 500]
+    public String generateTheString(int n) {
+        if (n % 2 == 0) {
+            return "a".repeat(n - 1) + 'b';
+        } else {
+            return "a".repeat(n);
+        }
+    }
+
     public List<List<Integer>> fourSum(int[] arr, int target) {
         List<List<Integer>> list = new ArrayList<>();
         Arrays.sort(arr);
