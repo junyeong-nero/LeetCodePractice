@@ -10,6 +10,33 @@ public class Solution {
         }
     }
 
+    public double getMedian(Queue<Integer> queue) {
+        ArrayList<Integer> arr = new ArrayList<>(queue);
+        arr.sort(Integer::compareTo);
+        if (arr.size() % 2 == 0) {
+            return ((double)arr.get(arr.size() / 2 - 1) + (double)arr.get(arr.size() / 2)) / 2.0f;
+        } else {
+            return (double) arr.get(arr.size() / 2);
+        }
+    }
+
+    public double[] medianSlidingWindow(int[] arr, int k) {
+        Queue<Integer> queue = new LinkedList<>();
+        double[] res = new double[arr.length - k + 1];
+        for (int i = 0; i < k; i++)
+            queue.add(arr[i]);
+
+        int count = 0;
+        for (int i = k; i < arr.length; i++) {
+            res[count++] = getMedian(queue);
+            queue.remove();
+            queue.add(arr[i]);
+        }
+        res[count] = getMedian(queue);
+        return res;
+    }
+
+
     public ListNode reverseKGroup(ListNode head, int k) {
         ListNode res = new ListNode();
         ListNode temp = res;
