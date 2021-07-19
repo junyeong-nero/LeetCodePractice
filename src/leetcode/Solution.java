@@ -10,6 +10,43 @@ public class Solution {
         }
     }
 
+    public ListNode reverseKGroup(ListNode head, int k) {
+        ListNode res = new ListNode();
+        ListNode temp = res;
+        int count = 0;
+        int[] arr = new int[k];
+        while (head != null) {
+            arr[count] = head.val;
+            count++;
+            head = head.next;
+            if (count == k) {
+                for (int i = k - 1; i >= 0; i--) {
+                    temp.next = new ListNode(arr[i]);
+                    temp = temp.next;
+                }
+                arr = new int[k];
+                count = 0;
+            }
+        }
+        for (int i = 0; i < k; i++) {
+            temp.next = new ListNode(arr[i]);
+            temp = temp.next;
+        }
+        return res.next;
+    }
+
+    // |arr1[i] - arr1[j]| + |arr2[i] - arr2[j]| + |i - j|
+    public int maxAbsValExpr(int[] arr1, int[] arr2) {
+        int n = arr1.length;
+        int res = Math.abs(arr1[0] - arr1[1]) + Math.abs(arr2[0] - arr2[1]) + 1;
+        for (int i = 0; i < n - 1; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                res = Math.max(res, Math.abs(arr1[i] - arr1[j]) + Math.abs(arr2[i] - arr2[j]) + Math.abs(i - j));
+            }
+        }
+        return res;
+    }
+
     // n -> [1, 500]
     public String generateTheString(int n) {
         if (n % 2 == 0) {
