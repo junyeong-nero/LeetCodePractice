@@ -10,31 +10,75 @@ public class Solution {
         }
     }
 
-    public double getMedian(Queue<Integer> queue) {
-        ArrayList<Integer> arr = new ArrayList<>(queue);
-        arr.sort(Integer::compareTo);
-        if (arr.size() % 2 == 0) {
-            return ((double)arr.get(arr.size() / 2 - 1) + (double)arr.get(arr.size() / 2)) / 2.0f;
-        } else {
-            return (double) arr.get(arr.size() / 2);
-        }
+    public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
+        if (root == null) return null;
+        if (root.val == p.val || root.val == q.val) return root;
+
+        TreeNode left = lowestCommonAncestor2(root.left, p, q);
+        TreeNode right = lowestCommonAncestor2(root.right, p, q);
+        if (left != null && right != null)
+            return root;
+        if (left != null) return left;
+        return right;
     }
 
-    public double[] medianSlidingWindow(int[] arr, int k) {
-        Queue<Integer> queue = new LinkedList<>();
-        double[] res = new double[arr.length - k + 1];
-        for (int i = 0; i < k; i++)
-            queue.add(arr[i]);
+    public double[] medianSlidingWindow(int[] nums, int k) {
+        double[] result = new double[nums.length - k + 1];
+        PriorityQueue<Integer> left = new PriorityQueue<>(1, Collections.reverseOrder());
+        PriorityQueue<Integer> right = new PriorityQueue<>(1);
 
-        int count = 0;
-        for (int i = k; i < arr.length; i++) {
-            res[count++] = getMedian(queue);
-            queue.remove();
-            queue.add(arr[i]);
+        for(int i = 0; i < nums.length; i++) {
+            if(left.size() <= right.size()) {
+                right.add(nums[i]);
+                left.add(right.remove());
+            } else {
+                left.add(nums[i]);
+                right.add(left.remove());
+            }
+
+            if(left.size() + right.size() == k) {
+                double median;
+                if(left.size() == right.size()) {
+                    median = (double) ((long)left.peek() + (long)right.peek()) / 2;
+                } else {
+                    median = (double) left.peek();
+                }
+
+                int start = i - k + 1;
+                result[start] = median;
+                if(!left.remove(nums[start])) {
+                    right.remove(nums[start]);
+                }
+            }
         }
-        res[count] = getMedian(queue);
-        return res;
+        return result;
     }
+
+//    public double getMedian(Queue<Integer> queue) {
+//        ArrayList<Integer> arr = new ArrayList<>(queue);
+//        arr.sort(Integer::compareTo);
+//        if (arr.size() % 2 == 0) {
+//            return ((double)arr.get(arr.size() / 2 - 1) + (double)arr.get(arr.size() / 2)) / 2.0f;
+//        } else {
+//            return (double) arr.get(arr.size() / 2);
+//        }
+//    }
+//
+//    public double[] medianSlidingWindow(int[] arr, int k) {
+//        Queue<Integer> queue = new LinkedList<>();
+//        double[] res = new double[arr.length - k + 1];
+//        for (int i = 0; i < k; i++)
+//            queue.add(arr[i]);
+//
+//        int count = 0;
+//        for (int i = k; i < arr.length; i++) {
+//            res[count++] = getMedian(queue);
+//            queue.remove();
+//            queue.add(arr[i]);
+//        }
+//        res[count] = getMedian(queue);
+//        return res;
+//    }
 
 
     public ListNode reverseKGroup(ListNode head, int k) {
