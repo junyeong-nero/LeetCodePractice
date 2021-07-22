@@ -10,6 +10,49 @@ public class Solution {
         }
     }
 
+    public String pushDominoes(String dominoes) {
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < dominoes.length(); i++) {
+            char c = dominoes.charAt(i);
+            if (c == '.') {
+                int left = i - 1;
+                int right = i + 1;
+                char cleft = '.';
+                char cright = '.';
+
+                while (left > 0 && dominoes.charAt(left) == '.') left--;
+                while (right < dominoes.length() && dominoes.charAt(right) == '.') right++;
+                if (left >= 0) cleft = dominoes.charAt(left);
+                if (right < dominoes.length()) cright = dominoes.charAt(right);
+
+//                System.out.printf("%d%n", i);
+//                System.out.printf("%d, %c%n", left, cleft);
+//                System.out.printf("%d, %c%n", right, cright);
+                if (cleft == '.') {
+                    if (cright == 'L') builder.append(cright);
+                    else               builder.append('.');
+                } else if (cright == '.') {
+                    if (cleft == 'R') builder.append(cleft);
+                    else              builder.append('.');
+                } else {
+                    if (cleft == 'L' && cright == 'R') builder.append('.');
+                    else if (cleft == 'R' && cright == 'L') {
+                        int dl = i - left;
+                        int dr = right - i;
+                        if (dl == dr)       builder.append('.');
+                        else if (dl > dr)   builder.append(cright);
+                        else                builder.append(cleft);
+                    }
+                    else if(cleft == 'R' && cright == 'R') builder.append('R');
+                    else if(cleft == 'L' && cright == 'L') builder.append('L');
+                }
+            } else {
+                builder.append(c);
+            }
+        }
+        return builder.toString();
+    }
+
     public TreeNode lowestCommonAncestor2(TreeNode root, TreeNode p, TreeNode q) {
         if (root == null) return null;
         if (root.val == p.val || root.val == q.val) return root;
