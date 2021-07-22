@@ -10,6 +10,82 @@ public class Solution {
         }
     }
 
+    public static class Transaction {
+        String name;
+        String city;
+        int time;
+        int amount;
+        String info;
+        boolean valid = true;
+
+        public Transaction(String info) {
+            this.info = info;
+            String[] split = info.split(",");
+            name = split[0];
+            time = Integer.parseInt(split[1]);
+            amount = Integer.parseInt(split[2]);
+            city = split[3];
+        }
+
+        public boolean isValid(Transaction other) {
+            if (other.name.equals(this.name)
+                    && Math.abs(other.time - this.time) <= 60
+                    && !other.city.equals(this.city))
+                return false;
+            else
+                return true;
+        }
+    }
+
+    public List<String> invalidTransactions(String[] transactions) {
+        int len = transactions.length;
+        Transaction[] arr = new Transaction[len];
+        for (int i = 0; i < len; i++) {
+            arr[i] = new Transaction(transactions[i]);
+        }
+        for (int i = 0; i < len; i++) {
+            if (arr[i].amount > 1000)
+                arr[i].valid = false;
+            for (int j = i + 1; j < len; j++) {
+                if (!arr[i].isValid(arr[j])) {
+                    arr[i].valid = false;
+                    arr[j].valid = false;
+                    break;
+                }
+            }
+        }
+        List<String> res = new ArrayList<>();
+        for (Transaction t : arr) {
+            if (!t.valid)
+                res.add(t.info);
+        }
+        return res;
+    }
+
+    public int oddCells(int m, int n, int[][] indices) {
+        int[][] matrix = new int[m][n];
+        for (int[] arr : indices) {
+            int row = arr[0];
+            int col = arr[1];
+
+            for (int i = 0; i < n; i++) {
+                matrix[row][i]++;
+            }
+            for (int j = 0; j < m; j++) {
+                matrix[j][col]++;
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] % 2 != 0) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
     public String pushDominoes(String dominoes) {
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < dominoes.length(); i++) {
