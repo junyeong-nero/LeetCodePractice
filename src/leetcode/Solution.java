@@ -10,6 +10,30 @@ public class Solution {
         }
     }
 
+    public int overlap(int[][] img1, int[][] img2, int x, int y) {
+        int n = img1.length;
+        int res = 0;
+        for (int i = 0; i < n - x; i++) {
+            for (int j = 0; j < n - y; j++) {
+                if (img1[i][j] == 1 && img2[i + x][j + y] == 1) {
+                    res++;
+                }
+            }
+        }
+        return res;
+    }
+
+    public int largestOverlap(int[][] img1, int[][] img2) {
+        int n = img1.length;
+        int max = -1;
+        for (int x = -n; x < n; x++) {
+            for (int y = -n; y < n; y++) {
+                max = Math.max(max, overlap(img1, img2, x, y));
+            }
+        }
+        return max;
+    }
+
     public int partitionDisjoint(int[] arr) {
         int n = arr.length;
         int max = arr[0];
