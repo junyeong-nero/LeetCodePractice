@@ -10,6 +10,24 @@ public class Solution {
         }
     }
 
+    public int partitionDisjoint(int[] arr) {
+        int n = arr.length;
+        int max = arr[0];
+        for (int i = 0; i < n; i++) {
+            max = Math.max(max, arr[i]);
+            boolean b = true;
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < max) {
+                    b = false;
+                    break;
+                }
+            }
+            if (b)
+                return i + 1;
+        }
+        return 0;
+    }
+
     public static class Transaction {
         String name;
         String city;
