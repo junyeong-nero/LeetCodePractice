@@ -10,6 +10,20 @@ public class Solution {
         }
     }
 
+        public TreeNode pruneTree(TreeNode root) {
+            if (root == null)
+                return null;
+            TreeNode left = pruneTree(root.left);
+            TreeNode right = pruneTree(root.right);
+            root.left = left;
+            root.right = right;
+            if (left == null && right == null) {
+                if (root.val == 1)  return root;
+                else                return null;
+            }
+            return root;
+        }
+
     public int overlap(int[][] img1, int[][] img2, int x, int y) {
         int n = img1.length;
         int res = 0;
