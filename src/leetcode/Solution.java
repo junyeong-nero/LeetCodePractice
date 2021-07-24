@@ -10,19 +10,39 @@ public class Solution {
         }
     }
 
-        public TreeNode pruneTree(TreeNode root) {
-            if (root == null)
-                return null;
-            TreeNode left = pruneTree(root.left);
-            TreeNode right = pruneTree(root.right);
-            root.left = left;
-            root.right = right;
-            if (left == null && right == null) {
-                if (root.val == 1)  return root;
-                else                return null;
+    public int countConsistentStrings(String allowed, String[] words) {
+        char[] temp = allowed.toCharArray();
+        ArrayList<Character> list = new ArrayList<>();
+        for (char c : temp) list.add(c);
+
+        int res = 0;
+        for (String s : words) {
+            boolean b = true;
+            char[] arr = s.toCharArray();
+            for (char c : arr) {
+                if (!list.contains(c)) {
+                    b = false;
+                }
             }
-            return root;
+            if (b)
+                res++;
         }
+        return res;
+    }
+
+    public TreeNode pruneTree(TreeNode root) {
+        if (root == null)
+            return null;
+        TreeNode left = pruneTree(root.left);
+        TreeNode right = pruneTree(root.right);
+        root.left = left;
+        root.right = right;
+        if (left == null && right == null) {
+            if (root.val == 1) return root;
+            else return null;
+        }
+        return root;
+    }
 
     public int overlap(int[][] img1, int[][] img2, int x, int y) {
         int n = img1.length;
