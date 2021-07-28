@@ -10,6 +10,60 @@ public class Solution {
         }
     }
 
+    // 1
+    // 2, 1
+    // 2, 3, 1
+    // 2, 1, 4, 3
+    // 3, 1, 2, 5, 4
+    public int[] beautifulArray(int N) {
+        int[] res = new int[N];
+        if (N == 1) {
+            return new int[]{1};
+        } else if (N == 2) {
+            return new int[]{1, 2};
+        } else {
+            int[] odds = beautifulArray((N + 1) / 2);
+            int[] even = beautifulArray(N / 2);
+            for (int i = 0; i < odds.length; i++) {
+                res[i] = odds[i] * 2 - 1;
+            }
+            for (int j = 0; j < even.length; j++) {
+                res[odds.length + j] = even[j] * 2;
+            }
+        }
+        return res;
+//        int[] res = new int[n];
+//        int target = (n + 1) / 2;
+//        if (n % 2 != 0) {
+//            res[0] = target;
+//            int temp = 1;
+//            for (int i = 1; temp < target && i < n; i += 2) {
+//                res[i++] = temp++;
+//                res[i++] = temp++;
+//            }
+//
+//            temp = n;
+//            for (int i = 3; i < n; i += 2) {
+//                res[i++] = temp--;
+//                res[i++] = temp--;
+//            }
+//        } else {
+//            int temp = 1;
+//            for (int i = 0; i < n; i += 2) {
+//                temp += 2;
+//                res[i++] = temp - 1;
+//                res[i++] = temp - 2;
+//            }
+//
+//            temp = n;
+//            for (int i = 2; temp > target && i < n; i += 2) {
+//                res[i++] = temp--;
+//                res[i++] = temp--;
+//            }
+//        }
+//        return res;
+    }
+
     public int countConsistentStrings(String allowed, String[] words) {
         char[] temp = allowed.toCharArray();
         ArrayList<Character> list = new ArrayList<>();
