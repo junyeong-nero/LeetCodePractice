@@ -1,5 +1,6 @@
 package leetcode;
 
+import javax.xml.stream.events.EndDocument;
 import java.util.*;
 
 public class Solution {
@@ -7,6 +8,51 @@ public class Solution {
     public void commitForRestDay(int count) {
         for (int i = 0; i < count; i++) {
             System.out.println("today is sunday");
+        }
+    }
+
+    public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
+        List<List<String>> temp = new ArrayList<>();
+        if (wordList.contains(endWord)) {
+            _findLadders(beginWord, endWord, wordList, List.of(beginWord), temp);
+        } else {
+            return temp;
+        }
+        int min = Integer.MAX_VALUE;
+        for (List<String> list : temp) {
+            min = Math.min(min, list.size());
+        }
+        List<List<String>> res = new ArrayList<>();
+        for (List<String> list : temp) {
+            if (list.size() == min) res.add(list);
+        }
+        return res;
+    }
+
+    public int diff(String a, String b) {
+        int len = a.length();
+        int count = 0;
+        for (int i = 0; i < len; i++) {
+            if (a.charAt(i) != b.charAt(i))
+                count++;
+        }
+        return count;
+    }
+
+    public void _findLadders(String beginWord, String endWord, List<String> wordList, List<String> current, List<List<String>> res) {
+        if (diff(beginWord, endWord) == 1) {
+            current.add(endWord);
+            res.add(current);
+            return;
+        }
+        for (String s : wordList) {
+            if (diff(beginWord, s) == 1) {
+                List<String> temp = new ArrayList<>(wordList);
+                temp.remove(s);
+                List<String> tempCurrent = new ArrayList<>(current);
+                tempCurrent.add(s);
+                _findLadders(s, endWord, temp, tempCurrent, res);
+            }
         }
     }
 
