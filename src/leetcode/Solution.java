@@ -11,6 +11,46 @@ public class Solution {
         }
     }
 
+    public int overlap(int[][] img1, int[][] img2, int x, int y) {
+        int n = img1.length;
+        int res = 0;
+        int[][] point1 = new int[2][2];
+        int[][] point2 = new int[2][2];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (img1[i][j] == 1) {
+                    point1[0][0] = Math.min(point1[0][0], i);
+                    point1[0][1] = Math.min(point1[0][1], i);
+                    point1[1][0] = Math.max(point1[1][0], i);
+                    point1[1][1] = Math.max(point1[1][1], i);
+                }
+                if (img2[i][j] == 1) {
+                    point2[0][0] = Math.min(point2[0][0], i);
+                    point2[0][1] = Math.min(point2[0][1], i);
+                    point2[1][0] = Math.max(point2[1][0], i);
+                    point2[1][1] = Math.max(point2[1][1], i);
+                }
+            }
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (img1[i][j] == 1) {
+                    point1[0][0] = Math.min(point1[0][0], i);
+                    point1[0][1] = Math.min(point1[0][1], i);
+                    point1[1][0] = Math.max(point1[1][0], i);
+                    point1[1][1] = Math.max(point1[1][1], i);
+                }
+                if (img2[i][j] == 1) {
+                    point2[0][0] = Math.min(point2[0][0], i);
+                    point2[0][1] = Math.min(point2[0][1], i);
+                    point2[1][0] = Math.max(point2[1][0], i);
+                    point2[1][1] = Math.max(point2[1][1], i);
+                }
+            }
+        }
+        return res;
+    }
+
     public int largestIsland(int[][] grid) {
         int n = grid.length;
         int areaIndex = 2;
@@ -189,30 +229,6 @@ public class Solution {
             else return null;
         }
         return root;
-    }
-
-    public int overlap(int[][] img1, int[][] img2, int x, int y) {
-        int n = img1.length;
-        int res = 0;
-        for (int i = 0; i < n - x; i++) {
-            for (int j = 0; j < n - y; j++) {
-                if (img1[i][j] == 1 && img2[i + x][j + y] == 1) {
-                    res++;
-                }
-            }
-        }
-        return res;
-    }
-
-    public int largestOverlap(int[][] img1, int[][] img2) {
-        int n = img1.length;
-        int max = -1;
-        for (int x = -n; x < n; x++) {
-            for (int y = -n; y < n; y++) {
-                max = Math.max(max, overlap(img1, img2, x, y));
-            }
-        }
-        return max;
     }
 
     public int partitionDisjoint(int[] arr) {
