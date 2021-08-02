@@ -11,6 +11,53 @@ public class Solution {
         }
     }
 
+    public int largestIsland(int[][] grid) {
+        int n = grid.length;
+        int areaIndex = 2;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        map.put(0, 0);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                int size = fillIsland(grid, i, j, areaIndex);
+                map.put(areaIndex, size);
+                areaIndex++;
+            }
+        }
+
+        int res = map.getOrDefault(2,0);
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 0) {
+                    Set<Integer> neighbors = new HashSet<>();
+                    neighbors.add(i > 0 ? grid[i - 1][j] : 0);
+                    neighbors.add(j > 0 ? grid[i][j - 1] : 0);
+                    neighbors.add(i < n - 1 ? grid[i + 1][j] : 0);
+                    neighbors.add(j < n - 1 ? grid[i][j + 1] : 0);
+                    int area = 1;
+                    for (int neighbor : neighbors) {
+                        area += map.get(neighbor);
+                    }
+                    res = Math.max(res, area);
+                }
+            }
+        }
+        return res;
+    }
+
+    public int fillIsland(int[][] grid, int x, int y, int fill) {
+        int n = grid.length;
+        if (x < 0 || x >= n || y < 0 || y >= n || grid[x][y] != 1)
+            return 0;
+        grid[x][y] = fill;
+
+        int res = 1;
+        res += fillIsland(grid, x + 1, y, fill);
+        res += fillIsland(grid, x - 1, y, fill);
+        res += fillIsland(grid, x, y + 1, fill);
+        res += fillIsland(grid, x, y - 1, fill);
+        return res;
+    }
+
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         List<List<String>> temp = new ArrayList<>();
         if (wordList.contains(endWord)) {
