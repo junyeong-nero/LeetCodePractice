@@ -19,6 +19,7 @@ public class Main {
                 {1, 1, 0, 1, 0, 0, 1, 0, 0, 0},
                 {1, 1, 0, 1, 0, 0, 1, 0, 0, 0}
         };
-        System.out.println(sol.largestIsland(img1));
+//        System.out.println(sol.largestIsland(img1));
+        System.out.println(sol.removeDuplicates("aaraabcccbbnkdn", 2));
     }
 }

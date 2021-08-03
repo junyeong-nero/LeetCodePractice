@@ -14,29 +14,30 @@ public class Solution {
     public String removeDuplicates(String s, int k) {
         int[] map = new int[26];
         Arrays.fill(map, 0);
-        int n = s.length();
-        for (int i = 0; i < n; i++) {
-            char c = s.charAt(i);
-            map[(int) (c - 'a')]++;
-        }
         ArrayList<Character> target = new ArrayList<>();
-        for (int i = 0; i < 26; i++) {
-            if (map[i] >= k) {
-                target.add((char) ('a' + i));
+        StringBuilder builder = new StringBuilder();
+        int n = s.length();
+        boolean check = true;
+        for (int i = 0; i < n; i++) {
+            int index = s.charAt(i) - 'a';
+            map[index]++;
+            if (map[index] >= k) {
+                target.add(s.charAt(i));
+                check = false;
             }
         }
-        StringBuilder builder = new StringBuilder();
+        if (check) return s;
         for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
             if (!target.contains(c))
                 builder.append(c);
         }
-        return builder.toString();
+        return removeDuplicates(builder.toString(), k);
     }
 
     public int overlap(int[][] img1, int[][] img2, int x, int y) {
-        int n = img1.length;
-        int res = 0;
+            int n = img1.length;
+            int res = 0;
         int[][] point1 = new int[2][2];
         int[][] point2 = new int[2][2];
         for (int i = 0; i < n; i++) {
