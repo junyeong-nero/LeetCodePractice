@@ -11,6 +11,24 @@ public class Solution {
         }
     }
 
+    public List<List<Integer>> subsetsWithDup(int[] arr) {
+        Set<List<Integer>> res = new HashSet<>();
+        Arrays.sort(arr);
+        subsetWithDup(arr, res, List.of(), 0);
+        return new ArrayList<>(res);
+    }
+
+    public void subsetWithDup(int[] arr, Set<List<Integer>> res, List<Integer> current, int index) {
+        if (arr.length == index) {
+            res.add(current);
+            return;
+        }
+        subsetWithDup(arr, res, current, index + 1);
+        List<Integer> temp = new ArrayList<>(current);
+        temp.add(arr[index]);
+        subsetWithDup(arr, res, temp, index + 1);
+    }
+
     public String removeDuplicates(String s, int k) {
         int[] map = new int[26];
         Arrays.fill(map, 0);
