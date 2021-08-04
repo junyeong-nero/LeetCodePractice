@@ -11,6 +11,47 @@ public class Solution {
         }
     }
 
+    public int findNthDigit(int n) {
+        long cond = 0;
+        for (int k = 1; k < 10; k++) {
+            long t = (long) Math.pow(10, k - 1);
+            // 10
+            // 2 * 90
+            // 3 * 900
+            long cond1 = k * (t * 10 - (t == 1 ? 0 : t));
+//            System.out.println("cond : " + cond1);
+            if (n >= cond + cond1) {
+                cond += cond1;
+                continue;
+            }
+            long num = (n - cond) / k + (t == 1 ? 0 : t); // nth number
+            int digit = (int) ((n - cond) % k);
+            int[] arr = new int[k];
+            for (int i = 0; i < k; i++) {
+                arr[k - 1 - i] = (int) (num % 10);
+                num /= 10;
+            }
+            System.out.println(Arrays.toString(arr));
+            return arr[digit];
+        }
+        return 0;
+    }
+
+    public int findNthDigit2(int n) {
+        int len = 1, i = 1;
+        long range = 9;
+        while(n > len * range){
+            n -= len * range;
+            len++;
+            range *= 10;
+            i *= 10;
+        }
+
+        i += (n - 1) / len;
+        String s = Integer.toString(i);
+        return Character.getNumericValue(s.charAt((n - 1) % len));
+    }
+
     public List<List<Integer>> subsetsWithDup(int[] arr) {
         Set<List<Integer>> res = new HashSet<>();
         Arrays.sort(arr);

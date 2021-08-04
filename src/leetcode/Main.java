@@ -7,6 +7,6 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        System.out.println(sol.subsetsWithDup(new int[]{4, 4, 4, 1, 4}));
+        System.out.println(sol.findNthDigit(1000000000));
     }
 }
