@@ -11,6 +11,26 @@ public class Solution {
         }
     }
 
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>> res = new ArrayList<>();
+        dfs(root, res, List.of(), 0, targetSum);
+        return res;
+    }
+
+    public void dfs(TreeNode root, List<List<Integer>> res, List<Integer> list, int current, int target) {
+        if (root == null) return;
+        List<Integer> temp = new ArrayList<>(list);
+        temp.add(root.val);
+        current += root.val;
+        if (root.right == null && root.left == null) {
+            if (current == target)
+                res.add(temp);
+            return;
+        }
+        dfs(root.right, res, temp, current, target);
+        dfs(root.left, res, temp, current, target);
+    }
+
     public int findNthDigit(int n) {
         long cond = 0;
         for (int k = 1; k < 10; k++) {
