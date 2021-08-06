@@ -1,6 +1,5 @@
 package leetcode;
 
-import javax.xml.stream.events.EndDocument;
 import java.util.*;
 
 public class Solution {
@@ -11,13 +10,52 @@ public class Solution {
         }
     }
 
+    public boolean stoneGame(int[] piles) {
+        int N = piles.length;
+
+        // dp[i+1][j+1] = the value of the game [piles[i], ..., piles[j]].
+        int[][] dp = new int[N+2][N+2];
+        for (int size = 1; size <= N; ++size)
+            for (int i = 0; i + size <= N; ++i) {
+                int j = i + size - 1;
+                int parity = (j + i + N) % 2;  // j - i - N; but +x = -x (mod 2)
+                if (parity == 1)
+                    dp[i+1][j+1] = Math.max(piles[i] + dp[i+2][j+1], piles[j] + dp[i+1][j]);
+                else
+                    dp[i+1][j+1] = Math.min(-piles[i] + dp[i+2][j+1], -piles[j] + dp[i+1][j]);
+            }
+
+        return dp[1][N] > 0;
+    }
+
+    public int stoneGame2(int[] piles) {
+        return stoneGame_t(piles, 0, 0, piles.length - 1, 0);
+    }
+
+    public int stoneGame_t(int[] piles, int len, int start, int end, int point) {
+        int n = piles.length;
+        if (len == n) return point;
+        if (start > end) return 0;
+
+        int temp = Integer.MIN_VALUE;
+        if (len % 2 == 0) {
+            temp = Math.max(temp, stoneGame_t(piles, len + 1, start + 1, end, point + piles[start]));
+            temp = Math.max(temp, stoneGame_t(piles, len + 1, start, end - 1, point + piles[end]));
+        } else {
+            temp = Math.max(temp, stoneGame_t(piles, len + 1, start + 1, end, point));
+            temp = Math.max(temp, stoneGame_t(piles, len + 1, start, end - 1, point));
+        }
+        return temp;
+    }
+
+
     public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
         List<List<Integer>> res = new ArrayList<>();
-        dfs(root, res, List.of(), 0, targetSum);
+        dfs_pathSum(root, res, List.of(), 0, targetSum);
         return res;
     }
 
-    public void dfs(TreeNode root, List<List<Integer>> res, List<Integer> list, int current, int target) {
+    public void dfs_pathSum(TreeNode root, List<List<Integer>> res, List<Integer> list, int current, int target) {
         if (root == null) return;
         List<Integer> temp = new ArrayList<>(list);
         temp.add(root.val);
@@ -27,8 +65,8 @@ public class Solution {
                 res.add(temp);
             return;
         }
-        dfs(root.right, res, temp, current, target);
-        dfs(root.left, res, temp, current, target);
+        dfs_pathSum(root.right, res, temp, current, target);
+        dfs_pathSum(root.left, res, temp, current, target);
     }
 
     public int findNthDigit(int n) {
