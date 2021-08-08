@@ -10,6 +10,15 @@ public class Solution {
         }
     }
 
+    public int toeicGame(double startPoint, double targetPoint, double rate) {
+        int count = 0;
+        while (startPoint < targetPoint) {
+            startPoint += rate;
+            count++;
+        }
+        return count;
+    }
+
     public boolean stoneGame(int[] piles) {
         int N = piles.length;
 
