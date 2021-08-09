@@ -19,21 +19,73 @@ public class Solution {
         return count;
     }
 
+    public int[][] matrixRankTransform(int[][] matrix) {
+        int M = matrix.length;
+        int N = matrix[0].length;
+        int P = Math.min(M, N);
+        int[][] res = new int[M][N];
+        for (int i = 0; i < P; i++) {
+            HashMap<Integer, Integer> map = new HashMap<>();
+            ArrayList<Integer> arr = new ArrayList<>();
+            for (int j = 0; j < N; j++) {
+                arr.add(matrix[i][j]);
+            }
+            arr.sort(Integer::compareTo);
+            int count = 1;
+            for (Integer integer : arr) {
+                if (!map.containsKey(integer)) {
+                    map.put(integer, count++);
+                }
+            }
+
+            HashMap<Integer, Integer> map2 = new HashMap<>();
+            ArrayList<Integer> arr2 = new ArrayList<>();
+            for (int j = 0; j < M; j++) {
+                arr2.add(matrix[j][i]);
+            }
+            arr2.sort(Integer::compareTo);
+            int count2 = 1;
+            for (Integer integer : arr2) {
+                if (!map2.containsKey(integer)) {
+                    map2.put(integer, count2++);
+                }
+            }
+
+            int diff = map.get(matrix[i][i]) - map2.get(matrix[i][i]);
+            if (diff > 0) {
+                for (int key : map2.keySet()) {
+                    map2.put(key, map2.get(key) + diff);
+                }
+            } else {
+                for (int key : map.keySet()) {
+                    map.put(key, map.get(key) - diff);
+                }
+            }
+
+            for (int j = i; j < N; j++) {
+                res[i][j] = map.get(matrix[i][j]);
+            }
+            for (int j = i; j < M; j++) {
+                res[j][i] = map2.get(matrix[j][i]);
+            }
+        }
+        return res;
+    }
+
     public boolean stoneGame(int[] piles) {
         int N = piles.length;
-
         // dp[i+1][j+1] = the value of the game [piles[i], ..., piles[j]].
-        int[][] dp = new int[N+2][N+2];
-        for (int size = 1; size <= N; ++size)
+        int[][] dp = new int[N + 2][N + 2];
+        for (int size = 1; size <= N; ++size) {
             for (int i = 0; i + size <= N; ++i) {
                 int j = i + size - 1;
                 int parity = (j + i + N) % 2;  // j - i - N; but +x = -x (mod 2)
                 if (parity == 1)
-                    dp[i+1][j+1] = Math.max(piles[i] + dp[i+2][j+1], piles[j] + dp[i+1][j]);
+                    dp[i + 1][j + 1] = Math.max(piles[i] + dp[i + 2][j + 1], piles[j] + dp[i + 1][j]);
                 else
-                    dp[i+1][j+1] = Math.min(-piles[i] + dp[i+2][j+1], -piles[j] + dp[i+1][j]);
+                    dp[i + 1][j + 1] = Math.min(-piles[i] + dp[i + 2][j + 1], -piles[j] + dp[i + 1][j]);
             }
-
+        }
         return dp[1][N] > 0;
     }
 
