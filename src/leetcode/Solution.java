@@ -10,6 +10,24 @@ public class Solution {
         }
     }
 
+    public String addStrings(String num1, String num2) {
+        int n = Math.max(num1.length(), num2.length());
+        int carry = 0;
+        StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < n || carry != 0; i++) {
+            int j = 0, k = 0;
+            if (num1.length() - 1 - i >= 0)
+                j = num1.charAt(num1.length() - 1 - i) - '0';
+            if (num2.length() - 1 - i >= 0)
+                k = num2.charAt(num2.length() - 1 - i) - '0';
+            int temp = j + k + carry;
+            carry = temp / 10;
+            builder.append(temp % 10);
+        }
+        builder.reverse();
+        return builder.toString();
+    }
+
     public int toeicGame(double startPoint, double targetPoint, double rate) {
         int count = 0;
         while (startPoint < targetPoint) {
@@ -53,13 +71,9 @@ public class Solution {
 
             int diff = map.get(matrix[i][i]) - map2.get(matrix[i][i]);
             if (diff > 0) {
-                for (int key : map2.keySet()) {
-                    map2.put(key, map2.get(key) + diff);
-                }
+                map2.replaceAll((k, v) -> map2.get(k) + diff);
             } else {
-                for (int key : map.keySet()) {
-                    map.put(key, map.get(key) - diff);
-                }
+                map.replaceAll((k, v) -> map.get(k) - diff);
             }
 
             for (int j = i; j < N; j++) {
