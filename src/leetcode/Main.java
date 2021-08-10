@@ -18,8 +18,7 @@ public class Main {
                 {1, 4, 5},
                 {9, 8, 2},
         };
-        System.out.println(sol.addString("11", "123"));
-        System.out.println(sol.addString("456", "77"));
-        System.out.println(sol.addString("9999999999", "999999999999"));
+        System.out.println(sol.nthUglyNumber(10));
+        System.out.println(sol.nthUglyNumber(1690));
     }
 }

@@ -10,6 +10,23 @@ public class Solution {
         }
     }
 
+    public int nthUglyNumber(int n) {
+        if (n == 1) return 1;
+        Set<Integer> set = new HashSet<>();
+        nthUglyNumber(set, 1, (int)(Math.log(n) / Math.log(3)) + 2);
+        ArrayList<Integer> list = new ArrayList<>(set);
+        list.sort(Integer::compareTo);
+        return list.get(n - 1);
+    }
+
+    public void nthUglyNumber(Set<Integer> res, int num, int count) {
+        if (count == 0) return;
+        res.add(num);
+        nthUglyNumber(res, num * 2, count - 1);
+        nthUglyNumber(res, num * 3, count - 1);
+        nthUglyNumber(res, num * 5, count - 1);
+    }
+
     public String addStrings(String num1, String num2) {
         int n = Math.max(num1.length(), num2.length());
         int carry = 0;
