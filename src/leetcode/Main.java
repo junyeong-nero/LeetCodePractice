@@ -18,9 +18,6 @@ public class Main {
                 {1, 4, 5},
                 {9, 8, 2},
         };
-        System.out.println(sol.minFlipsMonoIncr("00110"));
-        System.out.println(sol.minFlipsMonoIncr("010110"));
-        System.out.println(sol.minFlipsMonoIncr("00011000"));
-        System.out.println(sol.minFlipsMonoIncr("0101100011"));
+        System.out.println(sol.nthUglyNumber(10));
     }
 }

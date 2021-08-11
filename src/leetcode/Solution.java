@@ -10,6 +10,18 @@ public class Solution {
         }
     }
 
+    public boolean isUgly(int n) {
+        if (n == 1)
+            return true;
+        else if (n % 2 == 0)
+            return isUgly(n / 2);
+        else if (n % 3 == 0)
+            return isUgly(n / 3);
+        else if (n % 5 == 0)
+            return isUgly(n / 5);
+        return false;
+    }
+
     public int minFlipsMonoIncr(String s) {
         int ans = 0, count = 0;
         for (int i = 0; i < s.length(); i++) {
@@ -56,20 +68,21 @@ public class Solution {
     }
 
     public int nthUglyNumber(int n) {
-        if (n == 1) return 1;
-        Set<Integer> set = new HashSet<>();
-        nthUglyNumber(set, 1, (int)(Math.log(n) / Math.log(3)) + 2);
-        ArrayList<Integer> list = new ArrayList<>(set);
-        list.sort(Integer::compareTo);
-        return list.get(n - 1);
-    }
-
-    public void nthUglyNumber(Set<Integer> res, int num, int count) {
-        if (count == 0) return;
-        res.add(num);
-        nthUglyNumber(res, num * 2, count - 1);
-        nthUglyNumber(res, num * 3, count - 1);
-        nthUglyNumber(res, num * 5, count - 1);
+        int[] ugly = new int[n];
+        ugly[0] = 1;
+        int index2 = 0, index3 = 0, index5 = 0;
+        int factor2 = 2, factor3 = 3, factor5 = 5;
+        for (int i = 1; i < n; i++) {
+            int min = Math.min(Math.min(factor2, factor3), factor5);
+            ugly[i] = min;
+            if (factor2 == min)
+                factor2 = 2 * ugly[++index2];
+            if (factor3 == min)
+                factor3 = 3 * ugly[++index3];
+            if (factor5 == min)
+                factor5 = 5 * ugly[++index5];
+        }
+        return ugly[n-1];
     }
 
     public String addStrings(String num1, String num2) {
