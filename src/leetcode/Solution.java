@@ -10,6 +10,51 @@ public class Solution {
         }
     }
 
+    public int minFlipsMonoIncr(String s) {
+        int ans = 0, count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) == '0') {
+                ans = Math.min(ans + 1, count);
+            } else {
+                count++;
+            }
+        }
+        return ans;
+    }
+
+    public int minFlipsMonoIncr2(String s) {
+        int N = s.length();
+        int count = 0;
+        int[] a = new int[N + 1];
+        for (int i = 0; i < N; i++) {
+            int c = s.charAt(i) - '0';
+            a[i] = count;
+            if (c == 1)
+                count++;
+        }
+        a[N] = count;
+
+        int[] b = new int[N + 1];
+        count = 0;
+        for (int i = N - 1; i >= 0; i--) {
+            int c = s.charAt(i) - '0';
+            if (c == 0) {
+                count++;
+            }
+            b[i] = count;
+        }
+        b[N] = 0;
+
+        int res = a[N] + b[N];
+        for (int i = 0; i < N; i++) {
+            int c = s.charAt(i) - '0';
+            if (c == 1) {
+                res = Math.min(res, a[i] + b[i]);
+            }
+        }
+        return res;
+    }
+
     public int nthUglyNumber(int n) {
         if (n == 1) return 1;
         Set<Integer> set = new HashSet<>();
