@@ -10,6 +10,26 @@ public class Solution {
         }
     }
 
+    public boolean canReorderDoubled(int[] arr) {
+        Integer[] temp = new Integer[arr.length];
+        for (int i = 0; i < arr.length; ++i) temp[i] = arr[i];
+
+        Arrays.sort(temp, Comparator.comparingInt(Math::abs));
+        HashMap<Integer, Integer> map = new HashMap<>();
+        for (int x : arr) {
+            map.put(x, map.getOrDefault(x, 0) + 1);
+        }
+        for (int n : temp) {
+            if (map.get(n) == 0) continue;
+            if (map.getOrDefault(2 * n, 0) <= 0) {
+                return false;
+            }
+            map.put(n, map.get(n) - 1);
+            map.put(2 * n, map.get(2 * n) - 1);
+        }
+        return true;
+    }
+
     public boolean isUgly(int n) {
         if (n == 1)
             return true;

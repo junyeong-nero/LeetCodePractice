@@ -18,6 +18,9 @@ public class Main {
                 {1, 4, 5},
                 {9, 8, 2},
         };
-        System.out.println(sol.nthUglyNumber(10));
+        int[] arr = new int[]{
+                4, -2, 2, -4
+        };
+        System.out.println(sol.canReorderDoubled(arr));
     }
 }
