@@ -1,5 +1,6 @@
 package leetcode;
 
+import javax.swing.*;
 import java.util.*;
 
 public class Solution {
@@ -8,6 +9,23 @@ public class Solution {
         for (int i = 0; i < count; i++) {
             System.out.println("today is sunday");
         }
+    }
+
+    public String stringSort(String str) {
+        char[] arr = str.toCharArray();
+        Arrays.sort(arr);
+        return new String(arr);
+    }
+
+    public List<List<String>> groupAnagrams2(String[] arr) {
+        HashMap<String, List<String>> map = new HashMap<>();
+        for (String s : arr) {
+            String key = stringSort(s);
+            if (!map.containsKey(key))
+                map.put(key, new ArrayList<>());
+            map.get(key).add(s);
+        }
+        return new ArrayList<>(map.values());
     }
 
     public boolean canReorderDoubled(int[] arr) {

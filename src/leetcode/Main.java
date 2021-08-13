@@ -21,6 +21,9 @@ public class Main {
         int[] arr = new int[]{
                 4, -2, 2, -4
         };
-        System.out.println(sol.canReorderDoubled(arr));
+        String[] strs = new String[]{
+                "eat", "tea", "tan", "ate", "nat", "bat"
+        };
+        System.out.println(sol.groupAnagrams2(strs));
     }
 }
