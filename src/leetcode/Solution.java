@@ -11,6 +11,63 @@ public class Solution {
         }
     }
 
+    public void setZeroes(int[][] matrix) {
+        int n = matrix.length;
+        int m = matrix[0].length;
+
+        boolean clearTopCol = false;
+
+        for (int i = 0; i < n; i++) {
+            if (matrix[i][0] == 0) {
+                clearTopCol = true;
+            }
+            for (int j = 1; j < m; j++) {
+                if (matrix[i][j] == 0) {
+                    matrix[0][j] = 0;
+                    matrix[i][0] = 0;
+                }
+            }
+        }
+
+        for (int i = n - 1; i >= 0; i--) {
+            for (int j = 1; j < m; j++) {
+                if (matrix[i][0] == 0 || matrix[0][j] == 0) {
+                    matrix[i][j] = 0;
+                }
+            }
+        }
+
+        if (clearTopCol) {
+            for (int j = 0; j < n; j++) {
+                matrix[j][0] = 0;
+            }
+        }
+
+    }
+
+    public void setZeroes2(int[][] matrix) {
+        int M = matrix.length;
+        int N = matrix[0].length;
+        ArrayList<Integer> a = new ArrayList<>();
+        ArrayList<Integer> b = new ArrayList<>();
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                if (matrix[i][j] == 0) {
+                    a.add(i);
+                    b.add(j);
+                }
+            }
+        }
+        for (int n : a) {
+            matrix[n] = new int[N];
+        }
+        for (int n : b) {
+            for (int i = 0; i < M; i++) {
+                matrix[i][n] = 0;
+            }
+        }
+    }
+
     public String stringSort(String str) {
         char[] arr = str.toCharArray();
         Arrays.sort(arr);
