@@ -11,6 +11,18 @@ public class Solution {
         }
     }
 
+    public int nthUglyNumber(int n, int a, int b, int c) {
+        int count = 0;
+        int current = 1;
+        while (count < n) {
+            if (current % a == 0 || current % b == 0 || current % c == 0) {
+                count++;
+            }
+            current++;
+        }
+        return current - 1;
+    }
+
     public void setZeroes(int[][] matrix) {
         int n = matrix.length;
         int m = matrix[0].length;

@@ -24,6 +24,7 @@ public class Main {
         String[] strs = new String[]{
                 "eat", "tea", "tan", "ate", "nat", "bat"
         };
-        System.out.println(sol.groupAnagrams2(strs));
+        System.out.println(sol.nthUglyNumber(3, 2, 3, 5));
+        sol.commitForRestDay(20210815);
     }
 }
