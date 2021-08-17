@@ -11,6 +11,19 @@ public class Solution {
         }
     }
 
+    public int goodNodes(TreeNode root) {
+        return goodNodes(root, Integer.MIN_VALUE);
+    }
+
+    public int goodNodes(TreeNode root, int current) {
+        int res = root.val >= current ? 1 : 0;
+        int temp = Math.max(root.val, current);
+        if (root.right != null) res += goodNodes(root.right, temp);
+        if (root.left != null) res += goodNodes(root.left, temp);
+        return res;
+    }
+
+    
     public int nthUglyNumber(int n, int a, int b, int c) {
         int count = 0;
         int current = 1;
