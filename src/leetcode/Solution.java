@@ -11,6 +11,84 @@ public class Solution {
         }
     }
 
+    public int[][] spiralMatrixIII(int rows, int cols, int rStart, int cStart) {
+        int addition = 1;
+        boolean isSecond = false;
+        int[][] res = new int[rows][cols];
+        int[][] walk = new int[rows * cols][2];
+        int count = 1;
+        res[rStart][cStart] = count;
+        walk[0] = new int[]{rStart, cStart};
+        int x = rStart;
+        int y = cStart;
+        int dir = 0;
+        int[] move_x = new int[]{
+                0, 1, 0, -1
+        };
+        int[] move_y = new int[]{
+                1, 0, -1, 0
+        };
+        while (count < rows * cols) {
+            for (int i = 0; i < addition; i++) {
+                x += move_x[dir];
+                y += move_y[dir];
+                if (x >= 0 && x < rows && y >= 0 && y < cols) {
+                    walk[count] = new int[]{x, y};
+                    res[x][y] = ++count;
+                }
+
+            }
+            dir = (dir + 1) % 4;
+            if (isSecond){
+                isSecond = false;
+                addition++;
+            } else {
+                isSecond = true;
+            }
+        }
+        return walk;
+    }
+
+    public boolean circularArrayLoop(int[] nums) {
+        int n = nums.length;
+        boolean[] global_visited = new boolean[n];
+        Arrays.fill(global_visited, false);
+
+        for (int i = 0; i < n; i++) {
+            if (!global_visited[i]) {
+                boolean[] local_visited = new boolean[n];
+                Arrays.fill(local_visited, false);
+                int loop = 0;
+                int j = i;
+                boolean isPositive = nums[j] > 0;
+
+                do {
+                    if (isPositive && nums[j] < 0) break;
+                    if (!isPositive && nums[j] > 0) break;
+                    local_visited[j] = true;
+                    global_visited[j] = true;
+                    j = (j + nums[j]) % n;
+                    j = (j + n) % n;
+                    loop++;
+                } while (!local_visited[j] && !global_visited[j]);
+
+                // check loop contain pos neg element both
+                // 1st condition => curr jth ele is part of global_visited array
+                // 2nd condition => curr jth ele is have self loop
+
+                int k = (j + nums[j]) % n;
+                k = (k + n) % n;
+
+                if (!local_visited[j] || j == k)
+                    continue;
+
+                if (loop >= 1)
+                    return true;
+            }
+        }
+        return false;
+    }
+
     public int goodNodes(TreeNode root) {
         return goodNodes(root, Integer.MIN_VALUE);
     }
