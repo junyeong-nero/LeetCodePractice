@@ -1,9 +1,81 @@
 package leetcode;
 
-import javax.swing.*;
 import java.util.*;
 
 public class Solution {
+
+    public int maxProduct(TreeNode root) {
+        long total = sumTree(root);
+        return (int) (maxProductDps(root, total) % 1000000007);
+    }
+
+    public long maxProductDps(TreeNode root, long total) {
+        int M = 1000000007;
+        long temp = 0L;
+        if (root.right != null) {
+            long right = root.right.val;
+            temp = Math.max(temp, (total - right) * right);
+            temp = Math.max(temp, maxProductDps(root.right, total));
+        }
+        if (root.left != null) {
+            long left = root.left.val;
+            temp = Math.max(temp, (total - left) * left);
+            temp = Math.max(temp, maxProductDps(root.left, total));
+        }
+        return temp;
+    }
+
+    public long sumTree(TreeNode root) {
+        if (root == null) return 0;
+        long temp = root.val;
+        temp = (temp + sumTree(root.left));
+        temp = (temp + sumTree(root.right));
+        root.val = (int) temp;
+        return temp;
+    }
+
+    public int numDecodings(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        int n = s.length();
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = s.charAt(0) != '0' ? 1 : 0;
+        for (int i = 2; i <= n; i++) {
+            int first = Integer.valueOf(s.substring(i - 1, i));
+            int second = Integer.valueOf(s.substring(i - 2, i));
+            if (first >= 1 && first <= 9) {
+                dp[i] += dp[i - 1];
+            }
+            if (second >= 10 && second <= 26) {
+                dp[i] += dp[i - 2];
+            }
+        }
+        return dp[n];
+    }
+
+    public int numDecodings_m(String s) {
+        int a = -1, b = -1;
+        int temp = 0, len = s.length();
+        if (len >= 1) a = s.charAt(0) - '0';
+        if (len >= 2) b = s.charAt(1) - '0';
+        int n = 10 * a + b;
+
+        if (len == 0)
+            return 0;
+        if (len == 1)
+            return a >= 1 && a <= 9 ? 1 : 0;
+        if (len == 2) {
+            temp += n >= 10 && n <= 26 ? 1 : 0;
+        }
+
+        if (a >= 1 && a <= 9)
+            temp += numDecodings(s.substring(1));
+        if (b != -1 && n >= 10 && n <= 26)
+            temp += numDecodings(s.substring(2));
+        return temp;
+    }
 
     public void commitForRestDay(int count) {
         for (int i = 0; i < count; i++) {
@@ -1058,7 +1130,7 @@ public class Solution {
 
     // 96 * 9 + 96 * 9
 
-    public int numDecodings(String s) {
+    public int numDecodings3(String s) {
         /* initial conditions */
         long[] dp = new long[s.length()+1];
         dp[0] = 1;
@@ -1131,18 +1203,18 @@ public class Solution {
                 if (c2 == '*') k = 15;
             }
 
-            int temp2 = numDecodings(s.substring(0, 1));
-            temp2 *= numDecodings(s.substring(1));
+            int temp2 = numDecodings2(s.substring(0, 1));
+            temp2 *= numDecodings2(s.substring(1));
             return k + temp2;
 
         } else if (n > 2) {
             int temp;
-            temp = numDecodings(s.substring(0, 1));
-            temp *= numDecodings(s.substring(1));
+            temp = numDecodings2(s.substring(0, 1));
+            temp *= numDecodings2(s.substring(1));
 
             int temp2;
-            temp2 = numDecodings(s.substring(0, 2));
-            temp2 *= numDecodings(s.substring(2));
+            temp2 = numDecodings2(s.substring(0, 2));
+            temp2 *= numDecodings2(s.substring(2));
 
             return temp + temp2;
         }
@@ -1535,8 +1607,7 @@ public class Solution {
 
     public boolean consecutiveNumbersSum(int n, int k) {
         int tmp = n - k * (k + 1) / 2;
-        if (tmp < 0) return false;
-        return tmp % k == 0;
+        if (tmp < 0) return false;        return tmp % k == 0;
     }
 
     public List<String> stringMatching(String[] words) {

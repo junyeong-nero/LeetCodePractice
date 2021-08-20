@@ -10,7 +10,9 @@ public class Main {
         int[] arr = new int[]{
                 2, -1, 1, 2, 2
         };
-        System.out.println(Arrays.deepToString(sol.spiralMatrixIII(1, 4, 0, 0)));
-        System.out.println(Arrays.deepToString(sol.spiralMatrixIII(5, 6, 1, 4)));
+        System.out.println(sol.numDecodings("12"));
+        System.out.println(sol.numDecodings("226"));
+        System.out.println(sol.numDecodings("0"));
+        System.out.println(sol.numDecodings("06"));
     }
 }
