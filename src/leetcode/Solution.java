@@ -4,6 +4,92 @@ import java.util.*;
 
 public class Solution {
 
+    public final int N = 9;
+
+    public void solveSudoku(char[][] board) {
+        solve(board, 0, 0);
+    }
+
+    public boolean solve(char[][] board, int r, int c) {
+        if (c == N && r == N - 1) {
+            return true;
+        }
+        if (c == N) {
+            c = 0;
+            r++;
+        }
+        if (board[r][c] != '.') {
+            return solve(board, r, c + 1);
+        }
+        for (int i = 1; i <= N; i++) {
+            if (isSafe(board, r, c, String.valueOf(i).charAt(0))) {
+                board[r][c] = String.valueOf(i).charAt(0);
+                if (solve(board, r, c + 1)) {
+                    return true;
+                }
+            }
+            board[r][c] = '.';
+        }
+        return false;
+    }
+
+    public boolean isSafe(char[][] board, int r, int c, char num) {
+        for (int i = 0; i < N; i++) if (board[r][i] == num) return false; // check row
+        for (int i = 0; i < N; i++) if (board[i][c] == num) return false; // check column
+        int start_row = r - r % 3, start_col = c - c % 3; // check sub-grid
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                if (board[i + start_row][j + start_col] == num) return false;
+        return true;
+    }
+
+    public boolean isValidSudoku(char[][] board) {
+        // check horizontal line
+        for (int i = 0; i < 9; i++) {
+            int[] map = new int[10];
+            Arrays.fill(map, 0);
+            for (int j = 0; j < 9; j++) {
+                if (board[i][j] == '.') continue;
+                int c = board[i][j] - '0';
+                if (map[c] == 0) map[c]++;
+                else
+                    return false;
+            }
+        }
+
+        // check vertical line
+        for (int i = 0; i < 9; i++) {
+            int[] map = new int[10];
+            Arrays.fill(map, 0);
+            for (int j = 0; j < 9; j++) {
+                if (board[j][i] == '.') continue;
+                int c = board[j][i] - '0';
+                if (map[c] == 0) map[c]++;
+                else
+                    return false;
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                int sx = i * 3, sy = j * 3;
+                int[] map = new int[10];
+                Arrays.fill(map, 0);
+                for (int a = 0; a < 3; a++) {
+                    for (int b = 0; b < 3; b++) {
+                        int x = sx + a, y = sy + b;
+                        if (board[x][y] == '.') continue;
+                        int c = board[x][y] - '0';
+                        if (map[c] == 0) map[c]++;
+                        else
+                            return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
     public int maxProduct(TreeNode root) {
         long total = sumTree(root);
         return (int) (maxProductDps(root, total) % 1000000007);
