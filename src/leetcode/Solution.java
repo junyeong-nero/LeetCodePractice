@@ -4,8 +4,40 @@ import java.util.*;
 
 public class Solution {
 
-    public final int N = 9;
+    public int rectangleArea(int[][] arr) {
+        long res = 0;
+        int N = arr.length;
+        int M = 1000000007;
+        int comb = 1;
+        for (int r = 1; r <= N; r++) {
+            long temp = 0;
+            comb *= N - r + 1;
+            comb /= r;
+            for (int i = 0; i < N; i++) {
+                int[] point = new int[] {
+                        Integer.MIN_VALUE,
+                        Integer.MIN_VALUE,
+                        Integer.MAX_VALUE,
+                        Integer.MAX_VALUE,
+                };
+                for (int j = i; j < i + r; j++) {
+                    int k = j % N;
+                    point[0] = Math.max(point[0], arr[k][0]);
+                    point[1] = Math.max(point[1], arr[k][1]);
+                    point[2] = Math.min(point[2], arr[k][2]);
+                    point[3] = Math.min(point[3], arr[k][3]);
+                }
+                long dx = point[2] - point[0];
+                long dy = point[3] - point[1];
+                if (dx < 0 || dy < 0) continue;
+                temp = (temp + dx * dy);
+            }
+            res = (res + temp * (r % 2 == 0 ? -1 : 1));
+        }
+        return (int)(res % M);
+    }
 
+    public final int N = 9;
     public void solveSudoku(char[][] board) {
         solve(board, 0, 0);
     }

@@ -7,12 +7,9 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        int[] arr = new int[]{
-                2, -1, 1, 2, 2
+        int[][] arr = new int[][]{
+                {0, 0, 2, 2}, {1, 0, 2, 3}, {1, 0, 3, 1}
         };
-        System.out.println(sol.numDecodings("12"));
-        System.out.println(sol.numDecodings("226"));
-        System.out.println(sol.numDecodings("0"));
-        System.out.println(sol.numDecodings("06"));
+        System.out.println(sol.rectangleArea(arr));
     }
 }
