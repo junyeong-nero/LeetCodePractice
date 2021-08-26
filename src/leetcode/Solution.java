@@ -4,6 +4,52 @@ import java.util.*;
 
 public class Solution {
 
+    public List<List<Integer>> combinationSum3(int[] candidates, int target) {
+        List<List<Integer>> res = new ArrayList<>();
+        combinationSum_dfs(res, candidates, 0, target, new ArrayList<>());
+        return res;
+    }
+
+
+    public void combinationSum_dfs(List<List<Integer>> result, int[] candidates, int index, int target, ArrayList<Integer> list) {
+        if (target < 0) return;
+        if (target == 0) {
+            result.add(new ArrayList<>(list)); // why we have to re-generate ArrayList?
+            return;
+        }
+        for (int i = index; i < candidates.length; i++) {
+            list.add(candidates[i]);
+            combinationSum_dfs(result, candidates, i, target - candidates[i], list);
+            list.remove(list.size() - 1);
+        }
+    }
+
+    Map<Integer, Boolean> map = new HashMap();
+
+    public boolean judgeSquareSum(int c) {
+        if (c == 0)
+            return false;
+
+        for (int i = 1; i <= Math.ceil(Math.sqrt(c)); i++) {
+            int num = c - i * i;
+            int t = (int) Math.sqrt(num);
+            if (t * t == num)
+                return true;
+        }
+        return false;
+    }
+
+    public boolean judgeSquareSum2(int c) {
+        for (int i = 1; i <= Math.ceil(Math.sqrt(c)); i++) {
+            int num = c - i * i;
+            if (num == 0 || map.containsKey(num) || judgeSquareSum(num)) {
+                map.put(num, true);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public int rectangleArea(int[][] arr) {
         long res = 0;
         int N = arr.length;
@@ -14,7 +60,7 @@ public class Solution {
             comb *= N - r + 1;
             comb /= r;
             for (int i = 0; i < N; i++) {
-                int[] point = new int[] {
+                int[] point = new int[]{
                         Integer.MIN_VALUE,
                         Integer.MIN_VALUE,
                         Integer.MAX_VALUE,
@@ -34,10 +80,11 @@ public class Solution {
             }
             res = (res + temp * (r % 2 == 0 ? -1 : 1));
         }
-        return (int)(res % M);
+        return (int) (res % M);
     }
 
     public final int N = 9;
+
     public void solveSudoku(char[][] board) {
         solve(board, 0, 0);
     }
@@ -229,7 +276,7 @@ public class Solution {
 
             }
             dir = (dir + 1) % 4;
-            if (isSecond){
+            if (isSecond) {
                 isSecond = false;
                 addition++;
             } else {
@@ -291,7 +338,7 @@ public class Solution {
         return res;
     }
 
-    
+
     public int nthUglyNumber(int n, int a, int b, int c) {
         int count = 0;
         int current = 1;
@@ -470,7 +517,7 @@ public class Solution {
             if (factor5 == min)
                 factor5 = 5 * ugly[++index5];
         }
-        return ugly[n-1];
+        return ugly[n - 1];
     }
 
     public String addStrings(String num1, String num2) {
@@ -636,7 +683,7 @@ public class Solution {
     public int findNthDigit2(int n) {
         int len = 1, i = 1;
         long range = 9;
-        while(n > len * range){
+        while (n > len * range) {
             n -= len * range;
             len++;
             range *= 10;
@@ -691,8 +738,8 @@ public class Solution {
     }
 
     public int overlap(int[][] img1, int[][] img2, int x, int y) {
-            int n = img1.length;
-            int res = 0;
+        int n = img1.length;
+        int res = 0;
         int[][] point1 = new int[2][2];
         int[][] point2 = new int[2][2];
         for (int i = 0; i < n; i++) {
@@ -743,7 +790,7 @@ public class Solution {
             }
         }
 
-        int res = map.getOrDefault(2,0);
+        int res = map.getOrDefault(2, 0);
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (grid[i][j] == 0) {
@@ -1024,21 +1071,20 @@ public class Solution {
 //                System.out.printf("%d, %c%n", right, cright);
                 if (cleft == '.') {
                     if (cright == 'L') builder.append(cright);
-                    else               builder.append('.');
+                    else builder.append('.');
                 } else if (cright == '.') {
                     if (cleft == 'R') builder.append(cleft);
-                    else              builder.append('.');
+                    else builder.append('.');
                 } else {
                     if (cleft == 'L' && cright == 'R') builder.append('.');
                     else if (cleft == 'R' && cright == 'L') {
                         int dl = i - left;
                         int dr = right - i;
-                        if (dl == dr)       builder.append('.');
-                        else if (dl > dr)   builder.append(cright);
-                        else                builder.append(cleft);
-                    }
-                    else if(cleft == 'R' && cright == 'R') builder.append('R');
-                    else if(cleft == 'L' && cright == 'L') builder.append('L');
+                        if (dl == dr) builder.append('.');
+                        else if (dl > dr) builder.append(cright);
+                        else builder.append(cleft);
+                    } else if (cleft == 'R' && cright == 'R') builder.append('R');
+                    else if (cleft == 'L' && cright == 'L') builder.append('L');
                 }
             } else {
                 builder.append(c);
@@ -1064,8 +1110,8 @@ public class Solution {
         PriorityQueue<Integer> left = new PriorityQueue<>(1, Collections.reverseOrder());
         PriorityQueue<Integer> right = new PriorityQueue<>(1);
 
-        for(int i = 0; i < nums.length; i++) {
-            if(left.size() <= right.size()) {
+        for (int i = 0; i < nums.length; i++) {
+            if (left.size() <= right.size()) {
                 right.add(nums[i]);
                 left.add(right.remove());
             } else {
@@ -1073,17 +1119,17 @@ public class Solution {
                 right.add(left.remove());
             }
 
-            if(left.size() + right.size() == k) {
+            if (left.size() + right.size() == k) {
                 double median;
-                if(left.size() == right.size()) {
-                    median = (double) ((long)left.peek() + (long)right.peek()) / 2;
+                if (left.size() == right.size()) {
+                    median = (double) ((long) left.peek() + (long) right.peek()) / 2;
                 } else {
                     median = (double) left.peek();
                 }
 
                 int start = i - k + 1;
                 result[start] = median;
-                if(!left.remove(nums[start])) {
+                if (!left.remove(nums[start])) {
                     right.remove(nums[start]);
                 }
             }
@@ -1230,8 +1276,8 @@ public class Solution {
     public int triangleNumber2(int[] arr) {
         int count = 0;
         Arrays.sort(arr);
-        for(int i = 0; i < arr.length-2; i++) {
-            if(arr[i] != 0) {
+        for (int i = 0; i < arr.length - 2; i++) {
+            if (arr[i] != 0) {
                 int k = i + 2;
                 for (int j = i + 1; j < arr.length - 1; j++) {
                     while (k < arr.length && arr[i] + arr[j] > arr[k]) {
@@ -1250,50 +1296,50 @@ public class Solution {
 
     public int numDecodings3(String s) {
         /* initial conditions */
-        long[] dp = new long[s.length()+1];
+        long[] dp = new long[s.length() + 1];
         dp[0] = 1;
-        if(s.charAt(0) == '0'){
+        if (s.charAt(0) == '0') {
             return 0;
         }
         dp[1] = (s.charAt(0) == '*') ? 9 : 1;
 
         /* bottom up method */
-        for(int i = 2; i <= s.length(); i++){
-            char first = s.charAt(i-2);
-            char second = s.charAt(i-1);
+        for (int i = 2; i <= s.length(); i++) {
+            char first = s.charAt(i - 2);
+            char second = s.charAt(i - 1);
 
             // For dp[i-1]
-            if(second == '*'){
-                dp[i] += 9*dp[i-1];
-            }else if(second > '0'){
-                dp[i] += dp[i-1];
+            if (second == '*') {
+                dp[i] += 9 * dp[i - 1];
+            } else if (second > '0') {
+                dp[i] += dp[i - 1];
             }
 
             // For dp[i-2]
-            if(first == '*'){
-                if(second == '*'){
-                    dp[i] += 15*dp[i-2];
-                }else if(second <= '6'){
-                    dp[i] += 2*dp[i-2];
-                }else{
-                    dp[i] += dp[i-2];
+            if (first == '*') {
+                if (second == '*') {
+                    dp[i] += 15 * dp[i - 2];
+                } else if (second <= '6') {
+                    dp[i] += 2 * dp[i - 2];
+                } else {
+                    dp[i] += dp[i - 2];
                 }
-            }else if(first == '1' || first == '2'){
-                if(second == '*'){
-                    if(first == '1'){
-                        dp[i] += 9*dp[i-2];
-                    }else{ // first == '2'
-                        dp[i] += 6*dp[i-2];
+            } else if (first == '1' || first == '2') {
+                if (second == '*') {
+                    if (first == '1') {
+                        dp[i] += 9 * dp[i - 2];
+                    } else { // first == '2'
+                        dp[i] += 6 * dp[i - 2];
                     }
-                }else if( ((first-'0')*10 + (second-'0')) <= 26 ){
-                    dp[i] += dp[i-2];
+                } else if (((first - '0') * 10 + (second - '0')) <= 26) {
+                    dp[i] += dp[i - 2];
                 }
             }
 
             dp[i] %= 1000000007;
         }
         /* Return */
-        return (int)dp[s.length()];
+        return (int) dp[s.length()];
     }
 
     public int numDecodings2(String s) {
@@ -1725,7 +1771,8 @@ public class Solution {
 
     public boolean consecutiveNumbersSum(int n, int k) {
         int tmp = n - k * (k + 1) / 2;
-        if (tmp < 0) return false;        return tmp % k == 0;
+        if (tmp < 0) return false;
+        return tmp % k == 0;
     }
 
     public List<String> stringMatching(String[] words) {
