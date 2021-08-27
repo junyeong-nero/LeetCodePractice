@@ -4,12 +4,83 @@ import java.util.*;
 
 public class Solution {
 
+    public int findLUSlength(String[] strs) {
+        int maxLen = -1;
+        for (int i = 0; i < strs.length; i++) {
+            boolean flag = false;
+            int currLen = strs[i].length();
+            for (int j = 0; j < strs.length; j++) {
+                if (i != j && check(strs[i], strs[j])) {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag) {
+                maxLen = Math.max(maxLen, currLen);
+            }
+        }
+        return maxLen;
+    }
+
+    public boolean check(String str1, String str2){
+        int A = str1.length() , B = str2.length() ;
+        while(A > 0 && B > 0)
+        {
+            int i = str1.length() - A ;
+            int j = str2.length() - B ;
+            if(str1.charAt(i) == str2.charAt(j))
+            {
+                A-- ;
+            }
+            B-- ;
+        }
+        return A == 0;
+    }
+
+    public int findLUSlength2(String[] strs) {
+        int len = -1;
+        for (int i = 0; i < strs.length; i++) {
+            String s = strs[i];
+            if (s == null || s.length() <= len) continue;
+            for (int j = 0; j < strs.length; j++) {
+                if (i == j || strs[j] == null) continue;
+                if (!UScheck2(s, strs[j])) {
+                    len = s.length();
+                    break;
+                } else {
+                    strs[i] = null;
+                    strs[j] = null;
+                }
+            }
+        }
+        return len;
+    }
+
+    public boolean UScheck2(String target, String other) {
+        int count = 0;
+        char[] arr = target.toCharArray();
+        char[] otherArr = other.toCharArray();
+//        if (arr.length > otherArr.length) return false;
+        for (int i = 0; i < arr.length; i++) {
+            int j = count;
+            while (j < otherArr.length) {
+                if (otherArr[j] == arr[i]) {
+                    count = j + 1;
+                    break;
+                }
+                j++;
+            }
+            if (j == otherArr.length)
+                return false;
+        }
+        return true;
+    }
+
     public List<List<Integer>> combinationSum3(int[] candidates, int target) {
         List<List<Integer>> res = new ArrayList<>();
         combinationSum_dfs(res, candidates, 0, target, new ArrayList<>());
         return res;
     }
-
 
     public void combinationSum_dfs(List<List<Integer>> result, int[] candidates, int index, int target, ArrayList<Integer> list) {
         if (target < 0) return;
