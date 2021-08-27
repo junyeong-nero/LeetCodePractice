@@ -41,16 +41,16 @@ public class Solution {
         int len = -1;
         for (int i = 0; i < strs.length; i++) {
             String s = strs[i];
-            if (s == null || s.length() <= len) continue;
+            int l = s.length();
+            if (l <= len) continue;
+            boolean temp = false;
             for (int j = 0; j < strs.length; j++) {
-                if (i == j || strs[j] == null) continue;
-                if (!UScheck2(s, strs[j])) {
-                    len = s.length();
-                    break;
-                } else {
-                    strs[i] = null;
-                    strs[j] = null;
+                if (i != j && UScheck2(s, strs[j])) {
+                    temp = true;
                 }
+            }
+            if (!temp) {
+                len = l;
             }
         }
         return len;
