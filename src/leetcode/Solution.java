@@ -4,6 +4,93 @@ import java.util.*;
 
 public class Solution {
 
+    Integer prev = null;
+    int min = Integer.MAX_VALUE;
+
+    public int getMinimumDifference2(TreeNode root) {
+        if (root == null) return min;
+        getMinimumDifference2(root.left);
+        if (prev != null) {
+            min = Math.min(min, Math.abs(prev - root.val));
+        }
+        prev = root.val;
+        getMinimumDifference2(root.right);
+        return min;
+    }
+
+    public int getMinimumDifference(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        getMinimumDifferenceDFS(root, list);
+        list.sort(Integer::compareTo);
+        System.out.println(list);
+        int res = Integer.MAX_VALUE;
+        for (int i = 0; i < list.size() - 1; i++) {
+            res = Math.min(res, Math.abs(list.get(i) - list.get(i + 1)));
+        }
+        return res;
+    }
+
+    public void getMinimumDifferenceDFS(TreeNode root, List<Integer> list) {
+        if (root == null)
+            return;
+        list.add(root.val);
+        getMinimumDifferenceDFS(root.left, list);
+        getMinimumDifferenceDFS(root.right, list);
+    }
+
+//    public int getMinimumDifference2(TreeNode root) {
+//        int value = Integer.MAX_VALUE;
+//        if (root.left != null) {
+//            value = Math.min(value, Math.abs(root.val - root.left.val));
+//            value = Math.min(value, getMinimumDifference2(root.left));
+//        }
+//        if (root.right != null) {
+//            value = Math.min(value, Math.abs(root.val - root.right.val));
+//            value = Math.min(value, getMinimumDifference2(root.right));
+//        }
+//        return value;
+//    }
+
+    public int minPatches(int[] nums, int n) {
+        long patch = 1, sum = 0;
+        int ans = 0, i = 0;
+        int len = nums.length;
+        while (sum < n) {
+            while (i < len && patch >= nums[i]) {
+                sum = sum + nums[i++];
+            }
+            if (sum < patch) {   //if number to be added is smaller then current sum then no need of adding.
+                sum = sum + patch;       // here patching is done and then sum get updated.
+                ans++;
+            }
+            patch = sum + 1;
+        }
+        return ans;
+    }
+
+    public int minPatches2(int[] nums, int n) {
+        int res = 0;
+        long sum = nums[0];
+        // 1, 5, 31, 33
+        // 1, 2, 3, 5, 31, 33 -> 11
+        // 1, 2, 3, 5, 12| 31, 33 -> 23
+        // 1, 2, 3, 5, 12, 13| 31, 33 -> 36 + 36
+        // 1, 2, 3, 5, 12, 13, 31| 33| -> 72 + 72
+        for (int i = 1; i < nums.length; i++) {
+            for (long j = sum + 1; j < nums[i]; j++) {
+                sum += j;
+                if (sum >= nums[i])
+                    break;
+            }
+            sum += nums[i];
+        }
+        while (sum < n) {
+            sum *= 2;
+            res++;
+        }
+        return res;
+    }
+
     public int findLUSlength(String[] strs) {
         int maxLen = -1;
         for (int i = 0; i < strs.length; i++) {
