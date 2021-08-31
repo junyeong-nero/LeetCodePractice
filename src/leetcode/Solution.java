@@ -4,7 +4,24 @@ import java.util.*;
 
 public class Solution {
 
-
+    public int[] decrypt(int[] code, int k) {
+        int N = code.length;
+        int[] res = new int[N];
+        if (k != 0) {
+            for (int i = 0; i < N; i++) {
+                int sum = 0;
+                int m = (k > 0 ? 1 : -1);
+                for (int j = 1; j <= k * m; j++) {
+                    int d = (i + j * m) % N;
+                    sum += code[d];
+                }
+                res[i] = sum;
+            }
+        } else {
+            Arrays.fill(res, 0);
+        }
+        return res;
+    }
 
     public int findMin(int[] nums) {
         return findMinDPS(nums, 0, nums.length - 1);
