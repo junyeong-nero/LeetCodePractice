@@ -4,6 +4,104 @@ import java.util.*;
 
 public class Solution {
 
+    public long numberOfWeeks(int[] milestones) {
+        int i, j, max = -1, n = milestones.length;
+        long sum = 0;
+        for (i = 0; i < n; i++) {
+            max = Math.max(max, milestones[i]);
+            sum += milestones[i];
+        }
+        long x = sum - max;
+        if (max - x > 1)
+            return sum - (max - x - 1);
+        return sum;
+    }
+
+    public static long numberOfWeeks3(int[] milestones) {
+        long sum = 0;
+        for (int n : milestones) sum += n;
+        return numberOfWeeksDFS3(milestones, sum);
+    }
+
+    public static long numberOfWeeksDFS3(int[] milestones, long sum) {
+        int N = milestones.length;
+        Arrays.sort(milestones);
+        System.out.println(Arrays.toString(milestones));
+        long cur = milestones[N - 1];
+        long res = 0;
+        if (cur > sum || cur == 0) return 0;
+        if (cur - 1 <= sum - cur) {
+            long target = cur - 1;
+            for (int j = N - 2; j >= 0 && target > 0; j--) {
+                if (milestones[j] <= target) {
+                    target -= milestones[j];
+                    milestones[j] = 0;
+                } else {
+                    milestones[j] -= target;
+                    target = 0;
+                }
+            }
+            milestones[N - 1] = 0;
+            res += cur * 2 - 1;
+            sum -= cur * 2 - 1;
+        } else {
+            long temp = (sum - cur) * 2 + 1;
+            res += temp;
+            sum -= temp;
+        }
+        return res + numberOfWeeksDFS(milestones, sum);
+    }
+
+//    public static long numberOfWeeks(int[] milestones) {
+//        int N = milestones.length;
+//        Arrays.sort(milestones);
+//        long sum = 0, res = 0;
+//        for (int n : milestones) sum += n;
+//        for (int i = N - 1; i >= 0; i--) {
+//            long cur = milestones[i];
+//            if (cur > sum || cur == 0) continue;
+//            if (cur - 1 <= sum - cur) {
+//                long target = cur - 1;
+//                for (int j = i - 1; j >= 0 && target > 0; j--) {
+//                    if (milestones[j] <= target) {
+//                        target -= milestones[j];
+//                        milestones[j] = 0;
+//                    } else {
+//                        milestones[j] -= target;
+//                        target = 0;
+//                    }
+//                }
+//                res += cur * 2 - 1;
+//                sum -= cur * 2 - 1;
+//            } else {
+//                long temp = (sum - cur) * 2 + 1;
+//                res += temp;
+//                sum -= temp;
+//                break;
+//            }
+//        }
+//        return res;
+//    }
+
+    public static long numberOfWeeks2(int[] milestones) {
+        Arrays.sort(milestones);
+        return numberOfWeeksDPS2(milestones, -1);
+    }
+
+    public static long numberOfWeeksDPS2(int[] milestones, int prev) {
+        int N = milestones.length;
+        long res = Integer.MIN_VALUE;
+        for (int i = 0; i < N; i++) {
+            if (i != prev && milestones[i] > 0) {
+                milestones[i]--;
+                res = Math.max(res, numberOfWeeksDPS2(milestones, i));
+                milestones[i]++;
+            }
+        }
+        if (res == Integer.MIN_VALUE) return 0;
+        return res + 1;
+    }
+
     public int[] decrypt(int[] code, int k) {
         int N = code.length;
         int[] res = new int[N];
