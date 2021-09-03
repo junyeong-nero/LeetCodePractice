@@ -4,6 +4,123 @@ import java.util.*;
 
 public class Solution {
 
+    public int crossProduct(int[] p, int[] q, int[] r) {
+        return (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1]);
+    }
+
+    public boolean distance(int[] p, int[] i, int[] q) {
+        boolean a = i[0] >= p[0] && i[0] <= q[0] || i[0] <= p[0] && i[0] >= q[0];
+        boolean b = i[1] >= p[1] && i[1] <= q[1] || i[1] <= p[1] && i[1] >= q[1];
+        return a && b;
+    }
+
+    // Jarvis Algorithm
+    public int[][] outerTrees(int[][] points) {
+        //use set because this algorithm might try to insert duplicate point.
+        HashSet<int[]> set = new HashSet<>();
+        if (points.length < 4) {
+            for (int[] p : points)
+                set.add(p);
+            return set.toArray(new int[set.size()][]);
+        }
+        int left_most = 0;
+        for (int i = 0; i < points.length; i++)
+            if (points[i][0] < points[left_most][0])
+                left_most = i;
+
+        //first find leftmost point to start the march.
+        int p = left_most;
+        do {
+            int q = (p + 1) % points.length;
+
+            for (int i = 0; i < points.length; i++) {
+                //if crossProduct < 0 it means points[i] is on right of current point -> nextPoint. Make him the next point.
+                if (crossProduct(points[p], points[i], points[q]) < 0) {
+                    q = i;
+                }
+            }
+
+            for (int i = 0; i < points.length; i++) {
+                if (i != p && i != q && crossProduct(points[p], points[i], points[q]) == 0 && distance(points[p], points[i], points[q])) {
+                    // if more than one points are on the rightmost, then insert all the collinear points in the set
+                    set.add(points[i]);
+                }
+            }
+
+            set.add(points[q]);
+            p = q;
+        }
+        while (p != left_most);
+        return set.toArray(new int[set.size()][]);
+    }
+
+    public boolean outerLine(int x, int y, int x2, int y2, int curx, int cury) {
+        if (x == x2)
+            return curx >= x;
+        else if (y == y2)
+            return cury >= y;
+        else {
+            return (float) cury - y >= (float) (y2 - y) / (x2 - x) * (curx - x);
+        }
+    }
+
+    public int[][] outerTrees2(int[][] trees) {
+        ArrayList<int[]> polar = new ArrayList<>(4);
+        for (int i = 0; i < 4; i++) polar.add(trees[0]);
+        int[] coord = new int[]{
+                trees[0][0], // max
+                trees[0][1],
+                trees[0][0], // min
+                trees[0][1]
+        };
+
+        for (int[] tree : trees) {
+            if (tree[0] > coord[0]) {
+                polar.set(0, tree); // maxX
+                coord[0] = tree[0];
+            }
+            if (tree[1] > coord[1]) {
+                polar.set(1, tree); // maxY
+                coord[1] = tree[1];
+            }
+            if (tree[0] < coord[2]) {
+                polar.set(2, tree); // maxX
+                coord[2] = tree[0];
+            }
+            if (tree[1] < coord[3]) {
+                polar.set(3, tree); // maxX
+                coord[3] = tree[1];
+            }
+        }
+
+        ArrayList<int[]> filteredTrees = new ArrayList<>();
+        for (int[] tree : trees) {
+            if (!polar.contains(tree))
+                filteredTrees.add(tree);
+        }
+
+        ArrayList<int[]> list = new ArrayList<>();
+        for (int i = 0; i < 4; i++) {
+            int[] c1 = polar.get(i);
+            int[] c2 = polar.get((i + 1) % 4);
+            ArrayList<int[]> list1 = new ArrayList<>();
+            ArrayList<int[]> list2 = new ArrayList<>();
+            for (int[] tree : filteredTrees) {
+                if (outerLine(c1[0], c1[1], c2[0], c2[1], tree[0], tree[1])) {
+                    list1.add(tree);
+                } else {
+                    list2.add(tree);
+                }
+            }
+            if (list1.size() >= list2.size())
+                list.addAll(list2);
+            else
+                list.addAll(list1);
+        }
+
+        return list.toArray(new int[list.size()][2]);
+    }
+
     public long numberOfWeeks(int[] milestones) {
         int i, j, max = -1, n = milestones.length;
         long sum = 0;
@@ -49,7 +166,7 @@ public class Solution {
             res += temp;
             sum -= temp;
         }
-        return res + numberOfWeeksDFS(milestones, sum);
+        return res + numberOfWeeksDFS3(milestones, sum);
     }
 
 //    public static long numberOfWeeks(int[] milestones) {
