@@ -4,6 +4,94 @@ import java.util.*;
 
 public class Solution {
 
+    ArrayList<Integer>[] adj;
+    int [] ans;
+    int [] subtree;
+
+    int dfs(int v, int par, ArrayList<Integer> adj[], int[] subtree) {
+        int curr = 0;
+        int n = adj[v].size();
+        for (int i = 0; i < n; i++) {
+            int u = adj[v].get(i);
+            if (u != par) {
+                curr += dfs(u, v, adj, subtree);
+                curr += subtree[u];
+                subtree[v] += subtree[u];
+            }
+        }
+        return curr;
+    }
+
+    void dfs(int v, int par, ArrayList<Integer> adj[], int[] ans, int[] subtree, int now) {
+        ans[v] = now;
+        for (Integer u : adj[v]) {
+            if (u != par)
+                dfs(u, v, adj, ans, subtree, now - subtree[u] + subtree[0] - subtree[u]);
+        }
+    }
+    
+    public int[] sumOfDistancesInTree(int n, int[][] edges) {
+        adj = new ArrayList[n];
+        for (int i = 0; i < n; i++) {
+            adj[i] = new ArrayList<Integer>();
+        }
+        ans = new int[n];
+        subtree = new int[n];
+        Arrays.fill(subtree, 1);
+
+        int m = edges.length;
+        for (int i = 0; i < m; i++) {
+            adj[edges[i][0]].add(edges[i][1]);
+            adj[edges[i][1]].add(edges[i][0]);
+        }
+        int root_ans = dfs(0, -1, adj, subtree); // consider node 0 as root, so no parent
+        dfs(0, -1, adj, ans, subtree, root_ans);
+        return ans;
+    }
+
+    public int[] sumOfDistancesInTree2(int N, int[][] edges) {
+        int[][] res = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                res[i][j] = (i == j ? 0 : Integer.MAX_VALUE);
+            }
+        }
+        for (int[] e : edges) {
+            res[e[0]][e[1]] = 1;
+            res[e[1]][e[0]] = 1;
+        }
+
+        for (int i = 0; i < N; i++)
+            sumOfDistanceInTreeDPS(res, i, i, 0);
+
+        int[] a = new int[N];
+        for (int i = 0; i < N; i++) {
+            int sum = 0;
+            for (int j = 0; j < N; j++) {
+                if (i == j) continue;
+                sum += res[i][j];
+            }
+            a[i] = sum;
+        }
+        return a;
+    }
+
+    public void sumOfDistanceInTreeDPS(int[][] res, int target, int current, int distance) {
+        int N = res.length;
+        for (int i = 0; i < N; i++) {
+            if (i == target) continue;
+            if (res[current][i] != Integer.MAX_VALUE) {
+                int temp = distance + res[current][i];
+                int prev = res[target][i];
+                if (temp < prev) {
+                    res[target][i] = temp;
+                    res[i][target] = temp;
+                    sumOfDistanceInTreeDPS(res, target, i, temp);
+                }
+            }
+        }
+    }
+
     public int crossProduct(int[] p, int[] q, int[] r) {
         return (q[1] - p[1]) * (r[0] - q[0]) - (q[0] - p[0]) * (r[1] - q[1]);
     }
