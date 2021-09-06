@@ -4,6 +4,49 @@ import java.util.*;
 
 public class Solution {
 
+    public int continuousSubarraySum(int[] nums, int k) {
+        int sum = 0, result = 0;
+        Map<Integer, Integer> preSum = new HashMap<>();
+        preSum.put(0, 1);
+
+        for (int i = 0; i < nums.length; i++) {
+            sum += nums[i];
+            if (preSum.containsKey(sum - k)) {
+                result += preSum.get(sum - k);
+            }
+            preSum.put(sum, preSum.getOrDefault(sum, 0) + 1);
+        }
+
+        return result;
+    }
+
+    // -1, 1, 0
+    // 3
+
+    // -1, 1
+    // -1, 1, 0
+    // 0
+
+    public int subarraySum(int[] nums, int k) {
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i : nums) list.add(i);
+        return subarraySum(list, 0, k) + (k == 0 ? -1 : 0);
+    }
+
+    public int subarraySum(ArrayList<Integer> arr, int index, int target) {
+        int res = target == 0 ? 1 : 0;
+        int N = arr.size();
+        for (int i = index; i < N; i++) {
+            int temp = arr.get(i);
+            if (temp != Integer.MAX_VALUE) {
+                arr.set(i, Integer.MAX_VALUE);
+                res += subarraySum(arr, i, target - temp);
+                arr.set(i, temp);
+            }
+        }
+        return res;
+    }
+
     ArrayList<Integer>[] adj;
     int [] ans;
     int [] subtree;
@@ -29,7 +72,7 @@ public class Solution {
                 dfs(u, v, adj, ans, subtree, now - subtree[u] + subtree[0] - subtree[u]);
         }
     }
-    
+
     public int[] sumOfDistancesInTree(int n, int[][] edges) {
         adj = new ArrayList[n];
         for (int i = 0; i < n; i++) {

@@ -10,6 +10,9 @@ public class Main {
         int[][] arr = new int[][]{
                 {0, 1}, {0, 2}, {2, 3}, {2, 4}, {2, 5}
         };
-        System.out.println(Arrays.toString(sol.sumOfDistancesInTree(6, arr)));
+        int[] a = new int[]{
+                -1, 1, 0
+        };
+        System.out.println(sol.continuousSubarraySum(a, 0));
     }
 }
