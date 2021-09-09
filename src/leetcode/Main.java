@@ -13,6 +13,14 @@ public class Main {
         int[] a = new int[]{
                 -1, 1, 0
         };
-        System.out.println(sol.continuousSubarraySum(a, 0));
+        MyQueue myQueue = new MyQueue(10);
+        for (int i = 1; i <= 10; i++) {
+            myQueue.push(i);
+        }
+        System.out.println(myQueue);
+        System.out.println(myQueue.pop());
+        System.out.println(myQueue.pop());
+        System.out.println(myQueue.pop());
+
     }
 }
