@@ -24,15 +24,14 @@ public class MyQueue {
 		return res;
 	}
 
-	public int push(int num) {
+	public void push(int num) {
 		rear++;
 		arr.set(rear, num);
-		return num;
 	}
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		for (int i = front + 1; i <= rear; i++) builder.append(arr.get(i % size) + " ");
+		for (int i = front + 1; i <= rear; i++) builder.append(arr.get(i % size)).append(" ");
 		return builder.toString();
 	}
 }
