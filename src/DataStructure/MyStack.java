@@ -12,6 +12,14 @@ public class MyStack {
 		this.size = capacity;
 	}
 
+	public boolean isEmpty() {
+		return lastIndex == -1;
+	}
+
+	public boolean isFull() {
+		return lastIndex == size;
+	}
+
 	public void push(int data) {
 		arr[++lastIndex] = data;
 	}

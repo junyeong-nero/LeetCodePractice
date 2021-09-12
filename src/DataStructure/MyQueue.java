@@ -4,14 +4,23 @@ import java.util.ArrayList;
 
 public class MyQueue {
 	int[] arr;
-	int size = 0;
+	int size;
 	int front = 0;
 	int rear = 0;
+	int curSize = 0;
 
 	public MyQueue(int capacity) {
 		this.size = capacity + 1;
 		this.arr = new int[size + 1];
 		for (int i = 0; i <= size; i++) arr[i] = 0;
+	}
+
+	public boolean isEmpty() {
+		return curSize == 0;
+	}
+
+	public boolean isFull() {
+		return curSize == size;
 	}
 
 	public int get(int index) {
@@ -21,12 +30,14 @@ public class MyQueue {
 	public int pop() {
 		int res = this.get(0);
 		front++;
+		curSize--;
 		arr[front] = 0;
 		return res;
 	}
 
 	public void push(int num) {
 		rear++;
+		curSize++;
 		arr[rear] = num;
 	}
 
