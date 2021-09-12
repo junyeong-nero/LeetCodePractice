@@ -1,4 +1,4 @@
-package leetcode;
+package DataStructure;
 
 import java.util.ArrayList;
 
