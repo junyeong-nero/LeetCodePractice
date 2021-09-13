@@ -1,7 +1,5 @@
 package DataStructure;
 
-import java.util.ArrayList;
-
 public class MyQueue {
 	int[] arr;
 	int size;

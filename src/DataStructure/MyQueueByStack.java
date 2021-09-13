@@ -28,6 +28,14 @@ public class MyQueueByStack {
 		}
 	}
 
+	public boolean isFull() {
+		return size == L.size + R.size;
+	}
+
+	public boolean isEmpty() {
+		return L.size + R.size == 0;
+	}
+
 	public String toString() {
 		return "Left : " + L.toString() +
 				"\nRight : " + R.toString();
