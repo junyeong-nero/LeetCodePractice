@@ -11,7 +11,7 @@ public class MyQueue {
 
 	public MyQueue(int capacity) {
 		this.size = capacity + 1;
-		this.arr = new int[size + 1];
+		this.arr = new int[capacity + 2];
 		for (int i = 0; i <= size; i++) arr[i] = 0;
 	}
 
