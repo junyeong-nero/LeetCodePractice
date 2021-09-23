@@ -8,35 +8,33 @@ import java.util.*;
 
 public class Solution {
 
+    public int maxLengthTemp = Integer.MIN_VALUE;
     public int maxLength(List<String> arr) {
-        List<Integer> list = new ArrayList<>(26);
-        for (int i = 0; i < 26; i++) list.add(0);
-        return maxLengthDFS(arr, list, 0);
+        maxLengthDFS(arr, 0, "", arr.size());
+        return maxLengthTemp;
     }
 
-    public int maxLengthDFS(List<String> arr, List<Integer> chars, int len) {
-        int num = len;
-        List<String> filtered = new ArrayList<>();
-        for (String s : arr) {
-            boolean b = true;
-            for (char c : s.toCharArray()) {
-                int t = c - 'a';
-                if (chars.get(t) != 0) {
-                    b = false;
-                    break;
-                }
-            }
-            if (b) {
-                filtered.add(s);
+    public void maxLengthDFS(List<String> arr, int index, String current, int len) {
+        for (int i = index; i < len; i++) {
+            String s = arr.get(i);
+            if (isPossible(current, s)) {
+                maxLengthTemp = Math.max(maxLengthTemp, current.length() + s.length());
+                maxLengthDFS(arr, index + 1, current + s, len);
             }
         }
-        for (String s : filtered) {
-            List<Integer> copy = new ArrayList<>(chars);
-            for (char c : s.toCharArray())
-                copy.set(c - 'a', 1);
-            num = Math.max(num, maxLengthDFS(filtered, copy, len + s.length()));
+    }
+
+    public boolean isPossible(String s1, String s2) {
+        int num1 = 0, num2 = 0;
+        for (char c : s1.toCharArray()) {
+            if ((num1 & (1 << (c - 'a'))) != 0) return false;
+            num1 = num1 | (1 << (c - 'a'));
         }
-        return num;
+        for (char c : s2.toCharArray()) {
+            if ((num2 & (1 << (c - 'a'))) != 0) return false;
+            num2 = num2 | (1 << (c - 'a'));
+        }
+        return (num1 & num2) == 0;
     }
 
     public double Postfix(String str) {
