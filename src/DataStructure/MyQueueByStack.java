@@ -15,6 +15,11 @@ public class MyQueueByStack {
 		R.push(element);
 	}
 
+	public int top() {
+		front();
+		return L.top();
+	}
+
 	public int pop() {
 		front();
 		return L.pop();
@@ -40,5 +45,4 @@ public class MyQueueByStack {
 		return "Left : " + L.toString() +
 				"\nRight : " + R.toString();
 	}
-
 }

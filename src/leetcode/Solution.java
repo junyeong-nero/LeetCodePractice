@@ -1,11 +1,68 @@
 package leetcode;
 
 import DataStructure.ListNode;
+import DataStructure.MyStack;
 import DataStructure.TreeNode;
 
 import java.util.*;
 
 public class Solution {
+
+    public int maxLength(List<String> arr) {
+        List<Integer> list = new ArrayList<>(26);
+        for (int i = 0; i < 26; i++) list.add(0);
+        return maxLengthDFS(arr, list, 0);
+    }
+
+    public int maxLengthDFS(List<String> arr, List<Integer> chars, int len) {
+        int num = len;
+        List<String> filtered = new ArrayList<>();
+        for (String s : arr) {
+            boolean b = true;
+            for (char c : s.toCharArray()) {
+                int t = c - 'a';
+                if (chars.get(t) != 0) {
+                    b = false;
+                    break;
+                }
+            }
+            if (b) {
+                filtered.add(s);
+            }
+        }
+        for (String s : filtered) {
+            List<Integer> copy = new ArrayList<>(chars);
+            for (char c : s.toCharArray())
+                copy.set(c - 'a', 1);
+            num = Math.max(num, maxLengthDFS(filtered, copy, len + s.length()));
+        }
+        return num;
+    }
+
+    public double Postfix(String str) {
+        char[] arr = str.toCharArray();
+        ArrayList < Double > values = new ArrayList < > ();
+        for (char c: arr) {
+            if (c >= '0' && c <= '9')
+                values.add((double)(c - '0'));
+            else {
+                double input = 0;
+                int size = values.size();
+                if (c == '+')
+                    input = values.get(size - 2) + values.get(size - 1);
+                if (c == '*')
+                    input = values.get(size - 2) * values.get(size - 1);
+                if (c == '/')
+                    input = values.get(size - 2) / values.get(size - 1);
+                if (c == '-')
+                    input = values.get(size - 2) - values.get(size - 1);
+
+                values.set(size - 2, input);
+                values.remove(size - 1);
+            }
+        }
+        return values.get(0);
+    }
 
     public int continuousSubarraySum(int[] nums, int k) {
         int sum = 0, result = 0;

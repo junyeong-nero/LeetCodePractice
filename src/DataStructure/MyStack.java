@@ -24,9 +24,18 @@ public class MyStack {
 		arr[++lastIndex] = data;
 	}
 
+	public int get(int index) {
+		return arr[index];
+	}
+
 	public int pop() {
 		return arr[lastIndex--];
 	}
+
+	public int top() {
+		return arr[lastIndex];
+	}
+
 
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

@@ -33,6 +33,10 @@ public class MyQueue {
 		return res;
 	}
 
+	public int top() {
+		return this.get(0);
+	}
+
 	public void push(int num) {
 		rear++;
 		curSize++;
