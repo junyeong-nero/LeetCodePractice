@@ -8,6 +8,28 @@ import java.util.*;
 
 public class Solution {
 
+    public String breakPalindrome(String str) {
+        int len = str.length();
+        if (len == 1)
+            return "";
+        char[] arr = str.toCharArray();
+        int index = -1;
+        for (int i = 0; i < len / 2; i++) {
+            if (arr[i] != 'a') {
+                arr[i] = 'a';
+                index = -1;
+                break;
+            } else {
+                if (index == -1)
+                    index = i;
+            }
+        }
+        if (index != -1)
+            arr[len - 1 - index] = 'b';
+        return String.valueOf(arr);
+    }
+
+
     public int maxLengthTemp = Integer.MIN_VALUE;
     public int maxLength(List<String> arr) {
         maxLengthDFS(arr, 0, "", arr.size());
