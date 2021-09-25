@@ -13,15 +13,18 @@ public class Main {
         Solution sol = new Solution();
         // 0,1],[0,2],[2,3],[2,4],[2,5
         int[][] arr = new int[][]{
-                {0, 1}, {0, 2}, {2, 3}, {2, 4}, {2, 5}
+                {0, 0, 0},
+                {1, 1, 0},
+                {0, 0, 0},
+                {0, 1, 1},
+                {0, 0, 0}
         };
+
         int[] a = new int[]{
                 -1, 1, 0
         };
 
-        System.out.println(sol.maxLength(List.of("cha", "r", "act", "ers")));
-        System.out.println(sol.maxLength(List.of("abcdefghijklmnopqrstuvwxyz")));
-        System.out.println(sol.maxLength(List.of("a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p")));
+        System.out.println(sol.shortestPath(arr, 1));
 
 //        MyQueue myQueue = new MyQueue(10);
 //        MyQueueByStack myQueueByStack = new MyQueueByStack(10);

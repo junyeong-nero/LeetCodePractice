@@ -8,6 +8,36 @@ import java.util.*;
 
 public class Solution {
 
+    public int shortestPath(int[][] grid, int k) {
+        return shortestPath(grid, grid.length, grid[0].length, k,0, 0);
+    }
+
+    public int shortestPath(int[][] grid, int m, int n, int obs, int x, int y) {
+        int[] dx = {1, -1, 0, 0};
+        int[] dy = {0, 0, 1, -1};
+        int temp = Integer.MAX_VALUE;
+        if (x == m - 1 && y == n - 1)
+            return 0;
+        if (x < 0 || y < 0 || x >= m || y >= n)
+            return -1;
+        if (grid[x][y] == 1) {
+            if (obs == 0)
+                return -1;
+            obs--;
+        }
+
+        for (int i = 0; i < 4; i++) {
+            int sx = x + dx[i];
+            int sy = y + dy[i];
+            int res = shortestPath(grid, m, n, obs, sx, sy);
+            if (res != -1)
+                temp = Math.min(temp, res);
+        }
+        if (temp == Integer.MAX_VALUE) return -1;
+        else
+            return temp + 1;
+    }
+
     public String breakPalindrome(String str) {
         int len = str.length();
         if (len == 1)
