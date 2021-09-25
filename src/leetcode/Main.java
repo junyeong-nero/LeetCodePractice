@@ -20,11 +20,27 @@ public class Main {
                 {0, 0, 0}
         };
 
+        int[][] arr2 = new int[][]{
+                {0, 1, 1},
+                {1, 1, 1},
+                {1, 0, 0},
+        };
+
+        int[][] arr3 = new int[][]{
+                {0, 1, 0, 1},
+                {0, 1, 0, 0},
+                {0, 0, 1, 0},
+                {1, 0, 0, 1},
+                {0, 1, 0, 0}
+        };
+
         int[] a = new int[]{
                 -1, 1, 0
         };
 
         System.out.println(sol.shortestPath(arr, 1));
+        System.out.println(sol.shortestPath(arr2, 1));
+        System.out.println(sol.shortestPath(arr3, 18));
 
 //        MyQueue myQueue = new MyQueue(10);
 //        MyQueueByStack myQueueByStack = new MyQueueByStack(10);

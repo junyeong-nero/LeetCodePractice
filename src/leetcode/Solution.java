@@ -16,16 +16,21 @@ public class Solution {
         int[] dx = {1, -1, 0, 0};
         int[] dy = {0, 0, 1, -1};
         int temp = Integer.MAX_VALUE;
+        int block = 0;
         if (x == m - 1 && y == n - 1)
             return 0;
         if (x < 0 || y < 0 || x >= m || y >= n)
             return -1;
+        if (grid[x][y] == Integer.MAX_VALUE)
+            return -1;
         if (grid[x][y] == 1) {
             if (obs == 0)
                 return -1;
+            block = 1;
             obs--;
         }
 
+        grid[x][y] = Integer.MAX_VALUE;
         for (int i = 0; i < 4; i++) {
             int sx = x + dx[i];
             int sy = y + dy[i];
@@ -33,6 +38,7 @@ public class Solution {
             if (res != -1)
                 temp = Math.min(temp, res);
         }
+        grid[x][y] = block;
         if (temp == Integer.MAX_VALUE) return -1;
         else
             return temp + 1;
