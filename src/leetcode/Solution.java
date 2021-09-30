@@ -12,6 +12,22 @@ public class Solution {
         return shortestPath(grid, grid.length, grid[0].length, k,0, 0);
     }
 
+    public int fib(int n) {
+        if (n == 0) return 0;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MIN_VALUE);
+        dp[0] = 0;
+        dp[1] = 1;
+        return fibRecursion(dp, n);
+    }
+
+
+    public int fibRecursion(int[] dp, int n) {
+        if (dp[n] == Integer.MIN_VALUE)
+            dp[n] = fibRecursion(dp, n - 1) + fibRecursion(dp, n - 2);
+        return dp[n];
+    }
+
     public int shortestPath(int[][] grid, int m, int n, int obs, int x, int y) {
         int[] dx = {1, -1, 0, 0};
         int[] dy = {0, 0, 1, -1};
