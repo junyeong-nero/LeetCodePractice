@@ -8,6 +8,23 @@ import java.util.*;
 
 public class Solution {
 
+    public int tribonacci(int n) {
+        if (n == 0) return 0;
+        if (n <= 2) return 1;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MIN_VALUE);
+        dp[0] = 0;
+        dp[1] = 1;
+        dp[2] = 1;
+        return R(dp, n);
+    }
+
+    public int R(int[] dp, int n) {
+        if (dp[n] == Integer.MIN_VALUE)
+            dp[n] = R(dp, n - 1) + R(dp, n - 2) + R(dp, n - 3);
+        return dp[n];
+    }
+
     public int shortestPath(int[][] grid, int k) {
         return shortestPath(grid, grid.length, grid[0].length, k,0, 0);
     }
