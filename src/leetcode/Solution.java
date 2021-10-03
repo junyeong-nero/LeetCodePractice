@@ -8,6 +8,24 @@ import java.util.*;
 
 public class Solution {
 
+    
+
+    public int climbStairs(int n){
+        if (n <= 1) return 1;
+        int[] dp = new int[n + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE);
+        dp[0] = 1;
+        dp[1] = 1;
+        dp[2] = 2;
+        return climbStairsR(dp, n);
+    }
+
+    public int climbStairsR(int[] dp, int n) {
+        if (dp[n] == Integer.MAX_VALUE)
+            dp[n] = climbStairsR(dp, n - 1) + climbStairsR(dp, n - 2);
+        return dp[n];
+    }
+
     public int tribonacci(int n) {
         if (n == 0) return 0;
         if (n <= 2) return 1;
