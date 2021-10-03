@@ -8,6 +8,19 @@ import java.util.*;
 
 public class Solution {
 
+
+    public int minCostClimbingStairsF(int[] cost) {
+        if (cost.length == 2) {
+            return Math.min(cost[0], cost[1]);
+        }
+        for (int i = 2; i < cost.length; i++) {
+            int minCost = Math.min(cost[i - 2], cost[i - 1]);
+            cost[i] += minCost;
+        }
+        return Math.min(cost[cost.length - 2], cost[cost.length - 1]);
+    }
+
+
     public int minCostClimbingStairs(int[] cost) {
         int len = cost.length;
         // Corner case.
