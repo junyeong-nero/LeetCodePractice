@@ -8,7 +8,15 @@ import java.util.*;
 
 public class Solution {
 
-    
+    public int climbStairsFastest(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = 1;
+        dp[1] = 1;
+        for (int i = 2; i < dp.length; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
+    }
 
     public int climbStairs(int n){
         if (n <= 1) return 1;
@@ -25,6 +33,8 @@ public class Solution {
             dp[n] = climbStairsR(dp, n - 1) + climbStairsR(dp, n - 2);
         return dp[n];
     }
+
+    pu
 
     public int tribonacci(int n) {
         if (n == 0) return 0;
@@ -45,6 +55,16 @@ public class Solution {
 
     public int shortestPath(int[][] grid, int k) {
         return shortestPath(grid, grid.length, grid[0].length, k,0, 0);
+    }
+
+    public int fibFastest(int n) {
+        int[] dp = new int[n + 1];
+        dp[0] = 0;
+        dp[1] = 1;
+        for (int i = 2; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+        return dp[n];
     }
 
     public int fib(int n) {
