@@ -8,6 +8,20 @@ import java.util.*;
 
 public class Solution {
 
+    public void reorderList(ListNode head) {
+        if (head == null || head.next == null)
+            return;
+        ListNode last = head.next, prev = head;
+        ListNode temp = head.next;
+        while (last.next != null) {
+            prev = last;
+            last = last.next;
+        }
+        prev.next = last.next;
+        last.next = last == temp ? null : temp;
+        head.next = last;
+        reorderList(temp);
+    }
 
     public int minCostClimbingStairsF(int[] cost) {
         if (cost.length == 2) {
