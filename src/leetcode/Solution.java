@@ -8,6 +8,19 @@ import java.util.*;
 
 public class Solution {
 
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<>();
+        inorderTraversalD(list, root);
+        return list;
+    }
+
+    public void inorderTraversalD(List<Integer> list, TreeNode root) {
+        if (root == null) return;
+        inorderTraversalD(list, root.left);
+        list.add(root.val);
+        inorderTraversalD(list, root.right);
+    }
+
     public void reorderList(ListNode head) {
         if (head == null || head.next == null)
             return;
