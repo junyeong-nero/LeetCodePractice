@@ -8,6 +8,39 @@ import java.util.*;
 
 public class Solution {
 
+    public boolean exist(char[][] board, String word) {
+        int M = board.length;
+        int N = board[0].length;
+        char target = word.charAt(0);
+        boolean res = false;
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < N; j++) {
+                if (board[i][j] == target)
+                    res |= existD(board, word, i, j, 0);
+            }
+        }
+        return res;
+    }
+
+    public boolean existD(char[][] board, String word, int x, int y, int index) {
+        if (index == word.length())
+            return true;
+        if (x < 0 || x >= board.length || y < 0 || y >= board[0].length)
+            return false;
+
+        boolean res = false;
+        if (board[x][y] == word.charAt(index)) {
+            char temp = board[x][y];
+            board[x][y] = '\0';
+            res |= existD(board, word, x + 1, y, index + 1);
+            res |= existD(board, word, x - 1, y, index + 1);
+            res |= existD(board, word, x, y + 1, index + 1);
+            res |= existD(board, word, x, y - 1, index + 1);
+            board[x][y] = temp;
+        }
+        return res;
+    }
+
     public List<Integer> inorderTraversal(TreeNode root) {
         List<Integer> list = new ArrayList<>();
         inorderTraversalD(list, root);
