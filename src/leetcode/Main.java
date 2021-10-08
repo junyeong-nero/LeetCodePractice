@@ -4,6 +4,7 @@ import DataStructure.MyQueue;
 import DataStructure.MyQueueByStack;
 import DataStructure.MyStack;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,32 +14,17 @@ public class Main {
         Solution sol = new Solution();
         // 0,1],[0,2],[2,3],[2,4],[2,5
         int[][] arr = new int[][]{
-                {0, 0, 0},
-                {1, 1, 0},
-                {0, 0, 0},
-                {0, 1, 1},
-                {0, 0, 0}
-        };
-
-        int[][] arr2 = new int[][]{
-                {0, 1, 1},
-                {1, 1, 1},
-                {1, 0, 0},
-        };
-
-        int[][] arr3 = new int[][]{
-                {0, 1, 0, 1},
-                {0, 1, 0, 0},
-                {0, 0, 1, 0},
-                {1, 0, 0, 1},
-                {0, 1, 0, 0}
+                {1, 3},
+                {2, 6},
+                {8, 10},
+                {15, 18}
         };
 
         int[] a = new int[]{
                 -1, 1, 0
         };
 
-        System.out.println(sol.uniquePaths(23, 12));
+        System.out.println(Arrays.deepToString(sol.merge(arr)));
 
     }
 }

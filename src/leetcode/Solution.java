@@ -9,9 +9,36 @@ import java.util.*;
 
 public class Solution {
 
-	public long fac(int n) {
-		if (n <= 1) return 1;
-		else return n * fac(n - 1);
+	public int[][] merge(int[][] intervals) {
+		int n = intervals.length;
+		for (int i = 0; i < n; i++) {
+			if (intervals[i] == null) continue;
+
+			int[] cur = intervals[i];
+			boolean check = false;
+			for (int j = 0; j < n; j++) {
+				if (j == i || intervals[j] == null) continue;
+
+				int[] target = intervals[j];
+				if (cur[1] >= target[0] && cur[0] <= target[0] || cur[1] >= target[1] && cur[0] <= target[1]) {
+					cur[0] = Math.min(target[0], cur[0]);
+					cur[1] = Math.max(target[1], cur[1]);
+					intervals[j] = null;
+					check = true;
+				}
+			}
+			if (check)
+				i --;
+		}
+		int count = 0;
+		for (int i = 0; i < n; i++) count += (intervals[i] == null ? 0 : 1);
+
+		int index = 0;
+		int[][] res = new int[count][2];
+		for (int i = 0; i < n; i++)
+			if (intervals[i] != null)
+				res[index++] = intervals[i];
+		return res;
 	}
 
 	public int uniquePaths(int m, int n) {
@@ -25,7 +52,7 @@ public class Solution {
 			for (int j = 1; j < n; j++) {
 				grid[i][j] = grid[i - 1][j] + grid[i][j - 1];
 			}
-		}   
+		}
 		return grid[m - 1][n - 1];
 	}
 
