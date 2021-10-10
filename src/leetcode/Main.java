@@ -24,7 +24,7 @@ public class Main {
                 -1, 1, 0
         };
 
-        System.out.println(Arrays.deepToString(sol.merge(arr)));
+        System.out.println(sol.rangeBitwiseAnd(5, 7));
 
     }
 }

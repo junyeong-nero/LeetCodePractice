@@ -9,6 +9,50 @@ import java.util.*;
 
 public class Solution {
 
+	public int rangeBitwiseAndF(int m, int n) {
+		if(m == 0){
+			return 0;
+		}
+		int moveFactor = 1;
+		while(m != n){
+			m >>= 1;
+			n >>= 1;
+			moveFactor <<= 1;
+		}
+		return m * moveFactor;
+	}
+
+	public int rangeBitwiseAnd(int left, int right) {
+		if (left == 0) return 0;
+		int[] bits = new int[32];
+		int temp = left;
+		for (int j = 0; j < 32 && temp != 0; j++) {
+			bits[j] = temp % 2;
+			temp /= 2;
+		}
+		for (int i = left; i <= right; i++) {
+			temp = i;
+			boolean jump = true;
+			for (int j = 0; j < 32 && temp != 0; j++) {
+				if (bits[j] == 0) {
+					temp /= 2;
+					continue;
+				}
+				if (bits[j] == 1) jump = false;
+				bits[j] &= temp % 2;
+				temp /= 2;
+			}
+			if (jump)
+				break;
+		}
+		int c = 1, res = 0;
+		for (int i = 0; i < bits.length; i++) {
+			res += c * bits[i];
+			c *= 2;
+		}
+		return res;
+	}
+
 	public int[][] merge(int[][] intervals) {
 		int n = intervals.length;
 		for (int i = 0; i < n; i++) {
