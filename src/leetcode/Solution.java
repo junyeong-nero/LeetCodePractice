@@ -9,6 +9,26 @@ import java.util.*;
 
 public class Solution {
 
+	public int globalMax;
+	public int diameterOfBinaryTreeF(TreeNode root) {
+		globalMax = -1;
+		recursive(root);
+
+		return globalMax;
+	}
+
+	public int recursive(TreeNode root) {
+		if(root == null)
+			return -1;
+
+		int right = 1 + recursive(root.right);
+		int left = 1 + recursive(root.left);
+
+		globalMax = Math.max((right + left), globalMax);
+
+		return Math.max(right, left);
+	}
+
 	public int diameterOfBinaryTree(TreeNode root) {
 		TreeNode cur = root;
 		if (root == null) return 0;
