@@ -9,6 +9,20 @@ import java.util.*;
 
 public class Solution {
 
+	public int diameterOfBinaryTree(TreeNode root) {
+		TreeNode cur = root;
+		if (root == null) return 0;
+		int temp = height(root.left) + height(root.right);
+		temp = Math.max(temp, diameterOfBinaryTree(root.left));
+		temp = Math.max(temp, diameterOfBinaryTree(root.right));
+		return temp;
+	}
+
+	public int height(TreeNode root) {
+		if (root == null) return 0;
+		else return 1 + Math.max(height(root.left), height(root.right));
+	}
+
 	public int rangeBitwiseAndF(int m, int n) {
 		if(m == 0){
 			return 0;
