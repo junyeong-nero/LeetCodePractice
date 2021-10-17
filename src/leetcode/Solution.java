@@ -8,6 +8,13 @@ import com.sun.source.tree.Tree;
 import java.util.*;
 
 public class Solution {
+
+	public int guess (int n) {
+		if (n == 3) return 0;
+		else if (n > 3) return 1;
+		else return 1;
+	}
+
 	public int guessNumber(int n) {
 		int i = 1, j = n;
 		while(i < j) {
