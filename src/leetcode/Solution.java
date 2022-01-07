@@ -9,6 +9,25 @@ import java.util.*;
 
 public class Solution {
 
+	ListNode node;
+
+	public Solution(ListNode head) {
+		node = head;
+	}
+
+	public int size(ListNode n) {
+		if(n == null) return 0;
+		return 1 + size(n.next);
+	}
+
+	public int getRandom() {
+		int num = (int) (Math.random() * size(node));
+		ListNode temp = node;
+		for (int i = 0; i < num; i++)
+			temp = temp.next;
+		return temp.val;
+	}
+
 	public int guess (int n) {
 		if (n == 3) return 0;
 		else if (n > 3) return 1;
