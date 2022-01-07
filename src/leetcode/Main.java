@@ -1,5 +1,6 @@
 package leetcode;
 
+import DataStructure.ListNode;
 import DataStructure.MyQueue;
 import DataStructure.MyQueueByStack;
 import DataStructure.MyStack;
@@ -11,7 +12,11 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-//        Solution sol = new Solution();
-
+        Solution solution = new Solution(new ListNode(1, new ListNode(2, new ListNode(3))));
+        solution.getRandom(); // return 1
+        solution.getRandom(); // return 3
+        solution.getRandom(); // return 2
+        solution.getRandom(); // return 2
+        solution.getRandom(); // return 3
     }
 }

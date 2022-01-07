@@ -10,9 +10,11 @@ import java.util.*;
 public class Solution {
 
 	ListNode node;
+	int len;
 
 	public Solution(ListNode head) {
 		node = head;
+		len = size(node);
 	}
 
 	public int size(ListNode n) {
@@ -21,8 +23,8 @@ public class Solution {
 	}
 
 	public int getRandom() {
-		int num = (int) (Math.random() * size(node));
 		ListNode temp = node;
+		int num = (int) (Math.random() * len);
 		for (int i = 0; i < num; i++)
 			temp = temp.next;
 		return temp.val;
