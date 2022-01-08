@@ -12,11 +12,11 @@ import java.util.List;
 public class Main {
 
     public static void main(String[] args) {
-        Solution solution = new Solution(new ListNode(1, new ListNode(2, new ListNode(3))));
-        solution.getRandom(); // return 1
-        solution.getRandom(); // return 3
-        solution.getRandom(); // return 2
-        solution.getRandom(); // return 2
-        solution.getRandom(); // return 3
+        Solution sol = new Solution();
+        System.out.print(sol.slidingPuzzle(new int[][]{
+                {4, 1, 2},
+                {5, 0, 3}
+        }));
+
     }
 }

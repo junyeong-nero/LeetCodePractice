@@ -12,42 +12,42 @@ public class Solution {
 	ListNode node;
 	int len;
 
-	public Solution(ListNode head) {
-		node = head;
-		len = size(node);
+	public Solution() {
+
 	}
 
-	public int size(ListNode n) {
-		if(n == null) return 0;
-		return 1 + size(n.next);
-	}
+	// 773. Sliding Puzzle
+	public int slidingPuzzle(int[][] board) {
+		int[] temp = new int[2];
+		int res = 0;
 
-	public int getRandom() {
-		ListNode temp = node;
-		int num = (int) (Math.random() * len);
-		for (int i = 0; i < num; i++)
-			temp = temp.next;
-		return temp.val;
-	}
-
-	public int guess (int n) {
-		if (n == 3) return 0;
-		else if (n > 3) return 1;
-		else return 1;
-	}
-
-	public int guessNumber(int n) {
-		int i = 1, j = n;
-		while(i < j) {
-			int mid = i + (j - i) / 2;
-			if(guess(mid) == 0) {
-				return mid;
-			} else if(guess(mid) == 1) {
-				i = mid + 1;
-			} else {
-				j = mid;
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (board[i][j] == 0) {
+					temp[0] = i;
+					temp[1] = j;
+				}
 			}
 		}
-		return i;
+
+		int[] posX = new int[]{0, 1, 0, -1};
+		int[] posY = new int[]{1, 0, -1, 0};
+		for (int i = 0; i < 4; i++) {
+			if (check(board))
+				return res;
+			int x = temp[0] + posX[i];
+			int y = temp[0] + posY[i];
+			if (x < 0 || x >= 2 || y < 0 || y >= 3)
+				continue;
+			int tmp = board[x][y];
+		}
+		return res;
 	}
+
+	public boolean check(int[][] board) {
+		return board[0][0] == 1 && board[0][1] == 2 && board[0][2] == 3 &&
+				board[1][0] == 4 && board[1][1] == 5;
+	}
+
+
 }
