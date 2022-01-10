@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        System.out.print(sol.slidingPuzzle(new int[][]{
+        System.out.println(sol.slidingPuzzle(new int[][]{
                 {4, 1, 2},
                 {5, 0, 3}
         }));
