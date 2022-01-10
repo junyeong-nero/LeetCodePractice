@@ -16,6 +16,26 @@ public class Solution {
 
 	}
 
+		public String addBinary(String a, String b) {
+			StringBuilder sa = new StringBuilder(a).reverse();
+			StringBuilder sb = new StringBuilder(b).reverse();
+			StringBuilder builder = new StringBuilder();
+			int size = Math.max(sa.length(), sb.length());
+			int raise = 0;
+			for (int i = 0; i < size; i++) {
+				char ca = i < sa.length() ? sa.charAt(i) : '0';
+				char cb = i < sb.length() ? sb.charAt(i) : '0';
+				int numA = (int) ca - '0';
+				int numB = (int) cb - '0';
+				int result = raise + numA + numB;
+				builder.append(result % 2);
+				raise = result / 2;
+			}
+			if (raise != 0)
+				builder.append(raise);
+			return builder.reverse().toString();
+		}
+
 	// 773. Sliding Puzzle
 	public int slidingPuzzle(int[][] board) {
 		String target = "123450";
