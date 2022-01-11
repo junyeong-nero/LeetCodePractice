@@ -16,25 +16,44 @@ public class Solution {
 
 	}
 
-		public String addBinary(String a, String b) {
-			StringBuilder sa = new StringBuilder(a).reverse();
-			StringBuilder sb = new StringBuilder(b).reverse();
-			StringBuilder builder = new StringBuilder();
-			int size = Math.max(sa.length(), sb.length());
-			int raise = 0;
-			for (int i = 0; i < size; i++) {
-				char ca = i < sa.length() ? sa.charAt(i) : '0';
-				char cb = i < sb.length() ? sb.charAt(i) : '0';
-				int numA = (int) ca - '0';
-				int numB = (int) cb - '0';
-				int result = raise + numA + numB;
-				builder.append(result % 2);
-				raise = result / 2;
-			}
-			if (raise != 0)
-				builder.append(raise);
-			return builder.reverse().toString();
+	int sumRootToLeafRES = 0;
+
+	public int sumRootToLeaf(TreeNode root) {
+		sumRootToLeafDFS(root, 0);
+		return sumRootToLeafRES;
+	}
+
+	public void sumRootToLeafDFS(TreeNode root, int cur) {
+		if (root == null)
+			return;
+		int temp = root.val + cur * 2;
+		if (root.right == null && root.left == null) {
+			sumRootToLeafRES += temp;
+			return;
 		}
+		sumRootToLeafDFS(root.right, temp);
+		sumRootToLeafDFS(root.left, temp);
+	}
+
+	public String addBinary(String a, String b) {
+		StringBuilder sa = new StringBuilder(a).reverse();
+		StringBuilder sb = new StringBuilder(b).reverse();
+		StringBuilder builder = new StringBuilder();
+		int size = Math.max(sa.length(), sb.length());
+		int raise = 0;
+		for (int i = 0; i < size; i++) {
+			char ca = i < sa.length() ? sa.charAt(i) : '0';
+			char cb = i < sb.length() ? sb.charAt(i) : '0';
+			int numA = (int) ca - '0';
+			int numB = (int) cb - '0';
+			int result = raise + numA + numB;
+			builder.append(result % 2);
+			raise = result / 2;
+		}
+		if (raise != 0)
+			builder.append(raise);
+		return builder.reverse().toString();
+	}
 
 	// 773. Sliding Puzzle
 	public int slidingPuzzle(int[][] board) {
@@ -47,8 +66,8 @@ public class Solution {
 		}
 		HashSet<String> visited = new HashSet<>();
 		// all the positions 0 can be swapped to
-		int[][] dirs = new int[][] { { 1, 3 }, { 0, 2, 4 },
-				{ 1, 5 }, { 0, 4 }, { 1, 3, 5 }, { 2, 4 } };
+		int[][] dirs = new int[][]{{1, 3}, {0, 2, 4},
+				{1, 5}, {0, 4}, {1, 3, 5}, {2, 4}};
 		Queue<String> queue = new LinkedList<>();
 		queue.offer(start);
 		visited.add(start);
@@ -105,12 +124,12 @@ public class Solution {
 		int res = Integer.MAX_VALUE;
 		if (check(board))
 			return 0;
-		
+
 		int[] posX = new int[]{0, 1, 0, -1};
 		int[] posY = new int[]{1, 0, -1, 0};
 		for (int i = 1; i <= 4; i++) {
 			int new_dir = (dir + i) % 4;
-			int[] new_pos = new int[] {
+			int[] new_pos = new int[]{
 					pos[0] + posX[new_dir],
 					pos[1] + posY[new_dir]
 			};
