@@ -16,6 +16,32 @@ public class Solution {
 
 	}
 
+	public int[] xorQueries(int[] A, int[][] queries) {
+		int[] res = new int[queries.length], q;
+		for (int i = 1; i < A.length; ++i)
+			A[i] ^= A[i - 1];
+		for (int i = 0; i < queries.length; ++i) {
+			q = queries[i];
+			res[i] = q[0] > 0 ? A[q[0] - 1] ^ A[q[1]] : A[q[1]];
+		}
+		return res;
+	}
+
+	public int[] MYxorQueries(int[] arr, int[][] queries) {
+		int n = queries.length;
+		int[] res = new int[n];
+		for (int i = 0; i < queries.length; i++) {
+			int start = queries[i][0];
+			int end = queries[i][1];
+			int temp = arr[start];
+			for (int j = start + 1; j <= end; j++) {
+				temp ^= arr[j];
+			}
+			res[i] = temp;
+		}
+		return res;
+	}
+
 	int sumRootToLeafRES = 0;
 
 	public int sumRootToLeaf(TreeNode root) {
@@ -154,6 +180,4 @@ public class Solution {
 		return board[0][0] == 1 && board[0][1] == 2 && board[0][2] == 3 &&
 				board[1][0] == 4 && board[1][1] == 5;
 	}
-
-
 }
