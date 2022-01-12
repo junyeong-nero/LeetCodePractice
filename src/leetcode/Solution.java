@@ -16,6 +16,41 @@ public class Solution {
 
 	}
 
+	// 890. Find and Replace Pattern
+	public List<String> findAndReplacePattern(String[] words, String pattern) {
+		List<String> res = new ArrayList<>();
+		for (String s : words) {
+			if (check(s, pattern))
+				res.add(s);
+		}
+		return res;
+	}
+
+	public boolean check(String word, String pattern) {
+		HashMap<Integer, Integer> map = new HashMap<>(); // pattern -> word
+		int n = word.length();
+		int m = pattern.length();
+		if (n != m)
+			return false;
+		for (int i = 0; i < m; i++) {
+			int p = pattern.charAt(i) - 'a';
+			int w = word.charAt(i) - 'a';
+			if (!map.containsKey(p) && !map.containsValue(w))
+				map.put(p, w);
+			else {
+				if (map.containsKey(p) && map.get(p) != w)
+					return false;
+				if (map.containsValue(w)) {
+					for (Integer j : map.keySet()) {
+						if (map.get(j) == w && j != p)
+							return false;
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 	// 701. Insert into a Binary Search Tree
 	public TreeNode insertIntoBST(TreeNode root, int val) {
 		if (root == null)
