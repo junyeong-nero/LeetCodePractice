@@ -16,6 +16,28 @@ public class Solution {
 
 	}
 
+	// 701. Insert into a Binary Search Tree
+	public TreeNode insertIntoBST(TreeNode root, int val) {
+		if (root == null)
+			return new TreeNode(val);
+		test(root, val);
+		return root;
+	}
+
+	public void test(TreeNode root, int val) {
+		if (val > root.val) {
+			if (root.right == null)
+				root.right = new TreeNode(val);
+			else
+				test(root.right, val);
+		} else if (val < root.val) {
+			if (root.left == null)
+				root.left = new TreeNode(val);
+			else
+				test(root.left, val);
+		}
+	}
+
 	public int[] xorQueries(int[] A, int[][] queries) {
 		int[] res = new int[queries.length], q;
 		for (int i = 1; i < A.length; ++i)

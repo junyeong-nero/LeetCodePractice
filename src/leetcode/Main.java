@@ -1,9 +1,6 @@
 package leetcode;
 
-import DataStructure.ListNode;
-import DataStructure.MyQueue;
-import DataStructure.MyQueueByStack;
-import DataStructure.MyStack;
+import DataStructure.*;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -13,8 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        String res = sol.addBinary("0", "0");
-        System.out.println(res);
-
+        TreeNode res = sol.insertIntoBST(new TreeNode(), 5);
+        System.out.println(res.val);
     }
 }
