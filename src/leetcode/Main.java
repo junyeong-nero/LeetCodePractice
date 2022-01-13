@@ -10,7 +10,12 @@ public class Main {
 
     public static void main(String[] args) {
         Solution sol = new Solution();
-        TreeNode res = sol.insertIntoBST(new TreeNode(), 5);
-        System.out.println(res.val);
+        int[][] input = new int[][]{
+                {1, 2},
+                {4, 5},
+                {1, 5},
+        };
+        int res = sol.findMinArrowShots(input);
+        System.out.println(res);
     }
 }

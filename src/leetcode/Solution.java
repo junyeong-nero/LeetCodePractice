@@ -16,6 +16,31 @@ public class Solution {
 
 	}
 
+	public int findMinArrowShots(int[][] points) {
+		if (points == null || points.length == 0) {
+			return 0;
+		}
+		Arrays.sort(points, Comparator.comparingInt(o -> o[1])); //Using Integer.compare() to avoid edge case
+		int count = 1;
+		int end = points[0][1];
+		for (int[] point : points) {
+			int start = point[0];
+			if (start > end) {
+				count++;
+				end = point[1];
+			}
+		}
+		return count;
+	}
+
+	public boolean checkIntersection(int[] a, int[] b) {
+		return (a[0] <= b[0] && b[0] <= a[1]) || (a[0] <= b[1] && b[1] <= a[1]);
+	}
+
+	public int[] findIntersection(int[] a, int[] b) {
+		return new int[]{Math.max(a[0], b[0]), Math.min(a[1], b[1])};
+	}
+
 	// 890. Find and Replace Pattern
 	public List<String> findAndReplacePattern(String[] words, String pattern) {
 		List<String> res = new ArrayList<>();
