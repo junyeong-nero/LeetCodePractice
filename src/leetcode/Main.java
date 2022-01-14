@@ -15,7 +15,7 @@ public class Main {
                 {4, 5},
                 {1, 5},
         };
-        int res = sol.findMinArrowShots(input);
+        int res = sol.myAtoi("-6147483648");
         System.out.println(res);
     }
 }
