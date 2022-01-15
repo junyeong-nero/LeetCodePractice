@@ -1,9 +1,7 @@
 package leetcode;
 
 import DataStructure.ListNode;
-import DataStructure.MyStack;
 import DataStructure.TreeNode;
-import com.sun.source.tree.Tree;
 
 import java.util.*;
 
@@ -14,6 +12,59 @@ public class Solution {
 
 	public Solution() {
 
+	}
+
+	public int minNumberOperations(int[] target) {
+		return 0;
+	}
+
+	public int minJumps(int[] arr) {
+		int n = arr.length;
+		HashMap<Integer, List<Integer>> indicesOfValue = new HashMap<>();
+		for (int i = 0; i < n; i++)
+			indicesOfValue.computeIfAbsent(arr[i], x -> new LinkedList<>()).add(i);
+		boolean[] visited = new boolean[n]; visited[0] = true;
+		Queue<Integer> q = new LinkedList<>(); q.offer(0);
+		int step = 0;
+		while (!q.isEmpty()) {
+			for (int size = q.size(); size > 0; --size) {
+				int i = q.poll();
+				if (i == n - 1) return step; // Reached to last index
+				List<Integer> next = indicesOfValue.get(arr[i]);
+				next.add(i - 1); next.add(i + 1);
+				for (int j : next) {
+					if (j >= 0 && j < n && !visited[j]) {
+						visited[j] = true;
+						q.offer(j);
+					}
+				}
+				next.clear(); // avoid later lookup indicesOfValue arr[i]
+			}
+			step++;
+		}
+		return 0;
+	}
+
+	int history[];
+	public int minJumpsDFS(int[] arr, int pos) {
+		int res = Integer.MAX_VALUE;
+		int n = arr.length;
+		if (history[pos] != Integer.MAX_VALUE)
+			return history[pos];
+		if (pos == n - 1)
+			return 0;
+		if (pos + 1 < n)
+			res = Math.min(res, minJumpsDFS(arr, pos + 1));
+		if (pos - 1 >= 0)
+			res = Math.min(res, minJumpsDFS(arr, pos - 1));
+		for (int i = pos + 1; i < n; i++) {
+			if (arr[i] == arr[pos]) {
+				res = Math.min(res, minJumpsDFS(arr, i));
+			}
+		}
+		if (res != Integer.MAX_VALUE)
+			history[pos] = res + 1;
+		return res + 1;
 	}
 
 	//	Read in and ignore any leading whitespace.
