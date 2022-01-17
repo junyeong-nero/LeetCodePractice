@@ -14,10 +14,31 @@ public class Solution {
 
 	}
 
-	public int minNumberOperations(int[] target) {
-		return 0;
+
+	public boolean wordPattern(String pattern, String s) {
+		String[] list = s.split(" ");
+		HashMap<String, Character> map = new HashMap<>();
+		boolean[] check = new boolean[26];
+		Arrays.fill(check, false);
+		int len = list.length;
+		for (int i = 0; i < len; i++) {
+			String target = list[i];
+			char c = pattern.charAt(i);
+			if (map.containsKey(target)) {
+				if (map.get(target) != c)
+					return false;
+			} else {
+				if (check[c - 'a'])
+					return false;
+			}
+			map.put(target, c);
+			check[c - 'a'] = true;
+		}
+		return true;
 	}
 
+
+	// BFS
 	public int minJumps(int[] arr) {
 		int n = arr.length;
 		HashMap<Integer, List<Integer>> indicesOfValue = new HashMap<>();

@@ -18,7 +18,7 @@ public class Main {
         int[] input2 = new int[]{
                 100, -23, -23, 404, 100, 23, 23, 23, 3, 404
         };
-        int res = sol.minJumps(input2);
+        boolean res = sol.wordPattern("abba", "dog cat cat fish");
         System.out.println(res);
     }
 }
