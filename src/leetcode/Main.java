@@ -16,9 +16,9 @@ public class Main {
                 {1, 5},
         };
         int[] input2 = new int[]{
-                100, -23, -23, 404, 100, 23, 23, 23, 3, 404
+                1, 0, 1, 0, 1, 0, 1
         };
-        boolean res = sol.wordPattern("abba", "dog cat cat fish");
+        boolean res = sol.canPlaceFlowers(input2, 1);
         System.out.println(res);
     }
 }

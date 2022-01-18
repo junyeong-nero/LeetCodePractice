@@ -14,6 +14,22 @@ public class Solution {
 
 	}
 
+	public boolean canPlaceFlowers(int[] flowerbed, int n) {
+		int N = flowerbed.length;
+		if (N == 0)
+			return false;
+		int count = 0;
+		for (int i = 0; i < N; i++) {
+			boolean a = i + 1 >= N || flowerbed[i + 1] == 0;
+			boolean b = i - 1 < 0 || flowerbed[i - 1] == 0;
+			boolean c = flowerbed[i] == 0;
+			if (a && b && c) {
+				count++;
+				flowerbed[i] = 1;
+			}
+		}
+		return n <= count;
+	}
 
 	public boolean wordPattern(String pattern, String s) {
 		String[] list = s.split(" ");
@@ -44,15 +60,18 @@ public class Solution {
 		HashMap<Integer, List<Integer>> indicesOfValue = new HashMap<>();
 		for (int i = 0; i < n; i++)
 			indicesOfValue.computeIfAbsent(arr[i], x -> new LinkedList<>()).add(i);
-		boolean[] visited = new boolean[n]; visited[0] = true;
-		Queue<Integer> q = new LinkedList<>(); q.offer(0);
+		boolean[] visited = new boolean[n];
+		visited[0] = true;
+		Queue<Integer> q = new LinkedList<>();
+		q.offer(0);
 		int step = 0;
 		while (!q.isEmpty()) {
 			for (int size = q.size(); size > 0; --size) {
 				int i = q.poll();
 				if (i == n - 1) return step; // Reached to last index
 				List<Integer> next = indicesOfValue.get(arr[i]);
-				next.add(i - 1); next.add(i + 1);
+				next.add(i - 1);
+				next.add(i + 1);
 				for (int j : next) {
 					if (j >= 0 && j < n && !visited[j]) {
 						visited[j] = true;
@@ -67,6 +86,7 @@ public class Solution {
 	}
 
 	int history[];
+
 	public int minJumpsDFS(int[] arr, int pos) {
 		int res = Integer.MAX_VALUE;
 		int n = arr.length;
