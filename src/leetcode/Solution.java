@@ -14,6 +14,44 @@ public class Solution {
 
 	}
 
+	public ListNode detectCycle(ListNode head) {
+		if (head == null || head.next == null)
+			return null;
+
+		ListNode slow = head, fast = head;
+
+		while (fast != null && fast.next != null) {
+			slow = slow.next;
+			fast = fast.next.next;
+
+			if (slow == fast)
+				break;
+		}
+
+		if (slow == fast) {
+			slow = head;
+			while (slow != fast) {
+				slow = slow.next;
+				fast = fast.next;
+			}
+			return slow;
+		}
+		return null;
+	}
+
+	public ListNode MYdetectCycle(ListNode head) {
+		ListNode cur = head;
+		Set<ListNode> set = new HashSet<>();
+		while (cur != null) {
+			if (set.contains(cur))
+				return cur;
+			else
+				set.add(cur);
+			cur = cur.next;
+		}
+		return null;
+	}
+
 	public boolean canPlaceFlowers(int[] flowerbed, int n) {
 		int N = flowerbed.length;
 		if (N == 0)
