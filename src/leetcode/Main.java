@@ -18,7 +18,7 @@ public class Main {
         int[] input2 = new int[]{
                 1, 0, 1, 0, 1, 0, 1
         };
-        boolean res = sol.canPlaceFlowers(input2, 1);
+        boolean res = sol.winnerSquareGame(3);
         System.out.println(res);
     }
 }

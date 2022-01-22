@@ -14,6 +14,42 @@ public class Solution {
 
 	}
 
+	public boolean winnerSquareGame(int n) {
+		boolean[] dp = new boolean[n + 1];
+		for (int i = 1; i <= n; ++i) {
+			for (int k = 1; k * k <= i; ++k) {
+				if (!dp[i - k * k]) {
+					dp[i] = true;
+					break;
+				}
+			}
+		}
+		return dp[n];
+	}
+
+	public int canCompleteCircuit(int[] gas, int[] cost) {
+		int cur = 0;
+		int n = gas.length;
+		for (int i = 0; i < n; i++) {
+			if (checkCompletCircuit(i, gas, cost))
+				return i;
+		}
+		return -1;
+	}
+
+	public boolean checkCompletCircuit(int start, int[] gas, int[] cost) {
+		int cur = 0;
+		int n = gas.length;
+		for (int i = start; i < start + n; i++) {
+			int r = i % n;
+			cur += gas[r];
+			if (cur < cost[r])
+				return false;
+			cur = cur - cost[r];
+		}
+		return true;
+	}
+
 	public ListNode detectCycle(ListNode head) {
 		if (head == null || head.next == null)
 			return null;
