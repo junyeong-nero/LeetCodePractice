@@ -14,6 +14,36 @@ public class Solution {
 
 	}
 
+	public int digitGenerator(int digit, int start) {
+		int res = 0;
+		for (int j = 0; j < digit; j++) {
+			res *= 10;
+			res += start;
+			start += 1;
+		}
+		return res;
+	}
+
+	public List<Integer> sequentialDigits(int low, int high) {
+		int n = (int) Math.floor(Math.log10(low)) + 1;
+		int m = (int) Math.floor(Math.log10(high)) + 1;
+		List<Integer> list = new ArrayList<>();
+		// 100 -> 3
+		// 123 -> 3
+		for (int i = n; i <= m; i++) {
+			// 1 - 6 at XXXX
+			for (int j = 1; j <= 10 - i; j++) {
+				int num = digitGenerator(i, j);
+				System.out.println(num);
+				if (num >= low && num <= high)
+					list.add(num);
+				if (num > high)
+					break;
+			}
+		}
+		return list;
+	}
+
 	public boolean winnerSquareGame(int n) {
 		boolean[] dp = new boolean[n + 1];
 		for (int i = 1; i <= n; ++i) {

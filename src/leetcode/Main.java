@@ -18,7 +18,7 @@ public class Main {
         int[] input2 = new int[]{
                 1, 0, 1, 0, 1, 0, 1
         };
-        boolean res = sol.winnerSquareGame(3);
-        System.out.println(res);
+        List<Integer> res = sol.sequentialDigits(1000, 13000);
+        System.out.println(res.toString());
     }
 }
