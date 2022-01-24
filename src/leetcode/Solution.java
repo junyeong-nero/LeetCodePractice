@@ -14,6 +14,27 @@ public class Solution {
 
 	}
 
+	public boolean detectCapitalUse(String word) {
+		int n = word.length();
+		if (n <= 0)
+			return false;
+		char c = word.charAt(0);
+		// Google
+		// USA
+		boolean lower = false;
+		boolean upper = false;
+		if (n >= 2) {
+			for (int i = 1; i < n; i++) {
+				char a = word.charAt(i);
+				lower |= Character.isUpperCase(a);
+				upper |= Character.isLowerCase(a);
+			}
+		}
+		if (!lower)
+			return true;
+		return !upper && Character.isUpperCase(c);
+	}
+
 	public int digitGenerator(int digit, int start) {
 		int res = 0;
 		for (int j = 0; j < digit; j++) {
