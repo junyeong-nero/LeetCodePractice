@@ -14,6 +14,39 @@ public class Solution {
 
 	}
 
+	public boolean validMountainArray(int[] arr) {
+		if (arr.length < 3) return false;
+		int i = 0;
+		while (i <= arr.length - 2 && arr[i + 1] > arr[i]) i++;
+		if (i == 0 || i == arr.length - 1) {
+			return false;
+		}
+		while (i <= arr.length - 2 && arr[i + 1] < arr[i]) i++;
+		return i == arr.length - 1;
+	}
+
+	public boolean MYvalidMountainArray(int[] arr) {
+		int N = arr.length;
+		if (N < 3 || arr[0] > arr[1])
+			return false;
+		boolean side = true;
+		for (int i = 0; i < N - 1; i++) {
+			if (arr[i] < arr[i + 1]) {
+				if (!side) {
+					return false;
+				}
+			} else if (arr[i] > arr[i + 1]) {
+				if (side) {
+					side = false;
+				}
+			} else {
+				// same
+				return false;
+			}
+		}
+		return !side;
+	}
+
 	public boolean detectCapitalUse(String word) {
 		int n = word.length();
 		if (n <= 0)
