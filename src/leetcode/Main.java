@@ -11,14 +11,13 @@ public class Main {
     public static void main(String[] args) {
         Solution sol = new Solution();
         int[][] input = new int[][]{
-                {1, 2},
-                {4, 5},
-                {1, 5},
+                {55, 30, 5, 4, 2},
+                {100, 20, 10, 10, 5},
         };
         int[] input2 = new int[]{
                 1, 0, 1, 0, 1, 0, 1
         };
-        List<Integer> res = sol.sequentialDigits(1000, 13000);
-        System.out.println(res.toString());
+        int res = sol.maxDistance(input[0], input[1]);
+        System.out.println("output : " + res);
     }
 }
