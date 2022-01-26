@@ -4,6 +4,7 @@ import DataStructure.ListNode;
 import DataStructure.TreeNode;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 public class Solution {
 
@@ -12,6 +13,37 @@ public class Solution {
 
 	public Solution() {
 
+	}
+
+	public List<Integer> getAllElements(TreeNode root1, TreeNode root2) {
+		TreeMap<Integer, Integer> map = new TreeMap<>();
+		getAllElements(root1, node -> {
+			map.putIfAbsent(node.val, 0);
+			if (map.containsKey(node.val))
+				map.put(node.val, map.get(node.val) + 1);
+		});
+
+		getAllElements(root2, node -> {
+			map.putIfAbsent(node.val, 0);
+			if (map.containsKey(node.val))
+				map.put(node.val, map.get(node.val) + 1);
+		});
+		List<Integer> list = new ArrayList<>();
+		while (!map.isEmpty()) {
+			int key = map.firstKey();
+			for (int i = 0; i < map.get(key); i++)
+				list.add(key);
+			map.remove(key);
+		}
+		return list;
+	}
+
+	public void getAllElements(TreeNode root, Consumer<TreeNode> consumer) {
+		if (root == null)
+			return;
+		consumer.accept(root);
+		getAllElements(root.left, consumer);
+		getAllElements(root.right, consumer);
 	}
 
 	public boolean validMountainArray(int[] arr) {
