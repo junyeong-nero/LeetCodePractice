@@ -15,6 +15,168 @@ public class Solution {
 
 	}
 
+	boolean isOperator(char c) {
+		return c == '!' || c == 'u' || c == '(' || c == ')' ||
+				c == '*' || c == '-' ||
+				c == '+' || c == '/';
+	}
+
+	int icp(char c) {
+		return switch (c) {
+			case '(' -> 0;
+			case '!', 'u' -> // unary -
+					1;
+			case '*', '/', '%' -> 2;
+			case '+', '-' -> 3;
+			case '<', '>' -> 4;
+			default -> -1;
+		};
+	}
+
+	int isp(char c) {
+		return switch (c) {
+			case '(' -> 8;
+			case '!', 'u' -> // unary -
+					1;
+			case '*', '/', '%' -> 2;
+			case '+', '-' -> 3;
+			case '<', '>' -> 4;
+			default -> -1;
+		};
+	}
+
+	public static int calculate(String s) {
+		int len = s.length(), sign = 1, result = 0;
+		Stack<Integer> stack = new Stack<Integer>();
+		for (int i = 0; i < len; i++) {
+			if (Character.isDigit(s.charAt(i))) {
+				int sum = s.charAt(i) - '0';
+				while (i + 1 < len && Character.isDigit(s.charAt(i + 1))) {
+					sum = sum * 10 + s.charAt(i + 1) - '0';
+					i++;
+				}
+				result += sum * sign;
+			} else if (s.charAt(i) == '+')
+				sign = 1;
+			else if (s.charAt(i) == '-')
+				sign = -1;
+			else if (s.charAt(i) == '(') {
+				stack.push(result);
+				stack.push(sign);
+				result = 0;
+				sign = 1;
+			} else if (s.charAt(i) == ')') {
+				result = result * stack.pop() + stack.pop();
+			}
+
+		}
+		return result;
+	}
+
+	public TreeNode calculateBUILD(String postfix) {
+		Stack<TreeNode> stack = new Stack<>();
+		Queue<String> splits = new LinkedList<>();
+		int len = postfix.length();
+		if (len == 0)
+			return new TreeNode();
+
+		StringBuilder temp = new StringBuilder();
+		for (int i = 0; i < len; i++) {
+			char c = postfix.charAt(i);
+			if (c == ' ') {
+				if (temp.length() >= 1) {
+					// cout << "build_expression_tree : " << temp << endl;
+					splits.add(temp.toString());
+					temp = new StringBuilder();
+				} else
+					break;
+			} else
+				temp.append(c);
+		}
+
+		while (!splits.isEmpty()) {
+			String s = splits.poll();
+			// cout << "build_expression_tree : " << s << endl;
+			if(s.length() == 1 && isOperator(s.charAt(0))) { // operator, pop 2 elements and link
+				TreeNode a = stack.peek();
+				stack.pop();
+				TreeNode b = stack.peek();
+				stack.pop();
+				TreeNode c = new TreeNode(s.charAt(0), b, a);
+				stack.push(c);
+			} else { // operand, just push
+				TreeNode c = new TreeNode(s.charAt(0));
+				stack.push(c);
+			}
+		}
+		// cout << "build: " << stack.top() -> expr << endl;
+		return stack.peek();
+	}
+
+	public String calculatePOSTFIX(String s) {
+		int len = s.length();
+		StringBuilder res = new StringBuilder();
+		char prev = ' ';
+		Stack<Character> stack = new Stack<>();
+
+		for (int i = 0; i < len; i++) {
+			char c = s.charAt(i);
+			if (c == ' ') continue;
+			else if(Character.isDigit(c)) {
+				StringBuilder number = new StringBuilder();
+				// check larger than 1 digits
+				int j;
+				for (j = i; j < len; j++) {
+					char cur = s.charAt(j);
+					if (Character.isDigit(c))
+						number.append(cur);
+					else if(cur == '.')
+						number.append(cur);
+					else
+						break;
+				}
+				if (!stack.empty() && stack.peek() == 'u') { // unary minus on number
+					res.append('-');
+					stack.pop();
+				}
+				res.append(number);
+				res.append(' ');
+				i = j - 1;
+			} else if (c == ')') {
+				for (; !stack.empty() && stack.peek() != '('; stack.pop()) {
+					res.append(stack.peek());
+					res.append(' ');
+				}
+				stack.pop();
+			} else if (isOperator(c)) {
+				if (c == '-') { // check unary minus
+					if (isOperator(prev) && prev != ')') // after operator except ')'
+						c = 'u';
+					if (prev == ' ') // right after starting
+						c = 'u';
+				}
+				if (c == '(' && prev == 'u' && !stack.empty()) {
+					// unary minus for parthesis -(1 + 2)
+					res.append("-1 ");              // replace to -1 *
+					stack.pop();               // pop 'u'
+					stack.push('*');           // add '*' operator
+				}
+				for (; !stack.empty() && isp(stack.peek()) <= icp(c); stack.pop()) {
+					res.append(stack.peek());
+					res.append(' ');
+				}
+				stack.push(c);
+
+			}
+			prev = c;
+		}
+
+		while (!stack.empty()) {
+			res.append(stack.pop());
+		}
+		return res.toString();
+	}
+
 	public int maxDistance(int[] n1, int[] n2) {
 		int i = 0, j = 0, res = 0;
 		while (i < n1.length && j < n2.length)
