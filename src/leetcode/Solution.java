@@ -97,7 +97,7 @@ public class Solution {
 		while (!splits.isEmpty()) {
 			String s = splits.poll();
 			// cout << "build_expression_tree : " << s << endl;
-			if(s.length() == 1 && isOperator(s.charAt(0))) { // operator, pop 2 elements and link
+			if (s.length() == 1 && isOperator(s.charAt(0))) { // operator, pop 2 elements and link
 				TreeNode a = stack.peek();
 				stack.pop();
 				TreeNode b = stack.peek();
@@ -122,7 +122,7 @@ public class Solution {
 		for (int i = 0; i < len; i++) {
 			char c = s.charAt(i);
 			if (c == ' ') continue;
-			else if(Character.isDigit(c)) {
+			else if (Character.isDigit(c)) {
 				StringBuilder number = new StringBuilder();
 				// check larger than 1 digits
 				int j;
@@ -130,7 +130,7 @@ public class Solution {
 					char cur = s.charAt(j);
 					if (Character.isDigit(c))
 						number.append(cur);
-					else if(cur == '.')
+					else if (cur == '.')
 						number.append(cur);
 					else
 						break;
