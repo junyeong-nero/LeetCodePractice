@@ -15,6 +15,31 @@ public class Solution {
 
 	}
 
+	public int largestRectangleArea(int[] heights) {
+		return largestRectangleAreaDFS(heights, 0, heights.length);
+	}
+
+	public int largestRectangleAreaDFS(int[] heights, int start, int end) {
+		// width * min of height => area
+		int min = start, max = start;
+		int res = 0;
+		if (start >= end)
+			return 0;
+		for (int i = start; i < end; i++) {
+			if (heights[i] < heights[min])
+				min = i;
+			if (heights[i] > heights[max])
+				max = i;
+		}
+		if (max == min)
+			return (end - start) * heights[min];
+		res = Math.max(res, (end - start) * heights[min]);
+		res = Math.max(res, largestRectangleAreaDFS(heights, start, min));
+		res = Math.max(res, largestRectangleAreaDFS(heights, min + 1, end));
+		return res;
+	}
+
+
 	boolean isOperator(char c) {
 		return c == '!' || c == 'u' || c == '(' || c == ')' ||
 				c == '*' || c == '-' ||
