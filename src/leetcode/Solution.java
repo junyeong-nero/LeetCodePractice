@@ -15,6 +15,36 @@ public class Solution {
 
 	}
 
+	// 1 2 3 4 5 6 7
+	// 5 6 7 1 2 3 4
+	public void MYrotate(int[] nums, int k) {
+		int n = nums.length;
+		for (int s = 0; s < k; s++) {
+			int temp = nums[n - 1];
+			for (int i = n - 1; i > 0; i--) {
+				nums[i] = nums[i - 1];
+			}
+			nums[0] = temp;
+		}
+	}
+
+	public void rotate(int[] nums, int k) {
+		k %= nums.length;
+		reverse(nums, 0, nums.length - 1);
+		reverse(nums, 0, k - 1);
+		reverse(nums, k, nums.length - 1);
+	}
+
+	public void reverse(int[] nums, int start, int end) {
+		while (start < end) {
+			int temp = nums[start];
+			nums[start] = nums[end];
+			nums[end] = temp;
+			start++;
+			end--;
+		}
+	}
+
 	public int largestRectangleArea(int[] heights) {
 		return largestRectangleAreaDFS(heights, 0, heights.length);
 	}
