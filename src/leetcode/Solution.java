@@ -15,6 +15,15 @@ public class Solution {
 
 	}
 
+	public int maximumWealth(int[][] accounts) {
+		int max = Integer.MIN_VALUE;
+		for (int[] arr : accounts) {
+			int sum = Arrays.stream(arr).sum();
+			max = Math.max(max, sum);
+		}
+		return max;
+	}
+
 	// 1 2 3 4 5 6 7
 	// 5 6 7 1 2 3 4
 	public void MYrotate(int[] nums, int k) {
