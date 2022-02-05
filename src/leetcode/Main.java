@@ -15,12 +15,13 @@ public class Main {
                 {100, 20, 10, 10, 5},
         };
         int[] input2 = new int[]{
-                1, 2, 3, 4, 5, 6, 7
+                7, 6, 7, 5
         };
         int[] input3 = new int[]{
                 2, 4
         };
-        sol.rotate(input2, 3);
-        System.out.println("output : " + Arrays.toString(input2));
+
+        // (9 - 1) * (1 + 2)
+        System.out.println("output : " + sol.judgePoint24(input2));
     }
 }

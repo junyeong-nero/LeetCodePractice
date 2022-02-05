@@ -15,6 +15,74 @@ public class Solution {
 
 	}
 
+	public boolean judgePoint24(int[] cards) {
+		boolean res = false;
+		int n = cards.length;
+		for (int i = 0; i < n; i++) {
+			boolean[] check = new boolean[n];
+			check[i] = true;
+			res |= judgePoint24(cards, check, cards[i]);
+			res |= judgePoint24Value(cards, check, cards[i]);
+			check[i] = false;
+		}
+		return res;
+	}
+
+	public boolean judgePoint24(int[] cards, boolean[] check, double cur) {
+		int n = cards.length;
+		boolean res = cur == 24;
+		for (int i = 0; i < n; i++) {
+			if (!check[i]) {
+				check[i] = true;
+				res |= judgePoint24(cards, check, cur + cards[i]);
+				res |= judgePoint24(cards, check, cur - cards[i]);
+				res |= judgePoint24(cards, check, cur * cards[i]);
+				res |= judgePoint24(cards, check, cur / cards[i]);
+				res |= judgePoint24Value(cards, check, cur + cards[i]);
+				res |= judgePoint24Value(cards, check, cur - cards[i]);
+				res |= judgePoint24Value(cards, check, cur * cards[i]);
+				res |= judgePoint24Value(cards, check, cur / cards[i]);
+				check[i] = false;
+			}
+		}
+		return res;
+	}
+
+	public boolean judgePoint24Value(int[] cards, boolean[] check, double target) {
+		int n = cards.length;
+		boolean res = false;
+		for (int i = 0; i < n; i++) {
+			if (!check[i]) {
+				check[i] = true;
+				res |= judgePoint24Value(cards, check, cards[i], target);
+				res |= judgePoint24Value(cards, check, cards[i], target);
+				res |= judgePoint24Value(cards, check, cards[i], target);
+				res |= judgePoint24Value(cards, check, cards[i], target);
+				check[i] = false;
+			}
+		}
+		return res;
+	}
+
+	public boolean judgePoint24Value(int[] cards, boolean[] check, double cur, double target) {
+		int n = cards.length;
+		boolean res = (cur != 0 && target / cur == 24) ||
+				target * cur == 24 ||
+				target + cur == 24 ||
+				target - cur == 24;
+		for (int i = 0; i < n; i++) {
+			if (!check[i]) {
+				check[i] = true;
+				res |= judgePoint24Value(cards, check, cur + cards[i], target);
+				res |= judgePoint24Value(cards, check, cur - cards[i], target);
+				res |= judgePoint24Value(cards, check, cur * cards[i], target);
+				res |= judgePoint24Value(cards, check, cur / cards[i], target);
+				check[i] = false;
+			}
+		}
+		return res;
+	}
+
 	public int maximumWealth(int[][] accounts) {
 		int max = Integer.MIN_VALUE;
 		for (int[] arr : accounts) {
