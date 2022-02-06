@@ -15,6 +15,22 @@ public class Solution {
 
 	}
 
+	public int removeDuplicates(int[] arr) {
+		int cur, temp;
+		int res = 0, n = arr.length;
+		for (int i = 0; i < n; i++) {
+			cur = arr[i];
+			temp = i;
+			while (i < n && cur == arr[i]) i++;
+			int count = Math.min((i - temp), 2);
+			for (int j = 0; res < n && j < count; res++, j++)
+				arr[res] = cur;
+			i--;
+ 		}
+		System.out.println(Arrays.toString(arr));
+		return res;
+	}
+
 	public boolean judgePoint24(int[] cards) {
 		boolean res = false;
 		int n = cards.length;

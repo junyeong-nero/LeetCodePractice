@@ -15,13 +15,13 @@ public class Main {
                 {100, 20, 10, 10, 5},
         };
         int[] input2 = new int[]{
-                7, 6, 7, 5
+                1, 1, 1, 2, 2, 3
         };
         int[] input3 = new int[]{
                 2, 4
         };
 
         // (9 - 1) * (1 + 2)
-        System.out.println("output : " + sol.judgePoint24(input2));
+        System.out.println("output : " + sol.removeDuplicates(input2));
     }
 }
