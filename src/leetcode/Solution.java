@@ -15,6 +15,34 @@ public class Solution {
 
 	}
 
+	public char findTheDifference(String s, String t) {
+		int sumS = 0;
+		int sumT = 0;
+		char result;
+		for (char c : s.toCharArray()) {
+			sumS += (int) c;
+		}
+		for (char c : t.toCharArray()) {
+			sumT += (int) c;
+		}
+		result = (char) (sumT - sumS);
+		return result;
+	}
+
+	public char MYfindTheDifference(String s, String t) {
+		char[] a = s.toCharArray();
+		char[] b = t.toCharArray();
+		Arrays.sort(a);
+		Arrays.sort(b);
+		int n = a.length;
+		for (int i = 0; i < n; i++) {
+			if (a[i] != b[i])
+				return b[i];
+		}
+		return b[b.length - 1];
+	}
+
+
 	public int removeDuplicates(int[] arr) {
 		int cur, temp;
 		int res = 0, n = arr.length;
@@ -26,7 +54,7 @@ public class Solution {
 			for (int j = 0; res < n && j < count; res++, j++)
 				arr[res] = cur;
 			i--;
- 		}
+		}
 		System.out.println(Arrays.toString(arr));
 		return res;
 	}
