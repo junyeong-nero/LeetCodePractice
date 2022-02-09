@@ -15,6 +15,25 @@ public class Solution {
 
 	}
 
+	public int findPairs(int[] nums, int k) {
+		int n = nums.length;
+		Set<Set<Integer>> list = new HashSet<>();
+		for (int i = 0; i < n; i++) {
+			for (int j = i + 1; j < n; j++) {
+				int a = nums[i];
+				int b = nums[j];
+				if (Math.abs(a - b) == k) {
+					Set<Integer> temp = new HashSet<>();
+					temp.add(a);
+					temp.add(b);
+					list.add(temp);
+				}
+			}
+		}
+		return list.size();
+	}
+
+
 	public char findTheDifference(String s, String t) {
 		int sumS = 0;
 		int sumT = 0;
