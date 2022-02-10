@@ -15,6 +15,47 @@ public class Solution {
 
 	}
 
+	public int subarraySum(int[] nums, int k) {
+		if (nums.length == 0) return 0;
+
+		HashMap<Integer, Integer> map = new HashMap<>();
+		int sum = 0, count = 0;
+
+		for (int n : nums) {
+			sum += n;
+			if (sum == k) count++;
+			if (map.containsKey(sum - k))
+				count += map.get(sum - k);
+			map.put(sum, map.getOrDefault(sum, 0) + 1);
+		}
+
+		return count;
+	}
+
+	public int MYsubarraySum(int[] nums, int k) {
+		int i = 0;
+		int j = 0;
+		int n = nums.length;
+		int sum = nums[0];
+		int res = 0;
+		while (i <= j) {
+			System.out.println(i + ", " + j + " / " + sum);
+			if (sum == k) {
+				res++;
+				sum -= nums[i++];
+				if (j < n - 1)
+					sum += nums[++j];
+			} else if (i < j && sum > k || j == n - 1) {
+				sum -= nums[i++];
+			} else if (sum < k || i == n - 1) {
+				if (j < n - 1)
+					sum += nums[++j];
+			} else if (i == n - 1 && j == n - 1)
+				break;
+		}
+		return res;
+	}
+
 	public int findPairs(int[] nums, int k) {
 		int n = nums.length;
 		Set<Set<Integer>> list = new HashSet<>();

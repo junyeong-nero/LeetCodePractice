@@ -15,13 +15,13 @@ public class Main {
                 {100, 20, 10, 10, 5},
         };
         int[] input2 = new int[]{
-                3, 1, 4, 1, 5
+                1, -1, 0
         };
         int[] input3 = new int[]{
                 2, 4
         };
 
         // (9 - 1) * (1 + 2)
-        System.out.println("output : " + sol.findPairs(input2, 2));
+        System.out.println("output : " + sol.subarraySum(input2, 0));
     }
 }
