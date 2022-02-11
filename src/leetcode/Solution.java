@@ -15,10 +15,69 @@ public class Solution {
 
 	}
 
+	public boolean checkInclusion(String s1, String s2) {
+		int len_s1 = s1.length(), len_s2 = s2.length();
+		if (len_s1 > len_s2) return false;
+
+		int[] count = new int[26];
+		for (int i = 0; i < len_s1; i++) {
+			count[s1.charAt(i) - 'a']++;
+			count[s2.charAt(i) - 'a']--;
+		}
+		if (zeroCount(count)) return true;
+
+		for (int i = len_s1; i < len_s2; i++) {
+			count[s2.charAt(i) - 'a']--;
+			count[s2.charAt(i - len_s1) - 'a']++;
+			if (zeroCount(count)) return true;
+		}
+
+		return false;
+	}
+
+	private boolean zeroCount(int[] count) {
+		for (int i = 0; i < 26; i++) {
+			if (count[i] != 0)
+				return false;
+		}
+		return true;
+	}
+
+	public boolean MYcheckInclusion(String target, String str) {
+		int n = str.length();
+		int m = target.length();
+		int sum = string2int(target);
+		for (int i = 0; i <= n - m; i++) {
+			String sub = str.substring(i, i + m);
+			if (sum == string2int(sub) && checkPermutation(sub, target))
+				return true;
+		}
+		return false;
+	}
+
+	public int string2int(String s) {
+		int res = 0;
+		for (char c : s.toCharArray()) {
+			res += c;
+		}
+		return res;
+	}
+
+	public boolean checkPermutation(String s1, String s2) {
+		System.out.println(s1 + ", " + s2);
+		if (s1.length() != s2.length())
+			return false;
+		char[] arr1 = s1.toCharArray();
+		char[] arr2 = s2.toCharArray();
+		Arrays.sort(arr1);
+		Arrays.sort(arr2);
+		return Arrays.equals(arr1, arr2);
+	}
+
 	public int subarraySum(int[] nums, int k) {
 		if (nums.length == 0) return 0;
 
-		HashMap<Integer, Integer> map = new HashMap<>();
+		Map<Integer, Integer> map = new HashMap<>();
 		int sum = 0, count = 0;
 
 		for (int n : nums) {

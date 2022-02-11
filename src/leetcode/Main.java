@@ -21,7 +21,7 @@ public class Main {
                 2, 4
         };
 
-        // (9 - 1) * (1 + 2)
-        System.out.println("output : " + sol.subarraySum(input2, 0));
+        System.out.println("output : " +
+                sol.checkInclusion("hello", "ooolleoooleh"));
     }
 }
