@@ -17,9 +17,6 @@ public class Main {
         int[] input2 = new int[]{
                 1, -1, 0
         };
-        int[] input3 = new int[]{
-                2, 4
-        };
 
         System.out.println("output : " +
                 sol.checkInclusion("hello", "ooolleoooleh"));

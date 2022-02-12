@@ -15,6 +15,73 @@ public class Solution {
 
 	}
 
+	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+		Set<String> set = new HashSet<>(wordList);
+		if(!set.contains(endWord)) return 0;
+
+		Queue<String> queue = new LinkedList<>();
+		queue.add(beginWord);
+
+		Set<String> visited = new HashSet<>();
+		queue.add(beginWord);
+
+		int changes = 1;
+
+		while(!queue.isEmpty()){
+			int size = queue.size();
+			for(int i = 0; i < size; i++){
+				String word = queue.poll();
+				if(word.equals(endWord)) return changes;
+
+				for(int j = 0; j < word.length(); j++){
+					for(int k = 'a'; k <= 'z'; k++){
+						char arr[] = word.toCharArray();
+						arr[j] = (char) k;
+
+						String str = new String(arr);
+						if(set.contains(str) && !visited.contains(str)){
+							queue.add(str);
+							visited.add(str);
+						}
+					}
+				}
+			}
+			++changes;
+		}
+		return 0;
+	}
+
+	public int ladderLengthDFS(String beginWord, String endWord, List<String> wordList) {
+		int n = wordList.size();
+		int res = Integer.MAX_VALUE;
+		if (beginWord.equals(endWord))
+			return 1;
+		for (int i = 0; i < n; i++) {
+			String str = wordList.get(i);
+			if (ladderCheck(beginWord, str)) {
+				List<String> newList = new ArrayList<>(wordList);
+				newList.remove(i);
+				int temp = ladderLengthDFS(wordList.get(i), endWord, newList);
+				if (temp != 0)
+					res = Math.min(res, temp);
+			}
+		}
+		if (res == Integer.MAX_VALUE)
+			return 0;
+		return res + 1;
+	}
+
+	public boolean ladderCheck(String a, String b) {
+		assert (a.length() == b.length());
+		int n = a.length();
+		int count = 0;
+		for (int i = 0; i < n; i++) {
+			if (a.charAt(i) == b.charAt(i))
+				count++;
+		}
+		return count == n - 1;
+	}
+
 	public boolean checkInclusion(String s1, String s2) {
 		int len_s1 = s1.length(), len_s2 = s2.length();
 		if (len_s1 > len_s2) return false;
