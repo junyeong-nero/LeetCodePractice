@@ -15,6 +15,23 @@ public class Solution {
 
 	}
 
+	List<List<Integer>> subsetList;
+	public List<List<Integer>> subsets(int[] nums) {
+		subsetList = new ArrayList<>();
+		subsetR(nums, new ArrayList<>(), 0);
+		return subsetList;
+	}
+
+	public void subsetR(int[] arr, List<Integer> list, int index) {
+		if (index == arr.length) {
+			subsetList.add(list);
+			return;
+		}
+		subsetR(arr, new ArrayList<>(list), index + 1);
+		list.add(arr[index]);
+		subsetR(arr, list, index + 1);
+	}
+
 	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
 		Set<String> set = new HashSet<>(wordList);
 		if(!set.contains(endWord)) return 0;
