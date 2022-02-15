@@ -15,6 +15,30 @@ public class Solution {
 
 	}
 
+	public int singleNumber(int[] nums) {
+		if (nums.length == 1) {
+			return nums[0];
+		}
+		for (int i = 1; i < nums.length; i++) {
+			nums[0] ^= nums[i];
+		}
+		return nums[0];
+	}
+
+	public int MYsingleNumber(int[] arr) {
+		HashMap<Integer, Integer> map = new HashMap<>();
+		for (int i : arr) {
+			map.putIfAbsent(i, 0);
+			map.put(i, map.get(i) + 1);
+			if (map.get(i) == 2)
+				map.remove(i);
+		}
+		int res = 0;
+		for (int i : map.keySet())
+			res = i;
+		return res;
+	}
+
 	public int maxDepth(TreeNode root) {
 		if (root == null)
 			return 0;
