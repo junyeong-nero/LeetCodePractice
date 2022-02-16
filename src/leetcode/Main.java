@@ -18,7 +18,7 @@ public class Main {
                 1, -1, 0
         };
 
-        System.out.println("output : " +
-                sol.checkInclusion("hello", "ooolleoooleh"));
+        System.out.println("output : " + sol.lastRemaining(100));
+        System.out.println("output : " + sol.lastRemaining(50));
     }
 }

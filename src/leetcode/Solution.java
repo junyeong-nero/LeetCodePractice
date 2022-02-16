@@ -15,6 +15,54 @@ public class Solution {
 
 	}
 
+	public int lastRemaining(int n) {
+		boolean left = true;
+		int remaining = n;
+		int step = 1;
+		int head = 1;
+		while (remaining > 1) {
+			if (left || remaining % 2 ==1) {
+				head = head + step;
+			}
+			remaining = remaining / 2;
+			step = step * 2;
+			left = !left;
+		}
+		return head;
+	}
+
+	public int MYlastRemaining(int n) {
+		ArrayList<Integer> list = new ArrayList<>();
+		for (int i = 1; i <= n; i++) {
+			list.add(i);
+		}
+		int count = 0;
+		while (list.size() > 1) {
+			System.out.println(list);
+			int len = list.size();
+			ArrayList<Integer> newList = new ArrayList<>();
+			if (count % 2 == 0) {
+				int a = 0;
+				for (Integer integer : list) {
+					if (a % 2 == 1)
+						newList.add(integer);
+					a++;
+				}
+			} else {
+				int a = 0;
+				int target = len % 2 == 0 ? 0 : 1;
+				for (Integer integer : list) {
+					if (a % 2 == target)
+						newList.add(integer);
+					a++;
+				}
+			}
+			list = newList;
+			count++;
+		}
+		return list.get(0);
+	}
+
 	public int singleNumber(int[] nums) {
 		if (nums.length == 1) {
 			return nums[0];
