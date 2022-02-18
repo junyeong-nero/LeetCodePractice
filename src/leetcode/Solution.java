@@ -15,13 +15,59 @@ public class Solution {
 
 	}
 
+	String removeKdigits(String num, int k) {
+		char[] arr = num.toCharArray();
+		while (k > 0) {
+			int n = num.length();
+			int i = 0;
+			while (i + 1 < n && arr[i] <= arr[i + 1]) i++;
+			arr[i] = 0;
+			k--;
+		}
+		// trim leading zeros
+		int s = 0;
+		while (s < (int) num.length() - 1 && num.charAt(s) == '0') s++;
+		for (int i = 0; i < s; i++) {
+			arr[i] = 0;
+		}
+		StringBuilder builder = new StringBuilder();
+		for (char c : arr)
+			if (c != 0) builder.append(c);
+		num = builder.toString();
+		return num.isEmpty() ? "0" : num;
+	}
+
+	public String MYremoveKdigits(String num, int k) {
+		int n = num.length();
+		if (n == k)
+			return "0";
+
+		StringBuilder builder = new StringBuilder();
+		char[] arr = num.toCharArray();
+		int count = 0;
+		boolean check = false;
+		for (int i = 0; i < n; i++) {
+			char c = arr[i];
+			if (count < k && i + 1 < n && c >= arr[i + 1]) {
+				count++;
+				continue;
+			}
+			builder.append(c);
+		}
+		int m = builder.length();
+		for (int i = 0; i < m; i++) {
+
+		}
+		return builder.toString();
+	}
+
 	public int lastRemaining(int n) {
 		boolean left = true;
 		int remaining = n;
 		int step = 1;
 		int head = 1;
 		while (remaining > 1) {
-			if (left || remaining % 2 ==1) {
+			if (left || remaining % 2 == 1) {
 				head = head + step;
 			}
 			remaining = remaining / 2;
@@ -94,6 +140,7 @@ public class Solution {
 	}
 
 	List<List<Integer>> subsetList;
+
 	public List<List<Integer>> subsets(int[] nums) {
 		subsetList = new ArrayList<>();
 		subsetR(nums, new ArrayList<>(), 0);
@@ -112,7 +159,7 @@ public class Solution {
 
 	public int ladderLength(String beginWord, String endWord, List<String> wordList) {
 		Set<String> set = new HashSet<>(wordList);
-		if(!set.contains(endWord)) return 0;
+		if (!set.contains(endWord)) return 0;
 
 		Queue<String> queue = new LinkedList<>();
 		queue.add(beginWord);
@@ -122,19 +169,19 @@ public class Solution {
 
 		int changes = 1;
 
-		while(!queue.isEmpty()){
+		while (!queue.isEmpty()) {
 			int size = queue.size();
-			for(int i = 0; i < size; i++){
+			for (int i = 0; i < size; i++) {
 				String word = queue.poll();
-				if(word.equals(endWord)) return changes;
+				if (word.equals(endWord)) return changes;
 
-				for(int j = 0; j < word.length(); j++){
-					for(int k = 'a'; k <= 'z'; k++){
+				for (int j = 0; j < word.length(); j++) {
+					for (int k = 'a'; k <= 'z'; k++) {
 						char arr[] = word.toCharArray();
 						arr[j] = (char) k;
 
 						String str = new String(arr);
-						if(set.contains(str) && !visited.contains(str)){
+						if (set.contains(str) && !visited.contains(str)) {
 							queue.add(str);
 							visited.add(str);
 						}
