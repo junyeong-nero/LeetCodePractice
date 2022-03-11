@@ -15,6 +15,42 @@ public class Solution {
 
 	}
 
+	public int size(ListNode head) {
+		int num = 0;
+		while(head != null) {
+			head = head.next;
+			num++;
+		}
+		return num;
+	}
+
+	public ListNode rotateRight(ListNode head, int k) {
+		ListNode temp = head;
+		ListNode prev = null;
+		ListNode res = null;
+		int len = size(head);
+		if (len == 0)
+			return head;
+		int rotate = k % len;
+		if (rotate == 0)
+			return head;
+		for (int i = 0; i < len; i++) {
+			if (i == len - rotate) {
+				res = temp;
+				prev.next = null;
+				break;
+			}
+			prev = temp;
+			temp = temp.next;
+		}
+		temp = res;
+		while (temp != null && temp.next != null) {
+			temp = temp.next;
+		}
+		temp.next = head;
+		return res;
+	}
+
 	public int minPathSum(int[][] grid) {
 		int m = grid.length;
 		int n = grid[0].length;
