@@ -1,5 +1,6 @@
 package leetcode;
 
+import DataStructure.Node;
 import DataStructure.ListNode;
 import DataStructure.TreeNode;
 
@@ -13,6 +14,45 @@ public class Solution {
 
 	public Solution() {
 
+	}
+
+	public int index(Node head, Node target) {
+		Node temp = head;
+		if (target == null)
+			return -1;
+		int res = 0;
+		while (temp != null) {
+			if (temp == target)
+				return res;
+			res++;
+			temp = temp.next;
+		}
+		return -1;
+	}
+
+	public Node copyRandomList(Node head) {
+		Node a = head;
+		ArrayList<Node> lst = new ArrayList<>();
+		ArrayList<Integer> ind = new ArrayList<>();
+		while (a != null) {
+			lst.add(new Node(a.val));
+			ind.add(index(head, a.random));
+			a = a.next;
+		}
+		Node res = new Node(0);
+		Node temp = res;
+		for (int i = 0; i < lst.size(); i++) {
+			temp.next = lst.get(i);
+			temp = temp.next;
+		}
+		temp = res.next;
+		for (int i = 0; i < ind.size(); i++) {
+			int c = ind.get(i);
+			if (c != -1)
+				temp.random = lst.get(c);
+			temp = temp.next;
+		}
+		return res.next;
 	}
 
 	public int size(ListNode head) {
