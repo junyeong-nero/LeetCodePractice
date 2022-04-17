@@ -16,6 +16,24 @@ public class Solution {
 
 	}
 
+	public int calculateSteps(int n, int current) {
+		if (n == 0) {
+			if (current == 1)
+				return 0;
+			else
+				return Integer.MAX_VALUE;
+		}
+		else if (n < 0)
+			return Integer.MAX_VALUE;
+
+		int temp = Integer.MAX_VALUE - 1;
+		temp = Math.min(temp, calculateSteps(n - current, current + 1));
+		temp = Math.min(temp, calculateSteps(n - current, current));
+		temp = Math.min(temp, calculateSteps(n - current, current - 1));
+
+		return temp + 1;
+	}
+
 	public int index(Node head, Node target) {
 		Node temp = head;
 		if (target == null)
