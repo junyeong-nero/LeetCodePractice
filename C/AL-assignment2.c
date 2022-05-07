@@ -1,5 +1,4 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
 void swap(int *arr, int i, int j) {
     int temp = arr[i];
@@ -37,6 +36,6 @@ int calculate(int *arr, int len) {
 
 int main() {
     int len = 8;
-    int data[len] = {2, 1, 3, 123, 1, 99, 1, 2};
-    cout << calculate(data, len) << endl;
+    int data[8] = {2, 1, 3, 123, 1, 99, 1, 2};
+    printf("%d\n", calculate(data, len));
 }
