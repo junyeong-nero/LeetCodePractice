@@ -10,9 +10,7 @@
 float distance(float a[2], float b[2]) { return sqrt(pow(a[0] - b[0], 2) + pow(a[1] - b[1], 2)); }
 
 float min_distance(float points[MAX][2], int n) {
-    // return value
-    float res = 0;
-    // count used points
+    float res = 0.0;
     int used = 0;
 
     bool check[n];
@@ -25,31 +23,24 @@ float min_distance(float points[MAX][2], int n) {
     minDist[0] = 0;
 
     while (used < n) {
-        // get minimum
-        float currMinEdge = INT_MAX;
-        int currNode = -1;
-        for (int node = 0; node < n; ++node) {
-            if (!check[node] && currMinEdge > minDist[node]) {
-                currMinEdge = minDist[node];
-                currNode = node;
+        float min_dst = INT_MAX;
+        int cur = -1;
+        for (int i = 0; i < n; ++i) {
+            if (!check[i] && min_dst > minDist[i]) {
+                min_dst = minDist[i];
+                cur = i;
             }
         }
-
-        printf("cur : %f, %f\n", points[currNode][0], points[currNode][1]);
-        res += currMinEdge;
+        res += min_dst;
         used++;
-        check[currNode] = true;
-
-        // Update adjacent nodes of current node.
-        for (int nextNode = 0; nextNode < n; ++nextNode) {
-            float dist = distance(points[currNode], points[nextNode]);
-            printf("dst : %f\n", dist);
-            if (!check[nextNode] && minDist[nextNode] > dist) {
-                minDist[nextNode] = dist;
+        check[cur] = true;
+        for (int i = 0; i < n; i++) {
+            float dst = distance(points[cur], points[i]);
+            if (!check[i] && minDist[i] > dst) {
+                minDist[i] = dst;
             }
         }
     }
-    printf("res : %f\n", res);
     return res;
 }
 
